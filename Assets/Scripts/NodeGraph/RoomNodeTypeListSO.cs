@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "RoomNodeTypeListSO", menuName = "Scriptable Objects/Dungeon/Room Node Type List")]
 public class RoomNodeTypeListSO : ScriptableObject
 {
-    public List<RoomNodeTypeListSO> list;
+    public List<RoomNodeTypeSO> list;
 
 #if UNITY_EDITOR
     private void OnValidate()

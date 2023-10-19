@@ -8,7 +8,7 @@ public static class HelperUtilities
     {
         if(stringToCheck == "")
         {
-            Debug.Log(fieldName + " is empty and ,ust contain a value object " + thisObject.name.ToString());
+            Debug.Log(fieldName + " is empty and must contain a value object " + thisObject.name.ToString());
             return true;
         }
         return false;
