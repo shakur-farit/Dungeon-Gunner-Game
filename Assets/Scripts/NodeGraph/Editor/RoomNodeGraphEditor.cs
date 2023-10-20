@@ -1,4 +1,3 @@
-using System;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
@@ -15,7 +14,8 @@ public class RoomNodeGraphEditor : EditorWindow
     private const int nodePadding = 25;
     private const int nodeBorder = 10;
 
-    private float connectingLineWith = 3f;
+    private const float connectingLineWith = 3f;
+    private const float connectingLineArrowSize = 6f;
 
     [MenuItem("Room Node Graph Editor", menuItem = "Window/Dungeon Editor/Room Node Graph Editor")]
     private static void OpenWindow()
@@ -58,6 +58,8 @@ public class RoomNodeGraphEditor : EditorWindow
 
             ProcessEvent(Event.current);
 
+            DrawRoomConnection();
+
             DrawRoomNodes();
         }
 
@@ -69,8 +71,11 @@ public class RoomNodeGraphEditor : EditorWindow
     {
         if(currentRoomNodeGraph.linePosition != Vector2.zero)
         {
-            Handles.DrawBezier(currentRoomNodeGraph.roomNodeToDrawLineFrom.rect.center, currentRoomNodeGraph.linePosition,
-                currentRoomNodeGraph.roomNodeToDrawLineFrom.rect.center, currentRoomNodeGraph.linePosition,
+            Handles.DrawBezier(
+                currentRoomNodeGraph.roomNodeToDrawLineFrom.rect.center, 
+                currentRoomNodeGraph.linePosition,
+                currentRoomNodeGraph.roomNodeToDrawLineFrom.rect.center, 
+                currentRoomNodeGraph.linePosition,
                 Color.white, null, connectingLineWith);
         }
     }
@@ -152,6 +157,8 @@ public class RoomNodeGraphEditor : EditorWindow
         AssetDatabase.AddObjectToAsset(roomNode, currentRoomNodeGraph);
 
         AssetDatabase.SaveAssets();
+
+        currentRoomNodeGraph.OnValidate();
     }
 
     private void ProcessMouseUpEvent(Event currentEvent)
@@ -160,9 +167,8 @@ public class RoomNodeGraphEditor : EditorWindow
         {
             RoomNodeSO roomNode = IsMouseOverRoomNode(currentEvent);
 
-            if (currentRoomNode.AddChildRoomNodeIDToRoomNode(roomNode.id))
+            if (currentRoomNodeGraph.roomNodeToDrawLineFrom.AddChildRoomNodeIDToRoomNode(roomNode.id))
                 roomNode.AddParentRoomNodeIDToRoomNode(currentRoomNodeGraph.roomNodeToDrawLineFrom.id);
-
 
             ClearLineDrag();
         }
@@ -193,6 +199,54 @@ public class RoomNodeGraphEditor : EditorWindow
         currentRoomNodeGraph.roomNodeToDrawLineFrom = null;
         currentRoomNodeGraph.linePosition = Vector2.zero;
         GUI.changed = true;
+    }
+
+    private void DrawRoomConnection()
+    {
+        foreach (RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
+        {
+            if(roomNode.childRoomNodeIDList.Count > 0)
+            {
+                foreach (string childRoomNodeID in roomNode.childRoomNodeIDList)
+                {
+                    if (currentRoomNodeGraph.roomNodeDictionary.ContainsKey(childRoomNodeID))
+                    {
+                        DrawConnectionline(roomNode, currentRoomNodeGraph.roomNodeDictionary[childRoomNodeID]);
+
+                        GUI.changed = true;
+                    }
+                }
+            }
+        }
+    }
+
+    private void DrawConnectionline(RoomNodeSO parentRoomNode, RoomNodeSO childRoomNode)
+    {
+        Vector2 startPosition = parentRoomNode.rect.center;
+        Vector2 endPosition = childRoomNode.rect.center;
+
+        Vector2 midPosition = (endPosition + startPosition) / 2;
+        Vector2 direction = endPosition - startPosition;
+        Vector2 arrowTailpoint1 = midPosition - new Vector2(-direction.y, direction.x).normalized * connectingLineArrowSize;
+        Vector2 arrowTailpoint2 = midPosition + new Vector2(-direction.y, direction.x).normalized * connectingLineArrowSize;
+        Vector2 arrowHeadPoint = midPosition + direction.normalized * connectingLineArrowSize;
+
+        Handles.DrawBezier(
+            startPosition, endPosition, 
+            startPosition, endPosition, 
+            Color.white, null, connectingLineWith);
+
+        Handles.DrawBezier(
+            arrowHeadPoint, arrowTailpoint1, 
+            arrowHeadPoint, arrowTailpoint1, 
+            Color.white, null, connectingLineWith);
+        Handles.DrawBezier(
+            arrowHeadPoint, arrowTailpoint2, 
+            arrowHeadPoint, arrowTailpoint2, 
+            Color.white, null, connectingLineWith);
+
+        GUI.changed = true;
+
     }
 
     private void DrawRoomNodes()
