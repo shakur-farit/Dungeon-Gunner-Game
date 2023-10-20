@@ -85,6 +85,8 @@ public class RoomNodeSO : ScriptableObject
     {
         if (currentEvent.button == 0)
             ProcessLeftClickDownEvent();
+        else if (currentEvent.button == 1)
+            ProcessRightClickDownEvent(currentEvent);
     }
 
     private void ProcessLeftClickDownEvent()
@@ -92,6 +94,11 @@ public class RoomNodeSO : ScriptableObject
         Selection.activeObject = this;
 
         isSelected = !isSelected;
+    }
+
+    private void ProcessRightClickDownEvent(Event currentEvent)
+    {
+        roomNodeGraph.SetNodeToDrawConnectionLineFrom(this, currentEvent.mousePosition);
     }
 
     private void ProcessMouseUpevent(Event currentEvent)

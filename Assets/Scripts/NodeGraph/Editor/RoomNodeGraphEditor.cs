@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class RoomNodeGraphEditor : EditorWindow
     private const float nodeHeight = 75f;
     private const int nodePadding = 25;
     private const int nodeBorder = 10;
+
+    private float connectingLineWith = 3f;
 
     [MenuItem("Room Node Graph Editor", menuItem = "Window/Dungeon Editor/Room Node Graph Editor")]
     private static void OpenWindow()
@@ -51,6 +54,8 @@ public class RoomNodeGraphEditor : EditorWindow
     {
         if(currentRoomNodeGraph != null)
         {
+            DrawDraggedLine();
+
             ProcessEvent(Event.current);
 
             DrawRoomNodes();
@@ -60,12 +65,22 @@ public class RoomNodeGraphEditor : EditorWindow
             Repaint();
     }
 
+    private void DrawDraggedLine()
+    {
+        if(currentRoomNodeGraph.linePosition != Vector2.zero)
+        {
+            Handles.DrawBezier(currentRoomNodeGraph.roomNodeToDrawLineFrom.rect.center, currentRoomNodeGraph.linePosition,
+                currentRoomNodeGraph.roomNodeToDrawLineFrom.rect.center, currentRoomNodeGraph.linePosition,
+                Color.white, null, connectingLineWith);
+        }
+    }
+
     private void ProcessEvent(Event currentEvent)
     {
         if(currentRoomNode == null || currentRoomNode.isLeftClickDragging == false)
             currentRoomNode = IsMouseOverRoomNode(currentEvent);
 
-        if (currentRoomNode == null)
+        if (currentRoomNode == null || currentRoomNodeGraph.roomNodeToDrawLineFrom != null)
             ProcessRoomNodeGraphEvents(currentEvent);
         else
             currentRoomNode.ProcessEvent(currentEvent);
@@ -89,6 +104,10 @@ public class RoomNodeGraphEditor : EditorWindow
         {
             case EventType.MouseDown:
                 ProcessMouseDownEvent(currentEvent);
+                break;
+
+            case EventType.MouseDrag:
+                ProcessMouseDragEvent(currentEvent);
                 break;
 
             default:
@@ -129,6 +148,26 @@ public class RoomNodeGraphEditor : EditorWindow
         AssetDatabase.AddObjectToAsset(roomNode, currentRoomNodeGraph);
 
         AssetDatabase.SaveAssets();
+    }
+
+    private void ProcessMouseDragEvent(Event currentEvent)
+    {
+        if (currentEvent.button == 1)
+            ProcessRightMouseDragEvent(currentEvent);
+    }
+
+    private void ProcessRightMouseDragEvent(Event currentEvent)
+    {
+        if(currentRoomNodeGraph.roomNodeToDrawLineFrom != null)
+        {
+            DragCOnnectionLine(currentEvent.delta);
+            GUI.changed = true;
+        }
+    }
+
+    private void DragCOnnectionLine(Vector2 delta)
+    {
+        currentRoomNodeGraph.linePosition += delta;
     }
 
     private void DrawRoomNodes()
