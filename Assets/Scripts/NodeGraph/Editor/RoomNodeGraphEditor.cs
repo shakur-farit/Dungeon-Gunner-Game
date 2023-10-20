@@ -106,6 +106,10 @@ public class RoomNodeGraphEditor : EditorWindow
                 ProcessMouseDownEvent(currentEvent);
                 break;
 
+            case EventType.MouseUp:
+                ProcessMouseUpEvent(currentEvent);
+                break;
+
             case EventType.MouseDrag:
                 ProcessMouseDragEvent(currentEvent);
                 break;
@@ -150,6 +154,20 @@ public class RoomNodeGraphEditor : EditorWindow
         AssetDatabase.SaveAssets();
     }
 
+    private void ProcessMouseUpEvent(Event currentEvent)
+    {
+        if (currentEvent.button == 1 && currentRoomNodeGraph.roomNodeToDrawLineFrom != null)
+        {
+            RoomNodeSO roomNode = IsMouseOverRoomNode(currentEvent);
+
+            if (currentRoomNode.AddChildRoomNodeIDToRoomNode(roomNode.id))
+                roomNode.AddParentRoomNodeIDToRoomNode(currentRoomNodeGraph.roomNodeToDrawLineFrom.id);
+
+
+            ClearLineDrag();
+        }
+    }
+
     private void ProcessMouseDragEvent(Event currentEvent)
     {
         if (currentEvent.button == 1)
@@ -160,14 +178,21 @@ public class RoomNodeGraphEditor : EditorWindow
     {
         if(currentRoomNodeGraph.roomNodeToDrawLineFrom != null)
         {
-            DragCOnnectionLine(currentEvent.delta);
+            DragConnectionLine(currentEvent.delta);
             GUI.changed = true;
         }
     }
 
-    private void DragCOnnectionLine(Vector2 delta)
+    private void DragConnectionLine(Vector2 delta)
     {
         currentRoomNodeGraph.linePosition += delta;
+    }
+
+    private void ClearLineDrag()
+    {
+        currentRoomNodeGraph.roomNodeToDrawLineFrom = null;
+        currentRoomNodeGraph.linePosition = Vector2.zero;
+        GUI.changed = true;
     }
 
     private void DrawRoomNodes()
