@@ -114,7 +114,7 @@ public class RoomNodeGraphEditor : EditorWindow
         for (int j = 0; j < horizontalLineCount; j++)
         {
             Handles.DrawLine(new Vector3(-gridSize, j * gridSize, 0) + gridOffset,
-                new Vector3(position.height + gridSize, j * gridSize, 0f) + gridOffset);
+                new Vector3(position.width + gridSize, j * gridSize, 0f) + gridOffset);
         }
 
         Handles.color = Color.white;
@@ -321,7 +321,8 @@ public class RoomNodeGraphEditor : EditorWindow
         {
             RoomNodeSO roomNode = IsMouseOverRoomNode(currentEvent);
 
-            if (currentRoomNodeGraph.roomNodeToDrawLineFrom.AddChildRoomNodeIDToRoomNode(roomNode.id))
+            if (roomNode != null &&
+                currentRoomNodeGraph.roomNodeToDrawLineFrom.AddChildRoomNodeIDToRoomNode(roomNode.id))
                 roomNode.AddParentRoomNodeIDToRoomNode(currentRoomNodeGraph.roomNodeToDrawLineFrom.id);
 
             ClearLineDrag();
