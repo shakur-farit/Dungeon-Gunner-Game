@@ -1,8 +1,8 @@
 public enum Orientation
 {
-    north,
-    east,
-    south,
-    west,
-    none
+    North,
+    East,
+    South,
+    West,
+    None
 }

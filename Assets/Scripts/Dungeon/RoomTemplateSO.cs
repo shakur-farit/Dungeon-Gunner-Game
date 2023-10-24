@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,8 +9,7 @@ public class RoomTemplateSO : ScriptableObject
 
     public GameObject prefab;
 
-    //this is used to regenarate the guid if the SO is copied adn the prefab is changed
-    [HideInInspector] public GameObject previousPrefab;
+    [HideInInspector] public GameObject previousPrefab; // this is used to regenerate the guid if the so is copied and the prefab is changed
 
     public RoomNodeTypeSO roomNodeType;
     public Vector2Int lowerBounds;
@@ -23,9 +22,10 @@ public class RoomTemplateSO : ScriptableObject
     public List<Doorway> GetDoorwayList => doorwayList;
 
 #if UNITY_EDITOR
+
     private void OnValidate()
     {
-        if(guid == "" || previousPrefab != prefab)
+        if (guid == "" || previousPrefab != prefab)
         {
             guid = GUID.Generate().ToString();
             previousPrefab = prefab;
@@ -36,5 +36,6 @@ public class RoomTemplateSO : ScriptableObject
 
         HelperUtilities.ValidateCheckEnumerableValues(this, nameof(spawnPositionArray), spawnPositionArray);
     }
+
 #endif
 }
