@@ -15,18 +15,19 @@ MonoBehaviour:
   id: 697f5b70-7a32-463c-8a6b-cd3715a5a993
   parentRoomNodeIDList:
   - 19bf1a1b-5ee2-494f-8258-29e97d7d4670
-  childRoomNodeIDList: []
+  childRoomNodeIDList:
+  - 171cdbf7-b585-4ac2-ae56-5a8b3631357c
   roomNodeGraph: {fileID: 11400000}
   roomNodeType: {fileID: 11400000, guid: b397ae3c0d3814f3c815cad5f7d94e39, type: 2}
   roomNodeTypeList: {fileID: 11400000, guid: 9713b50ea6679455aa6007289d2939f4, type: 2}
   rect:
     serializedVersion: 2
-    x: 626
-    y: 117
+    x: 624
+    y: 120
     width: 160
     height: 75
   isLeftClickDragging: 0
-  isSelected: 0
+  isSelected: 1
 --- !u!114 &-6557976602304147790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,7 +81,7 @@ MonoBehaviour:
     width: 160
     height: 75
   isLeftClickDragging: 0
-  isSelected: 0
+  isSelected: 1
 --- !u!114 &-6393621848963298784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,6 +192,7 @@ MonoBehaviour:
   - {fileID: 2219181647895277083}
   - {fileID: 959617917345700577}
   - {fileID: -5181171468464517893}
+  - {fileID: 8262535024200036561}
   roomNodeToDrawLineFrom: {fileID: 0}
   linePosition: {x: 0, y: 0}
 --- !u!114 &959617917345700577
@@ -276,6 +278,33 @@ MonoBehaviour:
     height: 75
   isLeftClickDragging: 0
   isSelected: 0
+--- !u!114 &8262535024200036561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2e0c8ba3b000479fac081c1c51e7807, type: 3}
+  m_Name: RoomNode
+  m_EditorClassIdentifier: 
+  id: 171cdbf7-b585-4ac2-ae56-5a8b3631357c
+  parentRoomNodeIDList:
+  - 697f5b70-7a32-463c-8a6b-cd3715a5a993
+  childRoomNodeIDList: []
+  roomNodeGraph: {fileID: 11400000}
+  roomNodeType: {fileID: 11400000, guid: 6620e8739cb50473292419692ddbd88d, type: 2}
+  roomNodeTypeList: {fileID: 11400000, guid: 9713b50ea6679455aa6007289d2939f4, type: 2}
+  rect:
+    serializedVersion: 2
+    x: 622
+    y: 22
+    width: 160
+    height: 75
+  isLeftClickDragging: 0
+  isSelected: 0
 --- !u!114 &9214077735487941097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,4 +332,4 @@ MonoBehaviour:
     width: 160
     height: 75
   isLeftClickDragging: 0
-  isSelected: 0
+  isSelected: 1

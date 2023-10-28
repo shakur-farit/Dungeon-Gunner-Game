@@ -133,7 +133,6 @@ MonoBehaviour:
   - {fileID: 4706557627530169657}
   - {fileID: 521939893638823130}
   - {fileID: 7585045522127511119}
-  - {fileID: 4992593783209104651}
   - {fileID: 3601135744544776698}
   - {fileID: -6557976602304147790}
   - {fileID: -8789928191614555659}
@@ -212,8 +211,7 @@ MonoBehaviour:
   id: 0e282182-45fb-485d-ab82-34570e044df3
   parentRoomNodeIDList:
   - 6ab33176-33ef-4993-842e-c79b66b2b867
-  childRoomNodeIDList:
-  - 757cd8ab-57db-4410-b72b-ecf9cb7bd1a0
+  childRoomNodeIDList: []
   roomNodeGraph: {fileID: 11400000}
   roomNodeType: {fileID: 11400000, guid: a93aff06fb8ec41108686c3db14ceda6, type: 2}
   roomNodeTypeList: {fileID: 11400000, guid: 9713b50ea6679455aa6007289d2939f4, type: 2}
@@ -253,33 +251,6 @@ MonoBehaviour:
     height: 75
   isLeftClickDragging: 0
   isSelected: 0
---- !u!114 &4992593783209104651
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2e0c8ba3b000479fac081c1c51e7807, type: 3}
-  m_Name: RoomNode
-  m_EditorClassIdentifier: 
-  id: 757cd8ab-57db-4410-b72b-ecf9cb7bd1a0
-  parentRoomNodeIDList:
-  - 0e282182-45fb-485d-ab82-34570e044df3
-  childRoomNodeIDList: []
-  roomNodeGraph: {fileID: 11400000}
-  roomNodeType: {fileID: 11400000, guid: b397ae3c0d3814f3c815cad5f7d94e39, type: 2}
-  roomNodeTypeList: {fileID: 11400000, guid: 9713b50ea6679455aa6007289d2939f4, type: 2}
-  rect:
-    serializedVersion: 2
-    x: 427
-    y: 534
-    width: 160
-    height: 75
-  isLeftClickDragging: 0
-  isSelected: 0
 --- !u!114 &5936729972313334998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,7 +277,7 @@ MonoBehaviour:
     width: 160
     height: 75
   isLeftClickDragging: 0
-  isSelected: 1
+  isSelected: 0
 --- !u!114 &7585045522127511119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,7 +304,7 @@ MonoBehaviour:
     width: 160
     height: 75
   isLeftClickDragging: 0
-  isSelected: 1
+  isSelected: 0
 --- !u!114 &8450770396111007752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,4 +332,4 @@ MonoBehaviour:
     width: 160
     height: 75
   isLeftClickDragging: 0
-  isSelected: 1
+  isSelected: 0
