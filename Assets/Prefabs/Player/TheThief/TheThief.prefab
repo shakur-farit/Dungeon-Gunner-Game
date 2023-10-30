@@ -8,9 +8,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1380547483300312, guid: 8d4ca61ef252d494a99b8b24ca7db162, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1831502251, guid: 6132933bad8914124837b153c4368ea7, type: 3}
     - target: {fileID: 2429853594752003799, guid: 8d4ca61ef252d494a99b8b24ca7db162, type: 3}
       propertyPath: m_Name
-      value: Player
+      value: TheThief
       objectReference: {fileID: 0}
     - target: {fileID: 3485489004635133578, guid: 8d4ca61ef252d494a99b8b24ca7db162, type: 3}
       propertyPath: m_LocalPosition.x
@@ -51,6 +55,42 @@ PrefabInstance:
     - target: {fileID: 3485489004635133578, guid: 8d4ca61ef252d494a99b8b24ca7db162, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140249517435548092, guid: 8d4ca61ef252d494a99b8b24ca7db162, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3f018cebb641449a7a49950b93679bbc, type: 2}
+    - target: {fileID: 6286312330904135602, guid: 8d4ca61ef252d494a99b8b24ca7db162, type: 3}
+      propertyPath: m_Size.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6286312330904135602, guid: 8d4ca61ef252d494a99b8b24ca7db162, type: 3}
+      propertyPath: m_Size.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6286312330904135602, guid: 8d4ca61ef252d494a99b8b24ca7db162, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: fdff32e8dc92a49a38c60d52e4394ba7, type: 3}
+    - target: {fileID: 6286312330904135602, guid: 8d4ca61ef252d494a99b8b24ca7db162, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9131318917397350279, guid: 8d4ca61ef252d494a99b8b24ca7db162, type: 3}
+      propertyPath: m_Size.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 9131318917397350279, guid: 8d4ca61ef252d494a99b8b24ca7db162, type: 3}
+      propertyPath: m_Size.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 9131318917397350279, guid: 8d4ca61ef252d494a99b8b24ca7db162, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: fdff32e8dc92a49a38c60d52e4394ba7, type: 3}
+    - target: {fileID: 9131318917397350279, guid: 8d4ca61ef252d494a99b8b24ca7db162, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
