@@ -352,16 +352,18 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         room.roomNodeType = roomTemplate.roomNodeType;
         room.lowerBounds = roomTemplate.lowerBounds;
         room.upperBounds = roomTemplate.upperBounds;
-        room.spawnPositionArraw = roomTemplate.spawnPositionArray;
+        room.spawnPositionArray = roomTemplate.spawnPositionArray;
         room.templateLowerBounds = roomTemplate.lowerBounds;
         room.templateUpperBounds = roomTemplate.upperBounds;
         room.childRoomIDList = CopyStringList(roomNode.childRoomNodeIDList);
         room.doorwayList = CopyDoorwayList(roomTemplate.doorwayList);
 
-        if (roomNode.parentRoomNodeIDList.Count == 0)
+        if (roomNode.parentRoomNodeIDList.Count == 0) // Entrance
         {
             room.parentRoomID = "";
             room.isPreviouslyVisited = true;
+
+            GameManager.Instance.SetCurrentRoom = room;
         }
         else
             room.parentRoomID = roomNode.parentRoomNodeIDList[0];
