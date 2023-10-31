@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 1831502251, guid: 6132933bad8914124837b153c4368ea7, type: 3}
+    - target: {fileID: 942190368751766714, guid: 8d4ca61ef252d494a99b8b24ca7db162, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
     - target: {fileID: 2429853594752003799, guid: 8d4ca61ef252d494a99b8b24ca7db162, type: 3}
       propertyPath: m_Name
       value: TheThief
@@ -60,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 3f018cebb641449a7a49950b93679bbc, type: 2}
+    - target: {fileID: 6268510554357186244, guid: 8d4ca61ef252d494a99b8b24ca7db162, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6286312330904135602, guid: 8d4ca61ef252d494a99b8b24ca7db162, type: 3}
       propertyPath: m_Size.x
       value: 0.25
