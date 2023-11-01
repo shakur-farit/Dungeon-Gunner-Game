@@ -2,7 +2,58 @@ using System.Collections;
 using UnityEngine;
 
 public static class HelperUtilities
-{ 
+{
+    public static Camera mainCamera;
+
+    public static Vector3 GetMouseWorldPosition()
+    {
+        if (mainCamera == null)
+            mainCamera = Camera.main;
+
+        Vector3 mouseScreenPosition = Input.mousePosition;
+
+        mouseScreenPosition.x = Mathf.Clamp(mouseScreenPosition.x, 0f, Screen.width);
+        mouseScreenPosition.y = Mathf.Clamp(mouseScreenPosition.y, 0f, Screen.height);
+
+        Vector3 worldPosition = mainCamera.ScreenToWorldPoint(mouseScreenPosition);
+
+        worldPosition.z = 0;
+
+        return worldPosition;
+    }
+
+    public static float GetAngelFromVector(Vector3 vector)
+    {
+        float radians = Mathf.Atan2(vector.y, vector.x);
+
+        float degress = radians * Mathf.Rad2Deg;
+
+        return degress;
+    }
+
+    public static AimDirection GetAimDerection(float angleDegree)
+    {
+        AimDirection aimDirection;
+
+        if (angleDegree >= 22f && angleDegree <= 67f)
+            aimDirection = AimDirection.UpRight;
+        else if (angleDegree > 67f && angleDegree <= 112f)
+            aimDirection = AimDirection.Up;
+        else if (angleDegree > 112f && angleDegree <= 158f)
+            aimDirection = AimDirection.UpLeft;
+        else if ((angleDegree <= 180f && angleDegree > 158f) ||
+            (angleDegree > -180f && angleDegree <= -135f))
+            aimDirection = AimDirection.Left;
+        else if (angleDegree > -135f && angleDegree <= -45)
+            aimDirection = AimDirection.Down;
+        else if ((angleDegree > -45f && angleDegree <= 0f) || (angleDegree > 0f && angleDegree < 22f))
+            aimDirection = AimDirection.Right;
+        else
+            aimDirection = AimDirection.Right;
+
+        return aimDirection;
+    }
+
     public static bool ValidateCheckEmptyString(Object thisObject, string fieldName, string stringToCheck)
     {
         if(stringToCheck == "")
