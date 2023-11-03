@@ -3,6 +3,8 @@ using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(PlayerControl))]
+[RequireComponent(typeof(MovementToPosition))]
+[RequireComponent(typeof(MovementToPositionEvent))]
 [RequireComponent(typeof(MovementByVelocity))]
 [RequireComponent(typeof(MovementByVelocityEvent))]
 [RequireComponent(typeof(Idle))]
@@ -21,6 +23,7 @@ public class Player : MonoBehaviour
 {
     [HideInInspector] public PlayerDetailsSO playerDetails;
     [HideInInspector] public Health health;
+    [HideInInspector] public MovementToPositionEvent movementToPositionEvent;
     [HideInInspector] public MovementByVelocityEvent movementByVelocityEvent;
     [HideInInspector] public IdleEvent idleEvent;
     [HideInInspector] public AimWeaponEvent aimWeaponEvent;
@@ -30,6 +33,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         health = GetComponent<Health>();
+        movementToPositionEvent = GetComponent<MovementToPositionEvent>();
         movementByVelocityEvent = GetComponent<MovementByVelocityEvent>();
         idleEvent = GetComponent<IdleEvent>();
         aimWeaponEvent = GetComponent<AimWeaponEvent>();

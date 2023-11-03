@@ -107,6 +107,8 @@ GameObject:
   - component: {fileID: 1123397262554103432}
   - component: {fileID: -8441909659193415634}
   - component: {fileID: -9042249692076180596}
+  - component: {fileID: 2841935136769805505}
+  - component: {fileID: 4894313643901914211}
   - component: {fileID: 8890152267172405978}
   - component: {fileID: 287396789897486936}
   m_Layer: 10
@@ -373,6 +375,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerDetails: {fileID: 0}
   health: {fileID: 0}
+  movementToPositionEvent: {fileID: 0}
   movementByVelocityEvent: {fileID: 0}
   idleEvent: {fileID: 0}
   aimWeaponEvent: {fileID: 0}
@@ -449,6 +452,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15f16a3b49c2ce248a4e7bd9350e5bdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2841935136769805505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2429853594752003799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a610c3fdefbb7414daab7bc26d2ace6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4894313643901914211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2429853594752003799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 486cf47e44ecf874f87355d9b47af358, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &8890152267172405978

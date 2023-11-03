@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
@@ -10,6 +9,10 @@ public class PlayerControl : MonoBehaviour
 
     private Player player;
     private float moveSpeed;
+    private Coroutine playerRollCoroutine;
+    private WaitForFixedUpdate waitForFixedUpdate;
+    private bool isPlayerRolling = false;
+    private float playerRollColldownTimer = 0f;
 
     private void Awake()
     {
@@ -18,17 +21,28 @@ public class PlayerControl : MonoBehaviour
         moveSpeed = movementDetails.GetMoveSpeed();
     }
 
+    private void Start()
+    {
+        waitForFixedUpdate = new WaitForFixedUpdate();
+    }
+
     private void Update()
     {
+        if (isPlayerRolling)
+            return;
+
         MovementInput();
 
         WeaponInput();
+
+        PlayerRollCooldownTimer();
     }
 
     private void MovementInput()
     {
         float horizontalMovment = Input.GetAxisRaw("Horizontal");
         float verticalMovement = Input.GetAxisRaw("Vertical");
+        bool rightMouseButton = Input.GetMouseButtonDown(1);
 
         Vector2 direction = new Vector2(horizontalMovment, verticalMovement);
 
@@ -36,9 +50,48 @@ public class PlayerControl : MonoBehaviour
             direction *= .7f;
 
         if (direction != Vector2.zero)
-            player.movementByVelocityEvent.CallMovementbyVelocityEvent(direction, moveSpeed);
+        {
+            if(!rightMouseButton)
+                player.movementByVelocityEvent.CallMovementbyVelocityEvent(direction, moveSpeed);
+            else if(playerRollColldownTimer <= 0f)
+                PlayerRoll((Vector3)direction);
+        }
         else
             player.idleEvent.CallIdleEvent();
+    }
+
+    private void PlayerRoll(Vector3 direction)
+    {
+        playerRollCoroutine = StartCoroutine(PlayerRollRoutine(direction));
+    }
+
+    private IEnumerator PlayerRollRoutine(Vector3 direction)
+    {
+        float minDistance = 0.2f;
+
+        isPlayerRolling = true;
+
+        Vector3 targetPosition = player.transform.position + (Vector3)direction * movementDetails.rollDistance;
+
+        while(Vector3.Distance(player.transform.position, targetPosition) > minDistance)
+        {
+            player.movementToPositionEvent.CallMovementToPositionEvent(targetPosition, player.transform.position,
+                movementDetails.rollSpeed, direction, isPlayerRolling);
+
+            yield return waitForFixedUpdate;
+        }
+
+        isPlayerRolling = false;
+
+        playerRollColldownTimer = movementDetails.rollCooldownTime;
+
+        player.transform.position = targetPosition;
+    }
+
+    private void PlayerRollCooldownTimer()
+    {
+        if(playerRollColldownTimer >= 0f)
+            playerRollColldownTimer -= Time.deltaTime;
     }
 
     private void WeaponInput()
@@ -65,6 +118,26 @@ public class PlayerControl : MonoBehaviour
         playerAimDirection = HelperUtilities.GetAimDerection(playerAngleDegress);
 
         player.aimWeaponEvent.CallAimWeaponEvent(playerAimDirection, playerAngleDegress, weaponAngleDegress, weaponDirection);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        StopPlayerRollRoutine();
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        StopPlayerRollRoutine();
+    }
+
+    private void StopPlayerRollRoutine()
+    {
+        if(playerRollCoroutine != null)
+        {
+            StopCoroutine(playerRollCoroutine);
+
+            isPlayerRolling = false;
+        }
     }
 
 #if UNITY_EDITOR
