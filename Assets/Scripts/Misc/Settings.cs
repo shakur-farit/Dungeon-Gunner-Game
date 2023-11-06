@@ -2,6 +2,9 @@ using UnityEngine;
 
 public static class Settings 
 {
+    public const float pixelsPerUnit = 16f;
+    public const float tileSizePixels = 16f;
+
     public const int maxDungeonRebuildAttemptsForRoomGraph = 1000;
     public const int maxDungeonBuildAttempts = 10;
 
