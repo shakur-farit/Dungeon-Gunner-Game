@@ -11,6 +11,7 @@ public static class Settings
     public const int maxDungeonBuildAttempts = 10;
 
     // Room settings
+    public const float faidInTime = 0.5f;
     public const int maxChildCorridors = 3;
 
     // Player animation parameters
@@ -26,11 +27,12 @@ public static class Settings
     public static int rollRight = Animator.StringToHash("rollRight");
     public static int rollLeft = Animator.StringToHash("rollLeft");
     public static int rollDown = Animator.StringToHash("rollDown");
+    public static float baseSpeedForPlayerAnimations = 8f;
 
     // Door animation parameters
     public static int open = Animator.StringToHash("open");
 
-    // Tags settings
+    // Game object tags
     public const string playerTag = "Player";
     public const string playerWeapon = "playerWeapon";
 }
