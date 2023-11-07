@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -42,33 +43,30 @@ public class InstantiatedRoom : MonoBehaviour
 
         Tilemap[] tilemaps = roomGameObject.GetComponentsInChildren<Tilemap>();
 
+        Dictionary<string, Tilemap> tilemapDictionary = new Dictionary<string, Tilemap>
+    {
+        {"groundTilemap", null},
+        {"decoration1Tilemap", null},
+        {"decoration2Tilemap", null},
+        {"frontTilemap", null},
+        {"collisionTilemap", null},
+        {"minimapTilemap", null}
+    };
+
         foreach (Tilemap tilemap in tilemaps)
         {
-            if(tilemap.gameObject.tag == "groundTilemap")
+            if (tilemapDictionary.ContainsKey(tilemap.gameObject.tag))
             {
-                groundTilemap = tilemap;
-            }
-            else if (tilemap.gameObject.tag == "decoration1Tilemap")
-            {
-                decoration1Tilemap = tilemap;
-            }
-            else if (tilemap.gameObject.tag == "decoration2Tilemap")
-            {
-                decoration2Tilemap = tilemap;
-            }
-            else if (tilemap.gameObject.tag == "frontTilemap")
-            {
-                frontTilemap = tilemap;
-            }
-            else if (tilemap.gameObject.tag == "collisionTilemap")
-            {
-                collisionTilemap = tilemap;
-            }
-            else if (tilemap.gameObject.tag == "minimapTilemap")
-            {
-                minimapTilemap = tilemap;
+                tilemapDictionary[tilemap.gameObject.tag] = tilemap;
             }
         }
+
+        groundTilemap = tilemapDictionary["groundTilemap"];
+        decoration1Tilemap = tilemapDictionary["decoration1Tilemap"];
+        decoration2Tilemap = tilemapDictionary["decoration2Tilemap"];
+        frontTilemap = tilemapDictionary["frontTilemap"];
+        collisionTilemap = tilemapDictionary["collisionTilemap"];
+        minimapTilemap = tilemapDictionary["minimapTilemap"];
     }
 
     private void AddDoorsToRooms()
@@ -76,42 +74,44 @@ public class InstantiatedRoom : MonoBehaviour
         if (room.roomNodeType.isCorridorEW || room.roomNodeType.isCorridorNS)
             return;
 
+        Dictionary<Orientation, Vector2> orientationOffsets = new Dictionary<Orientation, Vector2>
+    {
+        {Orientation.North, new Vector2(0.5f, 1f)},
+        {Orientation.South, new Vector2(0.5f, 0f)},
+        {Orientation.East, new Vector2(1f, 1.25f)},
+        {Orientation.West, new Vector2(0f, 1.25f)}
+    };
+
         foreach (Doorway doorway in room.doorwayList)
         {
-            if(doorway.doorPrefab != null && doorway.isConnected)
+            if (doorway.doorPrefab != null && doorway.isConnected)
             {
                 float tileDistance = Settings.tileSizePixels / Settings.pixelsPerUnit;
+                Vector2 offset = orientationOffsets[doorway.orientation];
+                GameObject door = InstantiateDoor(doorway,
+                    doorway.position.x + tileDistance * offset.x,
+                    doorway.position.y + tileDistance * offset.y);
 
-                GameObject door = null;
+                Door doorComponent = door.GetComponent<Door>();
 
-                if(doorway.orientation == Orientation.North)
+                if (room.roomNodeType.isBossRoom)
                 {
-                    door = Instantiate(doorway.doorPrefab, gameObject.transform);
-                    door.transform.localPosition = new Vector3(doorway.position.x + tileDistance / 2f,
-                        doorway.position.y + tileDistance, 0f);
-                }
-                else if(doorway.orientation == Orientation.South)
-                {
-                    door = Instantiate(doorway.doorPrefab, gameObject.transform);
-                    door.transform.localPosition = new Vector3(doorway.position.x + tileDistance / 2f,
-                        doorway.position.y, 0f);
-                }
-                else if(doorway.orientation == Orientation.East)
-                {
-                    door = Instantiate(doorway.doorPrefab, gameObject.transform);
-                    door.transform.localPosition = new Vector3(doorway.position.x + tileDistance,
-                        doorway.position.y + tileDistance * 1.25f, 0f);
-                }
-                else if (doorway.orientation == Orientation.West)
-                {
-                    door = Instantiate(doorway.doorPrefab, gameObject.transform);
-                    door.transform.localPosition = new Vector3(doorway.position.x,
-                        doorway.position.y + tileDistance * 1.25f, 0f);
+                    doorComponent.isBossRoomDoor = true;
+
+                    doorComponent.LockDoor();
                 }
             }
         }
     }
 
+    private GameObject InstantiateDoor(Doorway doorway,
+        float xPostion, float yPostion)
+    {
+        GameObject door = Instantiate(doorway.doorPrefab, gameObject.transform);
+        door.transform.localPosition = new Vector3(xPostion, yPostion, 0f);
+        return door;
+    }
+    
     private void BlockOffUnusedDoorways()
     {
         foreach (Doorway doorway in room.doorwayList)
