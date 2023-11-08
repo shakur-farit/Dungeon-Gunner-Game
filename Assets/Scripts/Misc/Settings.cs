@@ -35,5 +35,10 @@ public static class Settings
     // Game object tags
     public const string playerTag = "Player";
     public const string playerWeapon = "playerWeapon";
+
+    // Firing control
+    // If the target distance is less than this value then the aim angle will be used (form player),
+    // else weapon aim angle (from the weapon shoot position)
+    public const float useAimAngleDistance = 3.5f;
 }
 

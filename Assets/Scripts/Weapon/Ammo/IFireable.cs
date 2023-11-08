@@ -1,18 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class IFireable : MonoBehaviour
+public interface IFireable
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    void InitialiseAmmo(AmmoDetailsSO ammoDetails, float aimAngle, float weaponAimAngle,
+        float ammoSpeed, Vector3 weaponAimDirectionVector, bool ovverideAmmoMovement = false);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    GameObject GetGameObject();
 }
