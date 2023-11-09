@@ -16,6 +16,9 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(FireWeaponEvent))]
 [RequireComponent(typeof(FireWeapon))]
 [RequireComponent(typeof(WeaponFiredEvent))]
+[RequireComponent(typeof(ReloadWeaponEvent))]
+[RequireComponent(typeof(WeaponReloadedEvent))]
+[RequireComponent(typeof(ReloadWeapon))]
 [RequireComponent(typeof(ActiveWeapon))]
 [RequireComponent(typeof(AnimatePlayer))]
 [RequireComponent(typeof(SortingGroup))]
@@ -36,6 +39,9 @@ public class Player : MonoBehaviour
     [HideInInspector] public SetActiveWeaponEvent setActiveWeaponEvent;
     [HideInInspector] public FireWeaponEvent fireWeaponEvent;
     [HideInInspector] public FireWeapon fireWeapon;
+    [HideInInspector] public ReloadWeaponEvent reloadWeaponEvent;
+    [HideInInspector] public WeaponReloadedEvent weaponReloadedEvent;
+    [HideInInspector] public ReloadWeapon reloadWeapon;
     [HideInInspector] public WeaponFiredEvent weaponFiredEvent;
     [HideInInspector] public ActiveWeapon activeWeapon;
     [HideInInspector] public SpriteRenderer spriteRenderer;
@@ -54,6 +60,9 @@ public class Player : MonoBehaviour
         fireWeaponEvent = GetComponent<FireWeaponEvent>();
         fireWeapon = GetComponent<FireWeapon>();
         weaponFiredEvent = GetComponent<WeaponFiredEvent>();
+        reloadWeaponEvent = GetComponent<ReloadWeaponEvent>();
+        weaponReloadedEvent = GetComponent<WeaponReloadedEvent>();
+        reloadWeapon = GetComponent<ReloadWeapon>();
         activeWeapon = GetComponent<ActiveWeapon>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();

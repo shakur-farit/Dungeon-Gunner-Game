@@ -2,6 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(ActiveWeapon))]
 [RequireComponent(typeof(FireWeaponEvent))]
+[RequireComponent(typeof(ReloadWeaponEvent))]
 [RequireComponent(typeof(WeaponFiredEvent))]
 [DisallowMultipleComponent]
 public class FireWeapon : MonoBehaviour
@@ -9,12 +10,14 @@ public class FireWeapon : MonoBehaviour
     private float _fireRateCoolDownTimer = 0f;
     private ActiveWeapon _activeWeapon;
     private FireWeaponEvent _fireWeaponEvent;
+    private ReloadWeaponEvent _reloadWeaponEvent;
     private WeaponFiredEvent _weaponFiredEvent;
 
     private void Awake()
     {
         _activeWeapon = GetComponent<ActiveWeapon>();
         _fireWeaponEvent = GetComponent<FireWeaponEvent>();
+        _reloadWeaponEvent = GetComponent<ReloadWeaponEvent>();
         _weaponFiredEvent = GetComponent<WeaponFiredEvent>();
     }
 
@@ -95,7 +98,11 @@ public class FireWeapon : MonoBehaviour
 
         if (!_activeWeapon.GetCurrentWeapon.WeaponDetails.hasInfinityClipCapacity &&
             _activeWeapon.GetCurrentWeapon.WeaponClipRemainingAmmo <= 0)
+        {
+            _reloadWeaponEvent.CallOnRealoadWeaponEvent(_activeWeapon.GetCurrentWeapon, 0);
+
             return false;
+        }
 
         return true;
     }
