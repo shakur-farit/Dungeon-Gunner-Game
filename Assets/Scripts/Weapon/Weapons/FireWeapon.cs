@@ -7,6 +7,7 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class FireWeapon : MonoBehaviour
 {
+    private float _firePrechargeTimer = 0f;
     private float _fireRateCoolDownTimer = 0f;
     private ActiveWeapon _activeWeapon;
     private FireWeaponEvent _fireWeaponEvent;
@@ -43,6 +44,8 @@ public class FireWeapon : MonoBehaviour
 
     private void WeaponFire(FireWeaponEventArgs fireWeaponEventArgs)
     {
+        WeaponPrecharge(fireWeaponEventArgs);
+
         if (fireWeaponEventArgs.Fire)
         {
             if (IsWeaponReadyToFire())
@@ -51,8 +54,21 @@ public class FireWeapon : MonoBehaviour
                     fireWeaponEventArgs.WeaponAimAngle, fireWeaponEventArgs.WeaponAimDirectionVector);
 
                 ResetColdownTimer();
+
+                ResetPrechargeTimer();
             }
         }
+    }
+
+    private void WeaponPrecharge(FireWeaponEventArgs fireWeaponEventArgs)
+    {
+        if (fireWeaponEventArgs.FirePreviousFrame)
+        {
+            _firePrechargeTimer -= Time.deltaTime;
+            return;
+        }
+
+        ResetPrechargeTimer();
     }
 
     private void FireAmmo(float aimAngle, float weaponAimAngle, Vector3 weaponAimDirectionVector)
@@ -79,11 +95,6 @@ public class FireWeapon : MonoBehaviour
         _weaponFiredEvent.CallOnWeaponFiredEvent(_activeWeapon.GetCurrentWeapon);
     }
 
-    private void ResetColdownTimer()
-    {
-        _fireRateCoolDownTimer = _activeWeapon.GetCurrentWeapon.WeaponDetails.weaponFireRate;
-    }
-
     private bool IsWeaponReadyToFire()
     {
         if (_activeWeapon.GetCurrentWeapon.WeaponRemainingAmmo <= 0 &&
@@ -93,7 +104,7 @@ public class FireWeapon : MonoBehaviour
         if (_activeWeapon.GetCurrentWeapon.IsWeaponReloading)
             return false;
 
-        if (_fireRateCoolDownTimer > 0f)
+        if (_firePrechargeTimer > 0f || _fireRateCoolDownTimer > 0f)
             return false;
 
         if (!_activeWeapon.GetCurrentWeapon.WeaponDetails.hasInfinityClipCapacity &&
@@ -105,5 +116,15 @@ public class FireWeapon : MonoBehaviour
         }
 
         return true;
+    }
+
+    private void ResetColdownTimer()
+    {
+        _fireRateCoolDownTimer = _activeWeapon.GetCurrentWeapon.WeaponDetails.weaponFireRate;
+    }
+
+    private void ResetPrechargeTimer()
+    {
+        _firePrechargeTimer = _activeWeapon.GetCurrentWeapon.WeaponDetails.weaponPrechargeTime;
     }
 }

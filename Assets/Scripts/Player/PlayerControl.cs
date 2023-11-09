@@ -9,6 +9,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private MovementDetailsSO movementDetails;
 
     private Player player;
+    private bool leftMouseDownPreviousFrame = false;
     private int currentWeaponIndex = 1;
     private float moveSpeed;
     private Coroutine playerRollCoroutine;
@@ -97,12 +98,13 @@ public class PlayerControl : MonoBehaviour
 
         isPlayerRolling = true;
 
-        Vector3 targetPosition = player.transform.position + (Vector3)direction * movementDetails.rollDistance;
+        Vector3 targetPosition = player.transform.position + 
+            (Vector3)direction * movementDetails.rollDistance;
 
         while(Vector3.Distance(player.transform.position, targetPosition) > minDistance)
         {
-            player.movementToPositionEvent.CallMovementToPositionEvent(targetPosition, player.transform.position,
-                movementDetails.rollSpeed, direction, isPlayerRolling);
+            player.movementToPositionEvent.CallMovementToPositionEvent(targetPosition, 
+                player.transform.position, movementDetails.rollSpeed, direction, isPlayerRolling);
 
             yield return waitForFixedUpdate;
         }
@@ -126,7 +128,8 @@ public class PlayerControl : MonoBehaviour
         float weaponAngleDegress, playerAngleDegress;
         AimDirection playerAimDirection;
 
-        AimWeaponInput(out weaponDirection, out weaponAngleDegress, out playerAngleDegress, out playerAimDirection);
+        AimWeaponInput(out weaponDirection, out weaponAngleDegress, 
+            out playerAngleDegress, out playerAimDirection);
 
         FireWeaponInput(weaponDirection, weaponAngleDegress, playerAngleDegress, playerAimDirection);
 
@@ -147,15 +150,22 @@ public class PlayerControl : MonoBehaviour
 
         playerAimDirection = HelperUtilities.GetAimDerection(playerAngleDegress);
 
-        player.aimWeaponEvent.CallAimWeaponEvent(playerAimDirection, playerAngleDegress, weaponAngleDegress, weaponDirection);
+        player.aimWeaponEvent.CallAimWeaponEvent(playerAimDirection, playerAngleDegress, 
+            weaponAngleDegress, weaponDirection);
     }
 
-    private void FireWeaponInput(Vector3 weaponDirection, float weaponAngleDegress, float playerAngleDegress, AimDirection playerAimDirection)
+    private void FireWeaponInput(Vector3 weaponDirection, float weaponAngleDegress, 
+        float playerAngleDegress, AimDirection playerAimDirection)
     {
         if (Input.GetMouseButton(0))
         {
-            player.fireWeaponEvent.CallOnFireWeaponEvent(true, playerAimDirection, playerAngleDegress, weaponAngleDegress, weaponDirection);
+            player.fireWeaponEvent.CallOnFireWeaponEvent(true, leftMouseDownPreviousFrame, playerAimDirection, 
+                playerAngleDegress, weaponAngleDegress, weaponDirection);
+            leftMouseDownPreviousFrame = true;
+            return;
         }
+
+        leftMouseDownPreviousFrame = false;
     }
 
     private void SetWeaponByIndex(int weaponIndex)
