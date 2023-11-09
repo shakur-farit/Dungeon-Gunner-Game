@@ -52,7 +52,7 @@ public class PoolManager : SingletonMonobehaviour<PoolManager>
         }
     }
 
-    private Component ReuseComponent(GameObject prefab, Vector3 position, Quaternion rotation)
+    public Component ReuseComponent(GameObject prefab, Vector3 position, Quaternion rotation)
     {
         int poolKey = prefab.GetInstanceID();
 
@@ -71,7 +71,7 @@ public class PoolManager : SingletonMonobehaviour<PoolManager>
         }
     }
 
-    private Component GetComponentFromPool(int poolKey)
+    public Component GetComponentFromPool(int poolKey)
     {
         Component componentToReuse = poolDictionary[poolKey].Dequeue();
         poolDictionary[poolKey].Enqueue(componentToReuse);
@@ -84,7 +84,7 @@ public class PoolManager : SingletonMonobehaviour<PoolManager>
         return componentToReuse;
     }
 
-    private void ResetObject(Vector3 position, Quaternion rotation, Component componentToReuse, GameObject prefab)
+    public void ResetObject(Vector3 position, Quaternion rotation, Component componentToReuse, GameObject prefab)
     {
         componentToReuse.transform.position = position;
         componentToReuse.transform.rotation = rotation;

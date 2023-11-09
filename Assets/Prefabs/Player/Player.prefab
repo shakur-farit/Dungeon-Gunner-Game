@@ -110,6 +110,9 @@ GameObject:
   - component: {fileID: 2841935136769805505}
   - component: {fileID: 4894313643901914211}
   - component: {fileID: 8314247881280205390}
+  - component: {fileID: 3127372912794080997}
+  - component: {fileID: 6521556395070647273}
+  - component: {fileID: 3782875216280684955}
   - component: {fileID: 5148182248525531040}
   - component: {fileID: 8890152267172405978}
   - component: {fileID: 287396789897486936}
@@ -382,6 +385,9 @@ MonoBehaviour:
   idleEvent: {fileID: 0}
   aimWeaponEvent: {fileID: 0}
   setActiveWeaponEvent: {fileID: 0}
+  fireWeaponEvent: {fileID: 0}
+  weaponFiredEvent: {fileID: 0}
+  activeWeapon: {fileID: 0}
   spriteRenderer: {fileID: 0}
   animator: {fileID: 0}
 --- !u!114 &4846028420949502368
@@ -493,6 +499,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55df271b387b7694aa095893cbb13e71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3127372912794080997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2429853594752003799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb7d9010cd25e4406b5138c80f3f32fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6521556395070647273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2429853594752003799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c0eaad9d3f7040fbb7e42109538e5c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3782875216280684955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2429853594752003799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67704b2b610fd4c99b3476ca6cd1073b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5148182248525531040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -534,7 +576,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementDetails: {fileID: 11400000, guid: 92c901b3c724fd940b89e3db0bf2606c, type: 2}
-  weaponShootPosition: {fileID: 5597652263919589150}
 --- !u!1 &2793051193500568816
 GameObject:
   m_ObjectHideFlags: 0
