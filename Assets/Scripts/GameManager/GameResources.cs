@@ -14,15 +14,16 @@ public class GameResources : MonoBehaviour
         }
     }
 
+    [Header("Dungeon")]
     public RoomNodeTypeListSO roomNodeTypeList;
-
+    [Header("Player")]
     public CurrentPlayerSO currentPlayer;
-
+    [Header("Materials")]
     public Material dimmeMaterial;
-
     public Material litMaterial;
-
     public Shader variableLitShader;
+    [Header("UI")]
+    public GameObject ammoIconPrefab;
 
 #if UNITY_EDITOR
     private void OnValidate()
@@ -32,6 +33,7 @@ public class GameResources : MonoBehaviour
         HelperUtilities.ValidateCheckNullValue(this, nameof(litMaterial), litMaterial);
         HelperUtilities.ValidateCheckNullValue(this, nameof(dimmeMaterial), dimmeMaterial);
         HelperUtilities.ValidateCheckNullValue(this, nameof(variableLitShader), variableLitShader);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(ammoIconPrefab), ammoIconPrefab);
     }
 #endif
 }

@@ -40,5 +40,8 @@ public static class Settings
     // If the target distance is less than this value then the aim angle will be used (form player),
     // else weapon aim angle (from the weapon shoot position)
     public const float useAimAngleDistance = 3.5f;
+
+    //UI Parametrs
+    public const float uiAmmoIconSpacing = 4f;
 }
 
