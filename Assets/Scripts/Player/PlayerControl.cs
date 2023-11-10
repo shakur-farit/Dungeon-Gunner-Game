@@ -1,5 +1,5 @@
-using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Player))]
@@ -133,6 +133,8 @@ public class PlayerControl : MonoBehaviour
 
         FireWeaponInput(weaponDirection, weaponAngleDegress, playerAngleDegress, playerAimDirection);
 
+        SwitchWeaponInput();
+
         ReloadWeaponInput();
     }
 
@@ -168,6 +170,37 @@ public class PlayerControl : MonoBehaviour
         leftMouseDownPreviousFrame = false;
     }
 
+    private void SwitchWeaponInput()
+    {
+        if(Input.mouseScrollDelta.y < 0f)
+        {
+            PreviousWeapon();
+        }
+
+        if(Input.mouseScrollDelta.y > 0f)
+        {
+            NextWeapon();
+        }
+
+        for (int i = 1; i < 10; i++)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha0 + i))
+            {
+                SetWeaponByIndex(i);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            SetWeaponByIndex(10);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Minus))
+        {
+            SetCurrentWeaponToFirstInTheList();
+        }
+    }
+
     private void SetWeaponByIndex(int weaponIndex)
     {
         int index = weaponIndex - 1;
@@ -177,6 +210,30 @@ public class PlayerControl : MonoBehaviour
             currentWeaponIndex = weaponIndex;
             player.setActiveWeaponEvent.CallSetActiveWeaponEvent(player.weaponList[index]);
         }
+    }
+
+    private void NextWeapon()
+    {
+        currentWeaponIndex++;
+
+        if(currentWeaponIndex > player.weaponList.Count)
+        {
+            currentWeaponIndex = 1;
+        }
+
+        SetWeaponByIndex(currentWeaponIndex);
+    }
+
+    private void PreviousWeapon()
+    {
+        currentWeaponIndex--;
+
+        if (currentWeaponIndex < 1)
+        {
+            currentWeaponIndex = player.weaponList.Count;
+        }
+
+        SetWeaponByIndex(currentWeaponIndex);
     }
 
     private void ReloadWeaponInput()
@@ -217,6 +274,33 @@ public class PlayerControl : MonoBehaviour
 
             isPlayerRolling = false;
         }
+    }
+
+    private void SetCurrentWeaponToFirstInTheList()
+    {
+        List<Weapon> tempWeaponList = new List<Weapon>();
+
+        Weapon currentWeapon = player.weaponList[currentWeaponIndex - 1];
+        currentWeapon.WeaponListPosition = 1;
+        tempWeaponList.Add(currentWeapon);
+
+        int index = 2;
+
+        foreach (Weapon weapon in player.weaponList)
+        {
+            if (weapon == currentWeapon)
+                continue;
+
+            tempWeaponList.Add(weapon);
+            weapon.WeaponListPosition = index;
+            index++;
+        }
+
+        player.weaponList = tempWeaponList;
+
+        currentWeaponIndex = 1;
+
+        SetWeaponByIndex(currentWeaponIndex);
     }
 
 #if UNITY_EDITOR

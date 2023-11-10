@@ -163,7 +163,7 @@ public class WeaponStatusUI : MonoBehaviour
 
     private void UpdateWeaponReloadBar(Weapon weapon)
     {
-        if (weapon.WeaponDetails.hasInfiniteAmmo)
+        if (weapon.WeaponDetails.hasInfinityClipCapacity)
             return;
 
         StopReloadWeaponCoroutine();
@@ -178,7 +178,7 @@ public class WeaponStatusUI : MonoBehaviour
 
         _barImage.color = Color.green;
 
-        _reloadBar.transform.localScale = Vector3.one;
+        _reloadBar.transform.localScale = new Vector3(1f,1f,1f);
     }
 
     private void StopReloadWeaponCoroutine()
@@ -193,8 +193,9 @@ public class WeaponStatusUI : MonoBehaviour
 
         while (weapon.IsWeaponReloading)
         {
+            
             float barFill = weapon.WeaponReloadTimer / weapon.WeaponDetails.weaponRealoadTime;
-
+            Debug.Log(barFill);
             _reloadBar.transform.localScale = new Vector3(barFill, 1f, 1f);
 
             yield return null;
@@ -203,6 +204,8 @@ public class WeaponStatusUI : MonoBehaviour
 
     private void UpdateReloadText(Weapon weapon)
     {
+        Debug.Log(weapon.WeaponClipRemainingAmmo <= 0 || weapon.IsWeaponReloading);
+
         if((!weapon.WeaponDetails.hasInfinityClipCapacity) &&
             (weapon.WeaponClipRemainingAmmo <= 0 || weapon.IsWeaponReloading))
         {
