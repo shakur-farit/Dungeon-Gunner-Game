@@ -22,7 +22,7 @@ public class WeaponStatusUI : MonoBehaviour
 
     private void Awake()
     {
-        player = GetComponent<Player>();
+        player = GameManager.Instance.GetPlayer;
     }
 
     private void OnEnable()
