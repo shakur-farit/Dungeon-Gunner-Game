@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(ActiveWeapon))]
@@ -75,16 +76,42 @@ public class FireWeapon : MonoBehaviour
     {
         AmmoDetailsSO currentAmmo = _activeWeapon.GetCurrentAmmo;
 
-        if (currentAmmo == null)
-            return;
+        if (currentAmmo != null)
+            StartCoroutine(FireAmmoRoutine(currentAmmo, aimAngle, weaponAimAngle, weaponAimDirectionVector));
+    }
 
-        GameObject ammoPrefab = currentAmmo.ammoPrefabArray[Random.Range(0, currentAmmo.ammoPrefabArray.Length)];
+    private IEnumerator FireAmmoRoutine(AmmoDetailsSO currentAmmo, float aimAngle,
+        float weaponAimAngle, Vector3 weaponAimDirectionVector)
+    {
+        int ammoCounter = 0;
 
-        float ammoSpeed = Random.Range(currentAmmo.ammoSpeedMin, currentAmmo.ammoSpeedMax);
+        int ammoPerShot = Random.Range(currentAmmo.ammoSpawnAmountMin, currentAmmo.ammoSpawnAmountMax + 1);
 
-        IFireable ammo = (IFireable)PoolManager.Instance.ReuseComponent(ammoPrefab, _activeWeapon.GetShootPosition, Quaternion.identity);
+        float ammoSpawnInterval;
 
-        ammo.InitialiseAmmo(currentAmmo, aimAngle, weaponAimAngle, ammoSpeed, weaponAimDirectionVector);
+        if(ammoPerShot > 1)
+        {
+            ammoSpawnInterval = Random.Range(currentAmmo.ammoSpawnIntervalMin, currentAmmo.ammoSpawnIntervalMax);
+        }
+        else
+        {
+            ammoSpawnInterval = 0f;
+        }
+
+        while(ammoCounter < ammoPerShot)
+        {
+            ammoCounter++;
+
+            GameObject ammoPrefab = currentAmmo.ammoPrefabArray[Random.Range(0, currentAmmo.ammoPrefabArray.Length)];
+
+            float ammoSpeed = Random.Range(currentAmmo.ammoSpeedMin, currentAmmo.ammoSpeedMax);
+
+            IFireable ammo = (IFireable)PoolManager.Instance.ReuseComponent(ammoPrefab, _activeWeapon.GetShootPosition, Quaternion.identity);
+
+            ammo.InitialiseAmmo(currentAmmo, aimAngle, weaponAimAngle, ammoSpeed, weaponAimDirectionVector);
+
+            yield return new WaitForSeconds(ammoSpawnInterval);
+        }
 
         if (!_activeWeapon.GetCurrentWeapon.WeaponDetails.hasInfinityClipCapacity)
         {
