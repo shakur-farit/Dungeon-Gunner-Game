@@ -3,10 +3,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "WeaponDetails_", menuName = "Scriptable Objects/Weapons/Weapon Details")]
 public class WeaponDetailsSO : ScriptableObject
 {
+    [Header("Basic Weapon Deatils")]
     public string weaponName;
     public Sprite weaponSprite;
+    [Header("Weapon Configuration")]
     public Vector3 weaponShootPosition;
     public AmmoDetailsSO weaponCurrentAmmo;
+    [Header("Weapon Operating Values")]
     public bool hasInfiniteAmmo = false;
     public bool hasInfinityClipCapacity = false;
     public int weaponClipAmmoCapacity = 6;

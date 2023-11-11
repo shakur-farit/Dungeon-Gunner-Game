@@ -195,7 +195,7 @@ public class WeaponStatusUI : MonoBehaviour
         {
             
             float barFill = weapon.WeaponReloadTimer / weapon.WeaponDetails.weaponRealoadTime;
-            Debug.Log(barFill);
+
             _reloadBar.transform.localScale = new Vector3(barFill, 1f, 1f);
 
             yield return null;
@@ -204,8 +204,6 @@ public class WeaponStatusUI : MonoBehaviour
 
     private void UpdateReloadText(Weapon weapon)
     {
-        Debug.Log(weapon.WeaponClipRemainingAmmo <= 0 || weapon.IsWeaponReloading);
-
         if((!weapon.WeaponDetails.hasInfinityClipCapacity) &&
             (weapon.WeaponClipRemainingAmmo <= 0 || weapon.IsWeaponReloading))
         {
