@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class GameResources : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class GameResources : MonoBehaviour
     public RoomNodeTypeListSO roomNodeTypeList;
     [Header("Player")]
     public CurrentPlayerSO currentPlayer;
+    [Header("Sounds")]
+    public AudioMixerGroup soundMasterMixerGroup;
     [Header("Materials")]
     public Material dimmeMaterial;
     public Material litMaterial;
