@@ -6,6 +6,10 @@ Implemented mechanics:
  2. Player movement.
  3. Player aiming.
  4. Player animation.
+ 5. Player shooting.
+ 6. Weapons changing and reloading.
 
 Some gameplay:
-https://github.com/shakur-farit/Dungeon-Gunner-Game/assets/93837330/4f5d45c2-a750-48e5-8fbe-c5575ddd9d7f
+
+https://github.com/shakur-farit/Dungeon-Gunner-Game/assets/93837330/127bf1c6-5a5c-41b6-8e1a-b058a8559099
+
