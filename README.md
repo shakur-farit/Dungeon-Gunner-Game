@@ -8,8 +8,11 @@ Implemented mechanics:
  4. Player animation.
  5. Player shooting.
  6. Weapons changing and reloading.
- 7. Sound effects of shooting and weapon reloading 
+ 7. Sound effects of shooting and weapon reloading
+ 8. Minimap
 
 Some gameplay:
-https://github.com/shakur-farit/Dungeon-Gunner-Game/assets/93837330/2424ff33-fa01-4ff4-b226-4e6301f8e0c8
+https://github.com/shakur-farit/Dungeon-Gunner-Game/assets/93837330/49a8163a-b7fe-4206-aed7-88888a170f05
+
+
 
