@@ -106,7 +106,8 @@ public class FireWeapon : MonoBehaviour
 
             float ammoSpeed = Random.Range(currentAmmo.ammoSpeedMin, currentAmmo.ammoSpeedMax);
 
-            IFireable ammo = (IFireable)PoolManager.Instance.ReuseComponent(ammoPrefab, _activeWeapon.GetShootPosition, Quaternion.identity);
+            IFireable ammo = (IFireable)PoolManager.Instance
+                .ReuseComponent(ammoPrefab, _activeWeapon.GetShootPosition, Quaternion.identity);
 
             ammo.InitialiseAmmo(currentAmmo, aimAngle, weaponAimAngle, ammoSpeed, weaponAimDirectionVector);
 
@@ -120,6 +121,8 @@ public class FireWeapon : MonoBehaviour
         }
 
         _weaponFiredEvent.CallOnWeaponFiredEvent(_activeWeapon.GetCurrentWeapon);
+
+        WeaponSoundEffect();
     }
 
     private bool IsWeaponReadyToFire()
@@ -153,5 +156,14 @@ public class FireWeapon : MonoBehaviour
     private void ResetPrechargeTimer()
     {
         _firePrechargeTimer = _activeWeapon.GetCurrentWeapon.WeaponDetails.weaponPrechargeTime;
+    }
+
+    private void WeaponSoundEffect()
+    {
+        if(_activeWeapon.GetCurrentWeapon.WeaponDetails.weaponFiringSoundEffect != null)
+        {
+            SoundEffectManager.Instance.PlaySoundEffect(_activeWeapon
+                .GetCurrentWeapon.WeaponDetails.weaponFiringSoundEffect);
+        }
     }
 }
