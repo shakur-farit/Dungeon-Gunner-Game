@@ -9,6 +9,7 @@ public class WeaponDetailsSO : ScriptableObject
     [Header("Weapon Configuration")]
     public Vector3 weaponShootPosition;
     public AmmoDetailsSO weaponCurrentAmmo;
+    public WeaponShootEffectSO weaponShootEffect;
     public SoundEffectSO weaponFiringSoundEffect;
     public SoundEffectSO weaponReloadSoundEffect;
     [Header("Weapon Operating Values")]

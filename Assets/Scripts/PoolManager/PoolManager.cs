@@ -33,7 +33,7 @@ public class PoolManager : SingletonMonobehaviour<PoolManager>
 
         string prefabName = prefab.name;
 
-        GameObject parentGameObject = new GameObject(prefab + "Acnhor");
+        GameObject parentGameObject = new GameObject(prefabName + "Acnhor");
 
         parentGameObject.transform.SetParent(objectPoolTransform);
 
@@ -41,7 +41,7 @@ public class PoolManager : SingletonMonobehaviour<PoolManager>
         {
             poolDictionary.Add(poolKey, new Queue<Component>());
 
-            for (int i = 0; i < poolKey; i++)
+            for (int i = 0; i < poolSize; i++)
             {
                 GameObject newObject = Instantiate(prefab, parentGameObject.transform) as GameObject;
 
