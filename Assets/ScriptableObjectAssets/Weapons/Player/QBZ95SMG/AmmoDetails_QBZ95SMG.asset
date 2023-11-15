@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammoName: QBZ95SMG Ammo
   isPlayerAmmo: 1
-  ammoSprite: {fileID: 21300000, guid: e36e8bbd18074d341b170885ac002038, type: 3}
+  ammoSprite: {fileID: 21300000, guid: 4df9cc7131cd27f4288bca5e76c82034, type: 3}
   ammoPrefabArray:
-  - {fileID: 3143163772143274963, guid: 58d0e3a2e0ab07b4e918b38805382301, type: 3}
+  - {fileID: 3143163772143274963, guid: 5d339182003f6440da246a9c53e9ffa4, type: 3}
   ammoMaterial: {fileID: 2100000, guid: c92da765fb7cca448a71d99956fe00bd, type: 2}
   ammoChargeTime: 0
   ammoChargeMaterial: {fileID: 0}
+  ammoHitEffect: {fileID: 11400000, guid: aaadb29cea7f344378725a9fc72262cf, type: 2}
   ammoDamage: 5
   ammoSpeedMin: 14
   ammoSpeedMax: 14

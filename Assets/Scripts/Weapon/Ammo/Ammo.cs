@@ -45,6 +45,8 @@ public class Ammo : MonoBehaviour, IFireable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        PlayAmmoHitEffect();
+
         DisableAmmo();
     }
 
@@ -108,6 +110,21 @@ public class Ammo : MonoBehaviour, IFireable
         transform.eulerAngles = new Vector3(0f, 0f, _fireDirectionAngle);
 
         _fireDirectionVector = HelperUtilities.GetDirectionVectorFromAngle(_fireDirectionAngle);
+    }
+
+    private void PlayAmmoHitEffect()
+    {
+        if(_ammoDetails.ammoHitEffect != null &&
+            _ammoDetails.ammoHitEffect.AmmoHitEffectPrefab != null)
+        {
+            AmmoHitEffect ammoHitEffect = (AmmoHitEffect)PoolManager
+                .Instance.ReuseComponent(_ammoDetails.ammoHitEffect.AmmoHitEffectPrefab,
+                transform.position, Quaternion.identity);
+
+            ammoHitEffect.SetHitEffect(_ammoDetails.ammoHitEffect);
+
+            ammoHitEffect.gameObject.SetActive(true);
+        }
     }
 
     private void DisableAmmo()

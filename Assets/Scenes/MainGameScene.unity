@@ -1440,6 +1440,12 @@ MonoBehaviour:
   - poolSize: 30
     prefab: {fileID: 1842357486167835928, guid: 6b35e01077232ad4c84a976226cb3054, type: 3}
     componentType: WeaponShootEffect
+  - poolSize: 10
+    prefab: {fileID: 2050015170986861436, guid: b88e60f60547a5843b5c305aa03aa270, type: 3}
+    componentType: WeaponShootEffect
+  - poolSize: 30
+    prefab: {fileID: 1842357486167835928, guid: 9e9b8645555134c82b6f7fc3c43c350b, type: 3}
+    componentType: AmmoHitEffect
 --- !u!1 &1154948545
 GameObject:
   m_ObjectHideFlags: 0
@@ -2729,7 +2735,7 @@ Camera:
     x: 0
     y: 0
     width: 1
-    height: 0.9989224
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60

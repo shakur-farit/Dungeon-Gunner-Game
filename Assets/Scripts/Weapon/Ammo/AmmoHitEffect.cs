@@ -1,42 +1,40 @@
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class WeaponShootEffect : MonoBehaviour
+public class AmmoHitEffect : MonoBehaviour
 {
-    private ParticleSystem _shootEffectParticleSystem;
+    private ParticleSystem _ammoHitEffectParticleSystem;
 
     private void Awake()
     {
-        _shootEffectParticleSystem = GetComponent<ParticleSystem>();
+        _ammoHitEffectParticleSystem = GetComponent<ParticleSystem>();
     }
 
-    public void SetShootEffect(WeaponShootEffectSO shootEffect, float aimAngle)
+    public void SetHitEffect(AmmoHitEffectSO ammoHitEffect)
     {
-        SetShootEffectColorGradient(shootEffect.ColorGradient);
+        SetShootEffectColorGradient(ammoHitEffect.ColorGradient);
 
-        SetShootEffectParticleStartingValues(shootEffect.Duration, shootEffect.StartParticleSize,
-            shootEffect.StartParticleSpeed, shootEffect.StartLifetime, shootEffect.EffectGravity,
-            shootEffect.MaxParticleNumber);
+        SetShootEffectParticleStartingValues(ammoHitEffect.Duration, ammoHitEffect.StartParticleSize,
+            ammoHitEffect.StartParticleSpeed, ammoHitEffect.StartLifetime, ammoHitEffect.EffectGravity,
+            ammoHitEffect.MaxParticleNumber);
 
-        SetShooEffectParticaleEmission(shootEffect.EmissionRate, shootEffect.BurstParticleNumber);
+        SetShooEffectParticaleEmission(ammoHitEffect.EmissionRate, ammoHitEffect.BurstParticleNumber);
 
-        SetEmissionRotation(aimAngle);
+        SetShootEffecPaticaleSprite(ammoHitEffect.EffectSprite);
 
-        SetShootEffecPaticaleSprite(shootEffect.EffectSprite);
-
-        SetShootEffectVelocityOverLifetime(shootEffect.VelocityOverLifetimeMin, shootEffect.VelocityOverLifetimeMax);
+        SetShootEffectVelocityOverLifetime(ammoHitEffect.VelocityOverLifetimeMin, ammoHitEffect.VelocityOverLifetimeMax);
     }
 
     private void SetShootEffectColorGradient(Gradient colorGradient)
     {
-        ParticleSystem.ColorOverLifetimeModule colorOverLifetimeModule = _shootEffectParticleSystem.colorOverLifetime;
+        ParticleSystem.ColorOverLifetimeModule colorOverLifetimeModule = _ammoHitEffectParticleSystem.colorOverLifetime;
         colorOverLifetimeModule.color = colorGradient;
     }
 
-    private void SetShootEffectParticleStartingValues(float duration, float startParticleSize, 
+    private void SetShootEffectParticleStartingValues(float duration, float startParticleSize,
         float startParticleSpeed, float startLifetime, float effectGravity, int maxParticleNumber)
     {
-        ParticleSystem.MainModule  mainModule = _shootEffectParticleSystem.main;
+        ParticleSystem.MainModule mainModule = _ammoHitEffectParticleSystem.main;
         mainModule.duration = duration;
         mainModule.startSize = startParticleSize;
         mainModule.startSpeed = startParticleSpeed;
@@ -47,7 +45,7 @@ public class WeaponShootEffect : MonoBehaviour
 
     private void SetShooEffectParticaleEmission(int emissionRate, int burstParticleNumber)
     {
-        ParticleSystem.EmissionModule emissionModule = _shootEffectParticleSystem.emission;
+        ParticleSystem.EmissionModule emissionModule = _ammoHitEffectParticleSystem.emission;
 
         ParticleSystem.Burst burst = new ParticleSystem.Burst(0f, burstParticleNumber);
         emissionModule.SetBurst(0, burst);
@@ -55,23 +53,18 @@ public class WeaponShootEffect : MonoBehaviour
         emissionModule.rateOverTime = emissionRate;
     }
 
-    private void SetEmissionRotation(float aimAngle)
-    {
-        transform.eulerAngles = new Vector3(0f, 0f, aimAngle);
-    }
-
     private void SetShootEffecPaticaleSprite(Sprite effectSprite)
     {
-        ParticleSystem.TextureSheetAnimationModule textureSheetAnimationModule = 
-            _shootEffectParticleSystem.textureSheetAnimation;
+        ParticleSystem.TextureSheetAnimationModule textureSheetAnimationModule =
+            _ammoHitEffectParticleSystem.textureSheetAnimation;
 
         textureSheetAnimationModule.SetSprite(0, effectSprite);
     }
 
     private void SetShootEffectVelocityOverLifetime(Vector3 velocityOverLifetimeMin, Vector3 velocityOverLifetimeMax)
     {
-        ParticleSystem.VelocityOverLifetimeModule velocityOverLifetimeModule = 
-            _shootEffectParticleSystem.velocityOverLifetime;
+        ParticleSystem.VelocityOverLifetimeModule velocityOverLifetimeModule =
+            _ammoHitEffectParticleSystem.velocityOverLifetime;
 
         ParticleSystem.MinMaxCurve minMaxCurveX = new ParticleSystem.MinMaxCurve();
         minMaxCurveX.mode = ParticleSystemCurveMode.TwoConstants;

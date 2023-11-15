@@ -12,6 +12,8 @@ public class AmmoDetailsSO : ScriptableObject
     public Material ammoMaterial;
     public float ammoChargeTime = 0.1f;
     public Material ammoChargeMaterial;
+    [Header("Ammo Hit Effect")]
+    public AmmoHitEffectSO ammoHitEffect;
     [Header("Ammo Base Parameters")]
     public int ammoDamage = 1;
     public float ammoSpeedMin = 20f;
