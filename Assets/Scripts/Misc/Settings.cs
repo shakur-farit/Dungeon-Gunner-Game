@@ -41,6 +41,10 @@ public static class Settings
     // else weapon aim angle (from the weapon shoot position)
     public const float useAimAngleDistance = 3.5f;
 
+    //AStar pathfinding parameters
+    public const int defaultAStarMovementPenalty = 40;
+    public const int prefferedPathAStarMovementPenalty = 1;
+
     //UI Parametrs
     public const float uiAmmoIconSpacing = 4f;
 }

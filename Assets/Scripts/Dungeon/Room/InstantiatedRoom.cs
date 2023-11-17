@@ -15,6 +15,7 @@ public class InstantiatedRoom : MonoBehaviour
     [HideInInspector] public Tilemap collisionTilemap;
     [HideInInspector] public Tilemap minimapTilemap;
     [HideInInspector] public Bounds roomColliderBounds;
+    [HideInInspector] public int[,] aStarMovementPenalty;
 
     private BoxCollider2D boxCollider;
 
@@ -40,6 +41,8 @@ public class InstantiatedRoom : MonoBehaviour
         PopulateTilemapMemberVariables(roomGameObject);
 
         BlockOffUnusedDoorways();
+
+        AddObstaclesAndPrefferedPath();
 
         AddDoorsToRooms();
 
@@ -76,6 +79,37 @@ public class InstantiatedRoom : MonoBehaviour
         frontTilemap = tilemapDictionary["frontTilemap"];
         collisionTilemap = tilemapDictionary["collisionTilemap"];
         minimapTilemap = tilemapDictionary["minimapTilemap"];
+    }
+
+    private void AddObstaclesAndPrefferedPath()
+    {
+        aStarMovementPenalty = new int[room.templateUpperBounds.x - room.templateLowerBounds.x + 1,
+            room.templateUpperBounds.y - room.templateLowerBounds.y + 1];
+
+        for (int x = 0; x < (room.templateUpperBounds.x - room.templateLowerBounds.x + 1); x++)
+        {
+            for (int y = 0; y < (room.templateUpperBounds.y - room.templateLowerBounds.y + 1); y++)
+            {
+                aStarMovementPenalty[x, y] = Settings.defaultAStarMovementPenalty;
+
+                TileBase tile = collisionTilemap.GetTile(new Vector3Int(
+                    x + room.templateLowerBounds.x, y + room.templateLowerBounds.y, 0));
+
+                foreach (TileBase collisionTile in GameResources.Instance.enemyUnwalkableCollisionTileArray)
+                {
+                    if(tile == collisionTile)
+                    {
+                        aStarMovementPenalty[x, y] = 0;
+                        break;
+                    }
+                }
+
+                if(tile == GameResources.Instance.preferredEnemyPathTile)
+                {
+                    aStarMovementPenalty[x, y] = Settings.prefferedPathAStarMovementPenalty;
+                }
+            }
+        }
     }
 
     private void AddDoorsToRooms()
