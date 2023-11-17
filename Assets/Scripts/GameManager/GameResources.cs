@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Tilemaps;
 
 public class GameResources : MonoBehaviour
 {
@@ -26,6 +27,9 @@ public class GameResources : MonoBehaviour
     public Material dimmeMaterial;
     public Material litMaterial;
     public Shader variableLitShader;
+    [Header("Special Tilemap Tiles")]
+    public TileBase[] enemyUnwalkableCollisionTileArray;
+    public TileBase preferredEnemyPathTile;
     [Header("UI")]
     public GameObject ammoIconPrefab;
 
@@ -38,6 +42,8 @@ public class GameResources : MonoBehaviour
         HelperUtilities.ValidateCheckNullValue(this, nameof(litMaterial), litMaterial);
         HelperUtilities.ValidateCheckNullValue(this, nameof(dimmeMaterial), dimmeMaterial);
         HelperUtilities.ValidateCheckNullValue(this, nameof(variableLitShader), variableLitShader);
+        HelperUtilities.ValidateCheckEnumerableValues(this, nameof(enemyUnwalkableCollisionTileArray), enemyUnwalkableCollisionTileArray);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(preferredEnemyPathTile), preferredEnemyPathTile);
         HelperUtilities.ValidateCheckNullValue(this, nameof(ammoIconPrefab), ammoIconPrefab);
     }
 #endif

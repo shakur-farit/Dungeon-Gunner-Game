@@ -1026,6 +1026,7 @@ GameObject:
   m_Component:
   - component: {fileID: 763733755}
   - component: {fileID: 763733756}
+  - component: {fileID: 763733757}
   m_Layer: 0
   m_Name: DungeonBuilder
   m_TagString: Untagged
@@ -1058,6 +1059,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f6bec90ab65646408e321b1941574ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &763733757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763733754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9727872b29e7d4fa59175974e0cbdf1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &839352284
@@ -2735,7 +2748,7 @@ Camera:
     x: 0
     y: 0
     width: 1
-    height: 0.9998239
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
