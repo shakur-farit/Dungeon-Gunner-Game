@@ -196,6 +196,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grimonk_Brown
       objectReference: {fileID: 0}
+    - target: {fileID: 7341277496775108195, guid: 456becf0228246849aaa56ad39ce5478, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 944ecbb1810696b4a8a6781ac1e002a5, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

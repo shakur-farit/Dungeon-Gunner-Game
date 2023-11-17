@@ -168,6 +168,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hedusa_Green
       objectReference: {fileID: 0}
+    - target: {fileID: 7341277496775108195, guid: 456becf0228246849aaa56ad39ce5478, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 19b6ff9fbadc74e479b63068d33eb245, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

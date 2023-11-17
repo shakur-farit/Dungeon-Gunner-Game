@@ -280,6 +280,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Orc_Flesh
       objectReference: {fileID: 0}
+    - target: {fileID: 7341277496775108195, guid: 456becf0228246849aaa56ad39ce5478, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: cf2b002105910e04a8f79c160b4602a0, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

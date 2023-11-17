@@ -268,6 +268,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MudRock_Brown
       objectReference: {fileID: 0}
+    - target: {fileID: 7341277496775108195, guid: 456becf0228246849aaa56ad39ce5478, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 0f372b3c644e5ce4a9d95f7f7f25d99a, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
