@@ -21,7 +21,7 @@ public class PlayerControl : MonoBehaviour
     {
         player = GetComponent<Player>();
 
-        moveSpeed = movementDetails.GetMoveSpeed();
+        moveSpeed = movementDetails.GetMovementSpeed;
     }
 
     private void Start()
