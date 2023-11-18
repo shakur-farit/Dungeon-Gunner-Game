@@ -74,6 +74,8 @@ public class EnemyMovementAI : MonoBehaviour
 
     private IEnumerator MoveEnemyRoutine(Stack<Vector3> movementSteps)
     {
+        Debug.Log("Move Steps = " + movementSteps.Count);
+
         while(movementSteps.Count > 0)
         {
             Vector3 nextPosition = movementSteps.Pop();
@@ -109,7 +111,7 @@ public class EnemyMovementAI : MonoBehaviour
 
         _movementSteps = AStar.BuildPath(currentRoom, enemyGridPosition, playerGridPosition);
 
-        if( _moveEnemyRoutine != null )
+        if( _movementSteps != null )
         {
             _movementSteps.Pop();
             return;
@@ -128,8 +130,6 @@ public class EnemyMovementAI : MonoBehaviour
         Vector2Int adjustedPlayerCellPosition =
             new Vector2Int(playerCellPosition.x - currentRoom.templateLowerBounds.x,
             playerCellPosition.y - currentRoom.templateLowerBounds.y);
-
-        Debug.Log(adjustedPlayerCellPosition.x + " / " + adjustedPlayerCellPosition.y);
 
         int obstacle = currentRoom.instantiatedRoom
             .aStarMovementPenalty
