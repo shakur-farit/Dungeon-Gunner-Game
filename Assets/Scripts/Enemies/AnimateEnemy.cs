@@ -76,6 +76,8 @@ public class AnimateEnemy : MonoBehaviour
     {
         InitialiseAnimationParametrs();
 
+        Debug.Log(aimDirection);
+
         switch (aimDirection)
         {
             case AimDirection.Up:
