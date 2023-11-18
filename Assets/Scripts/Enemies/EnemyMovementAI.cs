@@ -90,8 +90,6 @@ public class EnemyMovementAI : MonoBehaviour
                     transform.position, MovementSpeed,
                     (nextPosition - transform.position).normalized, false);
 
-                Debug.Log(distanceOfNextPosition);
-
                 yield return _waitForFixedUpdate;
             }
 
