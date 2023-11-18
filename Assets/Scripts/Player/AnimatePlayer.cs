@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Player))]
@@ -69,26 +70,20 @@ public class AnimatePlayer : MonoBehaviour
 
     private void SetAimWeaponAnimationParametrs(AimDirection aimDirection)
     {
-        switch (aimDirection)
+        Dictionary<AimDirection, int> aimMapping = new Dictionary<AimDirection, int>
         {
-            case AimDirection.Up:
-                player.animator.SetBool(Settings.aimUp, true);
-                break;
-            case AimDirection.UpLeft:
-                player.animator.SetBool(Settings.aimUpLeft, true);
-                break;
-            case AimDirection.UpRight:
-                player.animator.SetBool(Settings.aimUpRight, true);
-                break;
-            case AimDirection.Left:
-                player.animator.SetBool(Settings.aimLeft, true);
-                break;
-            case AimDirection.Right:
-                player.animator.SetBool(Settings.aimRight, true);
-                break;
-            case AimDirection.Down:
-                player.animator.SetBool(Settings.aimDown, true);
-                break;
+            { AimDirection.Up, Settings.aimUp },
+            { AimDirection.UpLeft, Settings.aimUpLeft },
+            { AimDirection.UpRight, Settings.aimUpRight },
+            { AimDirection.Left, Settings.aimLeft },
+            { AimDirection.Right, Settings.aimRight },
+            { AimDirection.Down, Settings.aimDown }
+        };
+
+        int aimParam;
+        if (aimMapping.TryGetValue(aimDirection, out aimParam))
+        {
+            player.animator.SetBool(aimParam, true);
         }
     }
 

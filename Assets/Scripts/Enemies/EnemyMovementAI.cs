@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,15 +42,15 @@ public class EnemyMovementAI : MonoBehaviour
         _currentEnemyPathRebuildCooldown -= Time.deltaTime;
 
         float distanceToPlayer = (transform.position - GameManager.Instance.GetPlayer.GetPlayerPosition).magnitude;
-        if(!_chasePlayer && distanceToPlayer < _enemy.EnemyDetails.ChaseDistance)
+        if (!_chasePlayer && distanceToPlayer < _enemy.EnemyDetails.ChaseDistance)
             _chasePlayer = true;
 
         if (!_chasePlayer)
             return;
 
-        float distanceToRebuildPath = 
+        float distanceToRebuildPath =
             (_playerReferencePosition - GameManager.Instance.GetPlayer.GetPlayerPosition).magnitude;
-        if(_currentEnemyPathRebuildCooldown <= 0f || distanceToRebuildPath > Settings.playerMoveDistanceToRebuildPath)
+        if (_currentEnemyPathRebuildCooldown <= 0f || distanceToRebuildPath > Settings.playerMoveDistanceToRebuildPath)
         {
             _currentEnemyPathRebuildCooldown = Settings.enemyPathRebuildCooldown;
 
@@ -68,7 +67,7 @@ public class EnemyMovementAI : MonoBehaviour
                 StopCoroutine(_moveEnemyRoutine);
             }
 
-            _moveEnemyRoutine = StartCoroutine(MoveEnemyRoutine(_movementSteps));          
+            _moveEnemyRoutine = StartCoroutine(MoveEnemyRoutine(_movementSteps));
         }
     }
 
@@ -76,14 +75,11 @@ public class EnemyMovementAI : MonoBehaviour
     {
         Debug.Log("Move Steps = " + movementSteps.Count);
 
-        while(movementSteps.Count > 0)
+        while (movementSteps.Count > 0)
         {
             Vector3 nextPosition = movementSteps.Pop();
 
-            float distanceOfNextPosition =
-                (nextPosition - transform.position).magnitude;
-
-            while(distanceOfNextPosition > 0.2f)
+            while ((nextPosition - transform.position).magnitude > 0.2f)
             {
                 _enemy.EnemyMovementToPositionEvent
                     .CallMovementToPositionEvent(nextPosition,
@@ -111,7 +107,7 @@ public class EnemyMovementAI : MonoBehaviour
 
         _movementSteps = AStar.BuildPath(currentRoom, enemyGridPosition, playerGridPosition);
 
-        if( _movementSteps != null )
+        if (_movementSteps != null)
         {
             _movementSteps.Pop();
             return;

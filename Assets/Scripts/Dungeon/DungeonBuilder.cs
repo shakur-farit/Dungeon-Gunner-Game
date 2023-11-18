@@ -177,24 +177,38 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
         if (roomNode.roomNodeType.isCorridor)
         {
-            switch (doorwayParent.orientation)
+            Dictionary<Orientation, RoomTemplateSO> orientationToRoomTemplate = new Dictionary<Orientation, RoomTemplateSO>()
             {
-                case Orientation.North:
-                case Orientation.South:
-                    roomTemplate = GetRandomroomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorNS));
-                    break;
+                { Orientation.North, GetRandomroomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorNS)) },
+                { Orientation.South, GetRandomroomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorNS)) },
+                { Orientation.West, GetRandomroomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorEW)) },
+                { Orientation.East, GetRandomroomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorEW)) },
+                { Orientation.None, null }
+            };
 
-                case Orientation.West:
-                case Orientation.East:
-                    roomTemplate = GetRandomroomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorEW));
-                    break;
-
-                case Orientation.None:
-                    break;
-
-                default:
-                    break;
+            if (orientationToRoomTemplate.ContainsKey(doorwayParent.orientation))
+            {
+                roomTemplate = orientationToRoomTemplate[doorwayParent.orientation];
             }
+
+            //switch (doorwayParent.orientation)
+            //{
+            //    case Orientation.North:
+            //    case Orientation.South:
+            //        roomTemplate = GetRandomroomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorNS));
+            //        break;
+
+            //    case Orientation.West:
+            //    case Orientation.East:
+            //        roomTemplate = GetRandomroomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorEW));
+            //        break;
+
+            //    case Orientation.None:
+            //        break;
+
+            //    default:
+            //        break;
+            //}
         }
         else
         {

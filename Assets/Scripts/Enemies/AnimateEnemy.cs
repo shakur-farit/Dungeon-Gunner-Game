@@ -76,28 +76,20 @@ public class AnimateEnemy : MonoBehaviour
     {
         InitialiseAnimationParametrs();
 
-        Debug.Log(aimDirection);
-
-        switch (aimDirection)
+        Dictionary<AimDirection, int> aimMapping = new Dictionary<AimDirection, int>
         {
-            case AimDirection.Up:
-                _enemy.EnemyAnimator.SetBool(Settings.aimUp, true);
-                break;
-            case AimDirection.UpLeft:
-                _enemy.EnemyAnimator.SetBool(Settings.aimUpLeft, true);
-                break;
-            case AimDirection.UpRight:
-                _enemy.EnemyAnimator.SetBool(Settings.aimUpRight, true);
-                break;
-            case AimDirection.Left:
-                _enemy.EnemyAnimator.SetBool(Settings.aimLeft, true);
-                break;
-            case AimDirection.Right:
-                _enemy.EnemyAnimator.SetBool(Settings.aimRight, true);
-                break;
-            case AimDirection.Down:
-                _enemy.EnemyAnimator.SetBool(Settings.aimDown, true);
-                break;
+            { AimDirection.Up, Settings.aimUp },
+            { AimDirection.UpLeft, Settings.aimUpLeft },
+            { AimDirection.UpRight, Settings.aimUpRight },
+            { AimDirection.Left, Settings.aimLeft },
+            { AimDirection.Right, Settings.aimRight },
+            { AimDirection.Down, Settings.aimDown }
+        };
+
+        int aimParam;
+        if (aimMapping.TryGetValue(aimDirection, out aimParam))
+        {
+            _enemy.EnemyAnimator.SetBool(aimParam, true);
         }
     }
 }
