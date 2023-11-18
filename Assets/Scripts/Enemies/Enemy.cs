@@ -7,21 +7,33 @@ using UnityEngine.Rendering;
 [RequireComponent (typeof(Animator))]
 [RequireComponent (typeof(CircleCollider2D))]
 [RequireComponent (typeof(PolygonCollider2D))]
+[RequireComponent(typeof(EnemyMovementAI))]
+[RequireComponent(typeof(MovementToPositionEvent))]
+[RequireComponent(typeof(MovementToPosition))]
+[RequireComponent(typeof(IdleEvent))]
+[RequireComponent(typeof(Idle))]
 [DisallowMultipleComponent]
 public class Enemy : MonoBehaviour
 {
-    [HideInInspector] public EnemyDetailsSO EnemyDetails;
+    public EnemyDetailsSO EnemyDetails;
+
     [HideInInspector] public SpriteRenderer[] SpriteRendererArray;
     [HideInInspector] public Animator EnemyAnimator;
+    [HideInInspector] public MovementToPositionEvent EnemyMovementToPositionEvent;
+    [HideInInspector] public IdleEvent EnemyIdleEvent;
 
     private CircleCollider2D _circleCollider2D;
     private PolygonCollider2D _polygonCollider2D;
+    private EnemyMovementAI _enemyMovementAI;
 
     private void Awake()
     {
         _circleCollider2D = GetComponent<CircleCollider2D>();
         _polygonCollider2D = GetComponent<PolygonCollider2D>();
+        _enemyMovementAI = GetComponent<EnemyMovementAI>();
         SpriteRendererArray = GetComponentsInChildren<SpriteRenderer>();
         EnemyAnimator = GetComponent<Animator>();
+        EnemyMovementToPositionEvent = GetComponent<MovementToPositionEvent>();
+        EnemyIdleEvent = GetComponent<IdleEvent>();
     }
 }

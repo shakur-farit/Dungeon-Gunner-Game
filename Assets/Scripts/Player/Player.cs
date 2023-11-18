@@ -49,6 +49,8 @@ public class Player : MonoBehaviour
 
     public List<Weapon> weaponList = new List<Weapon>();
 
+    public Vector3 GetPlayerPosition => transform.position;
+
     private void Awake()
     {
         health = GetComponent<Health>();

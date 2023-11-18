@@ -3,25 +3,28 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MovementDetails_", menuName = "Scriptable Objects/Movement/Movement Details")]
 public class MovementDetailsSO : ScriptableObject
 {
-    public float minMoveSpeed = 8f;
-    public float maxMoveSpeed = 8f;
+    public float minMovementSpeed = 8f;
+    public float maxMovementSpeed = 8f;
     public float rollSpeed;
     public float rollDistance;
     public float rollCooldownTime;
 
-    public float GetMoveSpeed()
+    public float GetMovementSpeed
     {
-        if (minMoveSpeed == maxMoveSpeed)
-            return minMoveSpeed;
-        else
-            return Random.Range(minMoveSpeed, maxMoveSpeed);
+        get 
+        {
+            if (minMovementSpeed == maxMovementSpeed)
+                return minMovementSpeed;
+            else
+                return Random.Range(minMovementSpeed, maxMovementSpeed);
+        }
     }
 
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        HelperUtilities.ValidateCheckPositiveRange(this, nameof(minMoveSpeed), minMoveSpeed,
-            nameof(maxMoveSpeed), maxMoveSpeed, false);
+        HelperUtilities.ValidateCheckPositiveRange(this, nameof(minMovementSpeed), minMovementSpeed,
+            nameof(maxMovementSpeed), maxMovementSpeed, false);
 
         if (rollSpeed != 0f || rollDistance != 0 || rollCooldownTime != 0)
         {
