@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4866109300778735315, guid: 456becf0228246849aaa56ad39ce5478, type: 3}
+      propertyPath: EnemyDetails
+      value: 
+      objectReference: {fileID: 11400000, guid: ddf04d716f276274d8bba881b52e8c08, type: 2}
     - target: {fileID: -4401429623254616581, guid: 456becf0228246849aaa56ad39ce5478, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 3
@@ -156,6 +160,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: c584c390b9e9e4e4faab37cd1bfce8b3, type: 2}
+    - target: {fileID: 7600018518745521266, guid: 456becf0228246849aaa56ad39ce5478, type: 3}
+      propertyPath: _movementDetails
+      value: 
+      objectReference: {fileID: 11400000, guid: 121d32c6999694c7f8f7bdfc8d088c9a, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

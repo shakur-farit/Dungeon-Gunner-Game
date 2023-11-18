@@ -86,6 +86,9 @@ public class InstantiatedRoom : MonoBehaviour
         aStarMovementPenalty = new int[room.templateUpperBounds.x - room.templateLowerBounds.x + 1,
             room.templateUpperBounds.y - room.templateLowerBounds.y + 1];
 
+        Debug.Log(room.id + " / " + (room.templateUpperBounds.x - room.templateLowerBounds.x + 1) + " , " +
+            (room.templateUpperBounds.y - room.templateLowerBounds.y + 1));
+
         for (int x = 0; x < (room.templateUpperBounds.x - room.templateLowerBounds.x + 1); x++)
         {
             for (int y = 0; y < (room.templateUpperBounds.y - room.templateLowerBounds.y + 1); y++)

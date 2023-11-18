@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4866109300778735315, guid: 456becf0228246849aaa56ad39ce5478, type: 3}
+      propertyPath: EnemyDetails
+      value: 
+      objectReference: {fileID: 11400000, guid: d3f2ff9bb07fcb241a95e2fe1f9974a5, type: 2}
     - target: {fileID: -3680149142504316394, guid: 456becf0228246849aaa56ad39ce5478, type: 3}
       propertyPath: m_Color.b
       value: 0.5801887
@@ -124,6 +128,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: a0ee566a387dcf744a5564ef5baa059e, type: 2}
+    - target: {fileID: 7600018518745521266, guid: 456becf0228246849aaa56ad39ce5478, type: 3}
+      propertyPath: _movementDetails
+      value: 
+      objectReference: {fileID: 11400000, guid: d37a716282ffc48ac9d7a69da313c321, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
