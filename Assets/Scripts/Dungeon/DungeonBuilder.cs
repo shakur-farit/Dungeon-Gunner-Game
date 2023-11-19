@@ -74,9 +74,12 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         foreach (var roomTemplate in roomTemplateList)
         {
             if (!roomTemplateDictionary.ContainsKey(roomTemplate.guid))
+            {
                 roomTemplateDictionary.Add(roomTemplate.guid, roomTemplate);
-            else
-                Debug.Log("Dublicate Room Template Key In " + roomTemplateList);               
+                continue;
+            }
+            
+            Debug.Log("Dublicate Room Template Key In " + roomTemplateList);               
         }
     }
 
@@ -86,15 +89,13 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
         RoomNodeSO entranceNode = roomNodeGraph.GetRoomNode(roomNodeTypeList.list.Find(x => x.isEntrance));
 
-        if (entranceNode != null)
-        {
-            openRoomNodeQueue.Enqueue(entranceNode);
-        }
-        else
+        if (entranceNode == null)
         {
             Debug.Log("No Entrance Node");
             return false;
         }
+
+        openRoomNodeQueue.Enqueue(entranceNode);
 
         bool noRoomOverlaps = true;
 
@@ -102,8 +103,8 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
         if (openRoomNodeQueue.Count == 0 && noRoomOverlaps)
             return true;
-        else
-            return false;
+        
+        return false;
     }
 
     private bool ProccessRoomsInOpenRoomNodeQueue(RoomNodeGraphSO roomNodeGraph, 
@@ -127,13 +128,14 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
                 room.isPositioned = true;
 
                 dungeonBuilderRoomDictionary.Add(room.id, room);
-            }
-            else
-            {
-                Room parentRoom = dungeonBuilderRoomDictionary[roomNode.parentRoomNodeIDList[0]];
 
-                noRoomOverlaps = CanPlaceRoomWithNoOverlaps(roomNode, parentRoom);
+                continue;
             }
+           
+            Room parentRoom = dungeonBuilderRoomDictionary[roomNode.parentRoomNodeIDList[0]];
+
+            noRoomOverlaps = CanPlaceRoomWithNoOverlaps(roomNode, parentRoom);
+           
         }
 
         return noRoomOverlaps;
@@ -165,11 +167,12 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
                 room.isPositioned = true;
 
                 dungeonBuilderRoomDictionary.Add(room.id, room);
+
+                continue;
             }
-            else
-            {
-                roomOverlaps = true;
-            }
+            
+            roomOverlaps = true;
+            
         }
 
         return true;
@@ -179,25 +182,24 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
     {
         RoomTemplateSO roomTemplate = null;
 
-        if (roomNode.roomNodeType.isCorridor)
-        {
-            Dictionary<Orientation, RoomTemplateSO> orientationToRoomTemplate = new Dictionary<Orientation, RoomTemplateSO>()
-            {
-                { Orientation.North, GetRandomRoomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorNS)) },
-                { Orientation.South, GetRandomRoomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorNS)) },
-                { Orientation.West, GetRandomRoomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorEW)) },
-                { Orientation.East, GetRandomRoomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorEW)) },
-                { Orientation.None, null }
-            };
-
-            if (orientationToRoomTemplate.ContainsKey(doorwayParent.orientation))
-            {
-                roomTemplate = orientationToRoomTemplate[doorwayParent.orientation];
-            }
-        }
-        else
+        if (!roomNode.roomNodeType.isCorridor)
         {
             roomTemplate = GetRandomRoomTemplate(roomNode.roomNodeType);
+            return roomTemplate;
+        }
+
+        Dictionary<Orientation, RoomTemplateSO> orientationToRoomTemplate = new Dictionary<Orientation, RoomTemplateSO>()
+        {
+            { Orientation.North, GetRandomRoomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorNS)) },
+            { Orientation.South, GetRandomRoomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorNS)) },
+            { Orientation.West, GetRandomRoomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorEW)) },
+            { Orientation.East, GetRandomRoomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorEW)) },
+            { Orientation.None, null }
+        };
+
+        if (orientationToRoomTemplate.ContainsKey(doorwayParent.orientation))
+        {
+            roomTemplate = orientationToRoomTemplate[doorwayParent.orientation];
         }
 
         return roomTemplate;
@@ -357,12 +359,12 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
             room.isPreviouslyVisited = true;
 
             GameManager.Instance.SetCurrentRoom = room;
-        }
-        else
-        {
-            room.parentRoomID = roomNode.parentRoomNodeIDList[0];
-        }
 
+            return room;
+        }
+        
+        room.parentRoomID = roomNode.parentRoomNodeIDList[0];
+        
         return room;
     }
 

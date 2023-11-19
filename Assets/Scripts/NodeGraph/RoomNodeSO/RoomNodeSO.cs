@@ -108,9 +108,15 @@ public class RoomNodeSO : ScriptableObject
     private void ProcessMouseDownEvent(Event currentEvent)
     {
         if (currentEvent.button == 0)
+        {
             ProcessLeftClickDownEvent();
-        else if (currentEvent.button == 1)
+            return;
+        }
+
+        if (currentEvent.button == 1)
+        {
             ProcessRightClickDownEvent(currentEvent);
+        }
     }
 
     private void ProcessLeftClickDownEvent()
@@ -161,8 +167,8 @@ public class RoomNodeSO : ScriptableObject
     {
         if (IsChildRoomValid(childID))
         {
-        childRoomNodeIDList.Add(childID);
-        return true;
+            childRoomNodeIDList.Add(childID);
+            return true;
         }
 
         return false;
@@ -228,6 +234,7 @@ public class RoomNodeSO : ScriptableObject
             childRoomNodeIDList.Remove(childID);
             return true;
         }
+
         return false;
     }
 
@@ -238,6 +245,7 @@ public class RoomNodeSO : ScriptableObject
             parentRoomNodeIDList.Remove(childID);
             return true;
         }
+
         return false;
     }
 #endif

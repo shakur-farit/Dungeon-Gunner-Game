@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -36,12 +34,11 @@ public class AnimateEnemy : MonoBehaviour
         if(_enemy.transform.position.x < GameManager.Instance.GetPlayer.transform.position.x)
         {
             SetAimWeaponAnimationParametry(AimDirection.Right);
-        }
-        else
-        {
-            SetAimWeaponAnimationParametry(AimDirection.Left);
+            SetMovementAnimationParametrs();
+            return;
         }
 
+        SetAimWeaponAnimationParametry(AimDirection.Left);        
         SetMovementAnimationParametrs();
     }
 
@@ -86,8 +83,8 @@ public class AnimateEnemy : MonoBehaviour
             { AimDirection.Down, Settings.aimDown }
         };
 
-        int aimParam;
-        if (aimMapping.TryGetValue(aimDirection, out aimParam))
+        //int aimParam;
+        if (aimMapping.TryGetValue(aimDirection, out int aimParam))
         {
             _enemy.EnemyAnimator.SetBool(aimParam, true);
         }

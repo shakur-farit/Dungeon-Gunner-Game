@@ -104,11 +104,10 @@ public static class HelperUtilities
             {
                 Debug.Log(filedName + " has null values in object " + thisObject.name.ToString());
                 error = true;
+                continue;
             }
-            else
-            {
-                count++;
-            }
+
+            count++;
         }
 
         if(count == 0)
@@ -124,21 +123,18 @@ public static class HelperUtilities
     {
         bool error = false;
 
-        if (isZeroAllowed)
+        if (isZeroAllowed && valueToCheck < 0)
         {
-            if(valueToCheck < 0)
-            {
-                Debug.Log(fieldName + " must contain a positive value or zero in object " + thisObject.name.ToString());
-                error = true;
-            }
+            Debug.Log(fieldName + " must contain a positive value or zero in object " + thisObject.name.ToString());
+            error = true;
+            return error;
         }
-        else
+        
+        if(valueToCheck <= 0)
         {
-            if(valueToCheck <= 0)
-            {
-                Debug.Log(fieldName + " must contain a positive value in object " + thisObject.name.ToString());
-                error = true;
-            }
+            Debug.Log(fieldName + " must contain a positive value in object " + thisObject.name.ToString());
+            error = true;
+            return error;
         }
 
         return error;
@@ -148,21 +144,19 @@ public static class HelperUtilities
     {
         bool error = false;
 
-        if (isZeroAllowed)
+        if (isZeroAllowed && valueToCheck < 0)
         {
-            if (valueToCheck < 0)
-            {
-                Debug.Log(fieldName + " must contain a positive value or zero in object " + thisObject.name.ToString());
-                error = true;
-            }
+            Debug.Log(fieldName + " must contain a positive value or zero in object " + thisObject.name.ToString());
+            error = true;
+            return error;
+            
         }
-        else
+
+        if (valueToCheck <= 0)
         {
-            if (valueToCheck <= 0)
-            {
-                Debug.Log(fieldName + " must contain a positive value in object " + thisObject.name.ToString());
-                error = true;
-            }
+            Debug.Log(fieldName + " must contain a positive value in object " + thisObject.name.ToString());
+            error = true;
+            return error;
         }
 
         return error;
@@ -182,6 +176,7 @@ public static class HelperUtilities
 
         if (ValidateCheckPositiveValue(thisObject, fieldNameMinimum, valueToCheckMinimum, isZeroAllowed))
             error = true;
+
         if(ValidateCheckPositiveValue(thisObject,fieldNameMaximum, valueToCheckMaximum, isZeroAllowed))
             error = true;
 

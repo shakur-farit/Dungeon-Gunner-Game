@@ -35,12 +35,10 @@ public class SoundEffectManager : SingletonMonobehaviour<SoundEffectManager>
         {
             GameResources.Instance.soundMasterMixerGroup.audioMixer.
                 SetFloat("soundsVolume", muteDecibels);
+            return;
         }
-        else
-        {
-            GameResources.Instance.soundMasterMixerGroup.audioMixer.
-                SetFloat("soundsVolume",
-                HelperUtilities.LinearToDecibles(soundsVolume));
-        }
+
+        GameResources.Instance.soundMasterMixerGroup.audioMixer
+            .SetFloat("soundsVolume", HelperUtilities.LinearToDecibles(soundsVolume));
     }
 }

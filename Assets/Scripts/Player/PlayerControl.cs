@@ -78,13 +78,20 @@ public class PlayerControl : MonoBehaviour
 
         if (direction != Vector2.zero)
         {
-            if(!rightMouseButton)
+            if (!rightMouseButton)
+            {
                 player.movementByVelocityEvent.CallMovementbyVelocityEvent(direction, moveSpeed);
-            else if(playerRollColldownTimer <= 0f)
+                return;
+            }
+
+            if (playerRollColldownTimer <= 0f)
+            {
                 PlayerRoll((Vector3)direction);
+                return;
+            }
         }
-        else
-            player.idleEvent.CallIdleEvent();
+        
+        player.idleEvent.CallIdleEvent();
     }
 
     private void PlayerRoll(Vector3 direction)

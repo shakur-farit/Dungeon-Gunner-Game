@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -146,7 +144,7 @@ public class Test : MonoBehaviour
 
     private bool IsPositionWithinBounds(Vector3Int startGridPosition)
     {
-        if(startGridPosition.x < _instantiatedRoom.room.templateLowerBounds.x||startGridPosition.x > _instantiatedRoom.room.templateUpperBounds.x ||
+        if(startGridPosition.x < _instantiatedRoom.room.templateLowerBounds.x || startGridPosition.x > _instantiatedRoom.room.templateUpperBounds.x ||
             startGridPosition.y < _instantiatedRoom.room.templateLowerBounds.y || startGridPosition.y > _instantiatedRoom.room.templateUpperBounds.y)
         {
             return false;

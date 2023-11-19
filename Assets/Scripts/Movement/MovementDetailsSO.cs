@@ -15,8 +15,8 @@ public class MovementDetailsSO : ScriptableObject
         {
             if (minMovementSpeed == maxMovementSpeed)
                 return minMovementSpeed;
-            else
-                return Random.Range(minMovementSpeed, maxMovementSpeed);
+            
+            return Random.Range(minMovementSpeed, maxMovementSpeed);
         }
     }
 

@@ -140,9 +140,12 @@ public class RoomNodeGraphEditor : EditorWindow
             currentRoomNode = IsMouseOverRoomNode(currentEvent);
 
         if (currentRoomNode == null || currentRoomNodeGraph.roomNodeToDrawLineFrom != null)
+        {
             ProcessRoomNodeGraphEvents(currentEvent);
-        else
-            currentRoomNode.ProcessEvent(currentEvent);
+            return;
+        }
+        
+        currentRoomNode.ProcessEvent(currentEvent);
             
     }
 
@@ -181,8 +184,12 @@ public class RoomNodeGraphEditor : EditorWindow
     private void ProcessMouseDownEvent(Event currentEvent)
     {
         if (currentEvent.button == 1)
+        {
             ShowContextMenu(currentEvent.mousePosition);
-        else if(currentEvent.button == 0)
+            return;
+        }
+
+        if(currentEvent.button == 0)
         {
             ClearLineDrag();
             ClearAllSelectedRoomNode();
@@ -331,9 +338,15 @@ public class RoomNodeGraphEditor : EditorWindow
     private void ProcessMouseDragEvent(Event currentEvent)
     {
         if (currentEvent.button == 1)
+        {
             ProcessRightMouseDragEvent(currentEvent);
-        else if (currentEvent.button == 0)
+            return;
+        }
+
+        if (currentEvent.button == 0)
+        {
             ProcessLeftMouseDragEvent(currentEvent.delta);
+        }
     }
 
     private void ProcessRightMouseDragEvent(Event currentEvent)
@@ -422,9 +435,12 @@ public class RoomNodeGraphEditor : EditorWindow
         foreach (RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
         {
             if (roomNode.isSelected)
+            {
                 roomNode.Draw(roomNodeSelectedStyle);
-            else
-                roomNode.Draw(roomNodeStyle);
+                continue;
+            }
+            
+            roomNode.Draw(roomNodeStyle);
         }
 
         GUI.changed = true;

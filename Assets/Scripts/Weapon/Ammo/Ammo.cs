@@ -27,7 +27,8 @@ public class Ammo : MonoBehaviour, IFireable
             _ammoChargeTimer -= Time.deltaTime;
             return;
         }
-        else if (!_isAmmoMaterialSet)
+
+        if (!_isAmmoMaterialSet)
         {
             SetAmmoMaterial(_ammoDetails.ammoMaterial);
             _isAmmoMaterialSet = true;

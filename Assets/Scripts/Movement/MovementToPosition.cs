@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 [RequireComponent (typeof(Rigidbody2D))]
@@ -6,23 +5,23 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class MovementToPosition : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    private MovementToPositionEvent movementToPositionEvent;
+    private Rigidbody2D _rigidbody;
+    private MovementToPositionEvent _movementToPositionEvent;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        movementToPositionEvent = GetComponent<MovementToPositionEvent>();
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _movementToPositionEvent = GetComponent<MovementToPositionEvent>();
     }
 
     private void OnEnable()
     {
-        movementToPositionEvent.OnMovementToPosition += MovementRoPositionEvent_OnMovementToPosition;
+        _movementToPositionEvent.OnMovementToPosition += MovementRoPositionEvent_OnMovementToPosition;
     }
 
     private void OnDisable()
     {
-        movementToPositionEvent.OnMovementToPosition -= MovementRoPositionEvent_OnMovementToPosition;
+        _movementToPositionEvent.OnMovementToPosition -= MovementRoPositionEvent_OnMovementToPosition;
     }
 
     private void MovementRoPositionEvent_OnMovementToPosition(MovementToPositionEvent movementToPositionEvent,
@@ -36,6 +35,6 @@ public class MovementToPosition : MonoBehaviour
     {
         Vector2 unitVector = Vector3.Normalize(movePosition - currentPosition);
 
-        rb.MovePosition(rb.position + (unitVector * moveSpeed * Time.fixedDeltaTime));
+        _rigidbody.MovePosition(_rigidbody.position + (unitVector * moveSpeed * Time.fixedDeltaTime));
     }
 }

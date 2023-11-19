@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "SoundsEffect_", menuName = "Scriptable Objects/Sounds/Sound Effect")]
