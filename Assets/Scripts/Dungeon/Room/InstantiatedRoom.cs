@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -184,20 +185,19 @@ public class InstantiatedRoom : MonoBehaviour
 
     private void BlockADoorwayOnTilemapLayer(Tilemap tilemap, Doorway doorway)
     {
-        switch (doorway.orientation)
+        Dictionary<Orientation, Action<Tilemap, Doorway>> orientationToBlockMethod = 
+            new Dictionary<Orientation, Action<Tilemap, Doorway>>
         {
-            case Orientation.North:
-            case Orientation.South:
-                BlockDoorwayHorizontally(tilemap, doorway);
-                break;
+            { Orientation.North, BlockDoorwayHorizontally },
+            { Orientation.South, BlockDoorwayHorizontally },
+            { Orientation.West, BlockDoorwayVertically },
+            { Orientation.East, BlockDoorwayVertically },
 
-            case Orientation.West:
-            case Orientation.East:
-                BlockDoorwayVertically(tilemap, doorway);
-                break;
+        };
 
-            case Orientation.None:
-                break;
+        if (orientationToBlockMethod.TryGetValue(doorway.orientation, out var blockMethod))
+        {
+            blockMethod(tilemap, doorway);
         }
     }
 

@@ -13,7 +13,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
     private void OnEnable()
     {
-        GameResources.Instance.dimmeMaterial.SetFloat("Alpha_Slider", 0f);
+        GameResources.Instance.dimmeMaterial.SetFloat("Alpha_Slider", 1f);
     }
 
     private void OnDisable()
@@ -87,7 +87,9 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         RoomNodeSO entranceNode = roomNodeGraph.GetRoomNode(roomNodeTypeList.list.Find(x => x.isEntrance));
 
         if (entranceNode != null)
+        {
             openRoomNodeQueue.Enqueue(entranceNode);
+        }
         else
         {
             Debug.Log("No Entrance Node");
@@ -118,7 +120,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
             if (roomNode.roomNodeType.isEntrance)
             {
-                RoomTemplateSO roomTemplate = GetRandomroomTemplate(roomNode.roomNodeType);
+                RoomTemplateSO roomTemplate = GetRandomRoomTemplate(roomNode.roomNodeType);
 
                 Room room = CreateRoomFromRoomTemplate(roomTemplate, roomNode);
 
@@ -156,7 +158,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
             Room room = CreateRoomFromRoomTemplate(roomTemplate, roomNode);
 
-            if(PlaceTheRoom(parentRoom, doorwayParent, room))
+            if (PlaceTheRoom(parentRoom, doorwayParent, room))
             {
                 roomOverlaps = false;
 
@@ -165,7 +167,9 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
                 dungeonBuilderRoomDictionary.Add(room.id, room);
             }
             else
+            {
                 roomOverlaps = true;
+            }
         }
 
         return true;
@@ -179,10 +183,10 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         {
             Dictionary<Orientation, RoomTemplateSO> orientationToRoomTemplate = new Dictionary<Orientation, RoomTemplateSO>()
             {
-                { Orientation.North, GetRandomroomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorNS)) },
-                { Orientation.South, GetRandomroomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorNS)) },
-                { Orientation.West, GetRandomroomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorEW)) },
-                { Orientation.East, GetRandomroomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorEW)) },
+                { Orientation.North, GetRandomRoomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorNS)) },
+                { Orientation.South, GetRandomRoomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorNS)) },
+                { Orientation.West, GetRandomRoomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorEW)) },
+                { Orientation.East, GetRandomRoomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorEW)) },
                 { Orientation.None, null }
             };
 
@@ -190,29 +194,10 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
             {
                 roomTemplate = orientationToRoomTemplate[doorwayParent.orientation];
             }
-
-            //switch (doorwayParent.orientation)
-            //{
-            //    case Orientation.North:
-            //    case Orientation.South:
-            //        roomTemplate = GetRandomroomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorNS));
-            //        break;
-
-            //    case Orientation.West:
-            //    case Orientation.East:
-            //        roomTemplate = GetRandomroomTemplate(roomNodeTypeList.list.Find(x => x.isCorridorEW));
-            //        break;
-
-            //    case Orientation.None:
-            //        break;
-
-            //    default:
-            //        break;
-            //}
         }
         else
         {
-            roomTemplate = GetRandomroomTemplate(roomNode.roomNodeType);
+            roomTemplate = GetRandomRoomTemplate(roomNode.roomNodeType);
         }
 
         return roomTemplate;
@@ -232,29 +217,16 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         Vector2Int parentDoorwayPosition =
             parentRoom.lowerBounds + doorwayParent.position - parentRoom.templateLowerBounds;
 
-        Vector2Int adjustment = Vector2Int.zero;
-
-        switch (doorway.orientation)
+        Dictionary<Orientation, Vector2Int> orientationToAdjustment = new Dictionary<Orientation, Vector2Int>
         {
-            case Orientation.North:
-                adjustment = new Vector2Int(0, -1);
-                break;
+            { Orientation.North, new Vector2Int(0, -1) },
+            { Orientation.East, new Vector2Int(-1, 0) },
+            { Orientation.South, new Vector2Int(0, 1) },
+            { Orientation.West, new Vector2Int(1, 0) },
+        };
 
-            case Orientation.East:
-                adjustment = new Vector2Int(-1, 0);
-                break;
-
-            case Orientation.South:
-                adjustment = new Vector2Int(0, 1);
-                break;
-
-            case Orientation.West:
-                adjustment = new Vector2Int(1, 0);
-                break;
-
-            default:
-                break;
-        }
+        Vector2Int adjustment = orientationToAdjustment.TryGetValue(doorway.orientation, out var value) ? value :
+            Vector2Int.zero;
 
         room.lowerBounds = parentDoorwayPosition + adjustment + room.templateLowerBounds - doorway.position;
         room.upperBounds = room.lowerBounds + room.templateUpperBounds - room.templateLowerBounds;
@@ -278,20 +250,20 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
     private Doorway GetOppositeDoorway(Doorway doorwayParent, List<Doorway> doorwayList)
     {
+        Dictionary<Orientation, Orientation> oppositeOrientation = new Dictionary<Orientation, Orientation>
+        {
+            { Orientation.East, Orientation.West },
+            { Orientation.West, Orientation.East },
+            { Orientation.North, Orientation.South },
+            { Orientation.South, Orientation.North }
+        };
+
         foreach (Doorway doorwayToCheck in doorwayList)
         {
-            if (doorwayParent.orientation == Orientation.East &&
-                doorwayToCheck.orientation == Orientation.West)
+            if (doorwayParent.orientation == oppositeOrientation[doorwayToCheck.orientation])
+            {
                 return doorwayToCheck;
-            else if (doorwayParent.orientation == Orientation.West &&
-                doorwayToCheck.orientation == Orientation.East)
-                return doorwayToCheck;
-            else if (doorwayParent.orientation == Orientation.North &&
-                doorwayToCheck.orientation == Orientation.South)
-                return doorwayToCheck;
-            else if (doorwayParent.orientation == Orientation.South &&
-                doorwayToCheck.orientation == Orientation.North)
-                return doorwayToCheck;
+            }
         }
 
         return null;
@@ -336,7 +308,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         return false;
     }
 
-    private RoomTemplateSO GetRandomroomTemplate(RoomNodeTypeSO roomNodeType)
+    private RoomTemplateSO GetRandomRoomTemplate(RoomNodeTypeSO roomNodeType)
     {
         List<RoomTemplateSO> matchingRoomTemplateList = new List<RoomTemplateSO>();
 
@@ -387,7 +359,9 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
             GameManager.Instance.SetCurrentRoom = room;
         }
         else
+        {
             room.parentRoomID = roomNode.parentRoomNodeIDList[0];
+        }
 
         return room;
     }
@@ -398,11 +372,9 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         {
             return roomNodeGraphList[Random.Range(0, roomNodeGraphList.Count)];
         }
-        else
-        {
-            Debug.Log("No room node graph in list");
-            return null;
-        }
+
+        Debug.Log("No room node graph in list");
+        return null;
     }
 
     private List<string> CopyStringList(List<string> oldStringList)
