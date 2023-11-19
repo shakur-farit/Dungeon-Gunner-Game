@@ -13,7 +13,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
     private void OnEnable()
     {
-        GameResources.Instance.dimmeMaterial.SetFloat("Alpha_Slider", 1f);
+        GameResources.Instance.dimmeMaterial.SetFloat("Alpha_Slider", 0f);
     }
 
     private void OnDisable()

@@ -97,18 +97,32 @@ public class AnimatePlayer : MonoBehaviour
     {
         if (movementToPositionArgs.isRolling)
         {
-            if(movementToPositionArgs.moveDirection.x > 0)
+            if (movementToPositionArgs.moveDirection.x > 0)
+            {
                 player.animator.SetBool(Settings.rollRight, true);
-            else if (movementToPositionArgs.moveDirection.x < 0)
+                return;
+            }
+
+            if (movementToPositionArgs.moveDirection.x < 0)
+            {
                 player.animator.SetBool(Settings.rollLeft, true);
-            else if (movementToPositionArgs.moveDirection.y > 0)
+                return;
+            }
+
+            if (movementToPositionArgs.moveDirection.y > 0)
+            {
                 player.animator.SetBool(Settings.rollUp, true);
-            else if (movementToPositionArgs.moveDirection.y < 0)
+                return;
+            }
+
+            if (movementToPositionArgs.moveDirection.y < 0)
+            {
                 player.animator.SetBool(Settings.rollDown, true);
+            }
         }
     }
 
-        private void InitializeAnimationParametrs()
+    private void InitializeAnimationParametrs()
     {
         player.animator.SetBool(Settings.aimUp, false);
         player.animator.SetBool(Settings.aimUpLeft, false);

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(AimWeaponEvent))]
@@ -30,22 +31,21 @@ public class AimWeapon : MonoBehaviour
 
     private void Aim(AimDirection aimDirection, float aimAngle)
     {
+        Dictionary<AimDirection, Vector3> AimDirectionScales = new Dictionary<AimDirection, Vector3>
+        {
+            { AimDirection.Left, new Vector3(1f, -1f, 0f) },
+            { AimDirection.UpLeft, new Vector3(1f, -1f, 0f) },
+            { AimDirection.Up, new Vector3(1f, 1f, 0f) },
+            { AimDirection.UpRight, new Vector3(1f, 1f, 0f) },
+            { AimDirection.Right, new Vector3(1f, 1f, 0f) },
+            { AimDirection.Down, new Vector3(1f, 1f, 0f) }
+        };
+
         weaponRotationPointTransform.eulerAngles = new Vector3(0f, 0f, aimAngle);
 
-        switch (aimDirection)
+        if (AimDirectionScales.TryGetValue(aimDirection, out Vector3 scale))
         {
-            case AimDirection.Left:
-            case AimDirection.UpLeft:
-                weaponRotationPointTransform.localScale = new Vector3(1f, -1f, 0f);
-                break;
-
-            case AimDirection.Up:
-            case AimDirection.UpRight:
-            case AimDirection.Right:
-            case AimDirection.Down:
-                weaponRotationPointTransform.localScale = new Vector3(1f, 1f, 0f);
-                break;
-
+            weaponRotationPointTransform.localScale = scale;
         }
     }
 

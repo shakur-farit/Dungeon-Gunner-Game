@@ -60,18 +60,9 @@ public class Ammo : MonoBehaviour, IFireable
 
         _spriteRenderer.sprite = ammoDetails.ammoSprite;
 
-        if(ammoDetails.ammoChargeTime > 0f)
-        {
-            _ammoChargeTimer = ammoDetails.ammoChargeTime;
-            SetAmmoMaterial(ammoDetails.ammoChargeMaterial);
-            _isAmmoMaterialSet = false;
-        }
-        else
-        {
-            _ammoChargeTimer = 0f;
-            SetAmmoMaterial(ammoDetails.ammoMaterial);
-            _isAmmoMaterialSet = true;
-        }
+        _ammoChargeTimer = ammoDetails.ammoChargeTime > 0f ? ammoDetails.ammoChargeTime : 0f;
+        _isAmmoMaterialSet = _ammoChargeTimer > 0f ? false : true;
+        SetAmmoMaterial(_isAmmoMaterialSet ? ammoDetails.ammoMaterial : ammoDetails.ammoChargeMaterial);
 
         _ammoRange = ammoDetails.ammoRange;
         _ammoSpeed = ammoSpeed;
@@ -79,19 +70,15 @@ public class Ammo : MonoBehaviour, IFireable
 
         gameObject.SetActive(true);
 
+        _trailRenderer.emitting = ammoDetails.isAmmoTrail;
+        _trailRenderer.gameObject.SetActive(ammoDetails.isAmmoTrail);
+
         if (ammoDetails.isAmmoTrail)
         {
-            _trailRenderer.gameObject.SetActive(true);
-            _trailRenderer.emitting = true;
             _trailRenderer.material = ammoDetails.ammoTrailMaterial;
             _trailRenderer.startWidth = ammoDetails.ammoStartTrailWidth;
             _trailRenderer.endWidth = ammoDetails.ammoEndTrailWidth;
             _trailRenderer.time = ammoDetails.ammoTrailTime;
-        }
-        else
-        {
-            _trailRenderer.emitting = false;
-            _trailRenderer.gameObject.SetActive(false);
         }
     }
 
@@ -101,10 +88,9 @@ public class Ammo : MonoBehaviour, IFireable
 
         int spreadToogle = Random.Range(0, 2) * 2 - 1;
 
-        if (weaponAimDirectionVector.magnitude < Settings.useAimAngleDistance)
-            _fireDirectionAngle = aimAngle;
-        else
-            _fireDirectionAngle = weaponAimAngle;
+        _fireDirectionAngle = weaponAimDirectionVector.magnitude < Settings.useAimAngleDistance
+           ? aimAngle
+           : weaponAimAngle;
 
         _fireDirectionAngle += spreadToogle * randomSpread;
 

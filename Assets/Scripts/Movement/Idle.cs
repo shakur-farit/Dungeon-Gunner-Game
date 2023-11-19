@@ -5,23 +5,23 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Idle : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    private IdleEvent idleEvent;
+    private Rigidbody2D _rigidbody;
+    private IdleEvent _idleEvent;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        idleEvent = GetComponent<IdleEvent>();
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _idleEvent = GetComponent<IdleEvent>();
     }
 
     private void OnEnable()
     {
-        idleEvent.OnIdle += IdleEvent_OnIdle;
+        _idleEvent.OnIdle += IdleEvent_OnIdle;
     }
 
     private void OnDisable()
     {
-        idleEvent.OnIdle -= IdleEvent_OnIdle;
+        _idleEvent.OnIdle -= IdleEvent_OnIdle;
     }
 
     private void IdleEvent_OnIdle(IdleEvent idleEvent)
@@ -31,6 +31,6 @@ public class Idle : MonoBehaviour
 
     private void MoveRigidBody()
     {
-        rb.velocity = Vector2.zero;
+        _rigidbody.velocity = Vector2.zero;
     }
 }

@@ -5,23 +5,23 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class MovementByVelocity : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    private MovementByVelocityEvent movementByVelocityEvent;
+    private Rigidbody2D _rigidbody;
+    private MovementByVelocityEvent _movementByVelocityEvent;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        movementByVelocityEvent = GetComponent<MovementByVelocityEvent>();
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _movementByVelocityEvent = GetComponent<MovementByVelocityEvent>();
     }
 
     private void OnEnable()
     {
-        movementByVelocityEvent.OnMovementByVelocity += MovementByVelocityEvent_OnMovementByVelocity;
+        _movementByVelocityEvent.OnMovementByVelocity += MovementByVelocityEvent_OnMovementByVelocity;
     }
 
     private void OnDisable()
     {
-        movementByVelocityEvent.OnMovementByVelocity -= MovementByVelocityEvent_OnMovementByVelocity;
+        _movementByVelocityEvent.OnMovementByVelocity -= MovementByVelocityEvent_OnMovementByVelocity;
     }
 
     private void MovementByVelocityEvent_OnMovementByVelocity(
@@ -32,6 +32,6 @@ public class MovementByVelocity : MonoBehaviour
 
     private void MoveRigidbody(Vector2 moveDirection, float moveSpeed)
     {
-        rb.velocity = moveDirection * moveSpeed;
+        _rigidbody.velocity = moveDirection * moveSpeed;
     }
 }

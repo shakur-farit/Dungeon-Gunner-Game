@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -39,25 +40,14 @@ public static class HelperUtilities
 
     public static AimDirection GetAimDerection(float angleDegree)
     {
-        AimDirection aimDirection;
+        angleDegree = (angleDegree + 360) % 360; // Normalize angle to be positive
 
-        if (angleDegree >= 22f && angleDegree <= 67f)
-            aimDirection = AimDirection.UpRight;
-        else if (angleDegree > 67f && angleDegree <= 112f)
-            aimDirection = AimDirection.Up;
-        else if (angleDegree > 112f && angleDegree <= 158f)
-            aimDirection = AimDirection.UpLeft;
-        else if ((angleDegree <= 180f && angleDegree > 158f) ||
-            (angleDegree > -180f && angleDegree <= -135f))
-            aimDirection = AimDirection.Left;
-        else if (angleDegree > -135f && angleDegree <= -45)
-            aimDirection = AimDirection.Down;
-        else if ((angleDegree > -45f && angleDegree <= 0f) || (angleDegree > 0f && angleDegree < 22f))
-            aimDirection = AimDirection.Right;
-        else
-            aimDirection = AimDirection.Right;
+        string[] directionMap = { "Right", "UpRight", "Up", "UpLeft", "Left", "Down", "Right" };
 
-        return aimDirection;
+        int index = (int)((angleDegree + 22.5) % 360) / 45;
+        index = (index == 7) ? 0 : index; // Wrap around for 315-360 degrees
+
+        return (AimDirection)Enum.Parse(typeof(AimDirection), directionMap[index]);
     }
 
     public static float LinearToDecibles(int linear)
@@ -67,7 +57,7 @@ public static class HelperUtilities
         return Mathf.Log10((float)linear / linearScaleRange) * 20f;
     }
 
-    public static bool ValidateCheckEmptyString(Object thisObject, string fieldName, string stringToCheck)
+    public static bool ValidateCheckEmptyString(UnityEngine.Object thisObject, string fieldName, string stringToCheck)
     {
         if(stringToCheck == "")
         {
@@ -77,7 +67,7 @@ public static class HelperUtilities
         return false;
     }
 
-    public static bool ValidateCheckNullValue(Object thisObject, string fieldName, Object objectToCheck)
+    public static bool ValidateCheckNullValue(UnityEngine.Object thisObject, string fieldName, UnityEngine.Object objectToCheck)
     {
         if (objectToCheck ==  null)
         {
@@ -87,7 +77,7 @@ public static class HelperUtilities
         return false;
     }
 
-    public static bool ValidateCheckEnumerableValues(Object thisObject, string filedName, IEnumerable enumerableObjectToCheck)
+    public static bool ValidateCheckEnumerableValues(UnityEngine.Object thisObject, string filedName, IEnumerable enumerableObjectToCheck)
     {
         bool error = false;
         int count = 0;
@@ -119,7 +109,7 @@ public static class HelperUtilities
         return error;
     }
 
-    public static bool ValidateCheckPositiveValue(Object thisObject, string fieldName, int valueToCheck, bool isZeroAllowed)
+    public static bool ValidateCheckPositiveValue(UnityEngine.Object thisObject, string fieldName, int valueToCheck, bool isZeroAllowed)
     {
         bool error = false;
 
@@ -140,7 +130,7 @@ public static class HelperUtilities
         return error;
     }
 
-    public static bool ValidateCheckPositiveValue(Object thisObject, string fieldName, float valueToCheck, bool isZeroAllowed)
+    public static bool ValidateCheckPositiveValue(UnityEngine.Object thisObject, string fieldName, float valueToCheck, bool isZeroAllowed)
     {
         bool error = false;
 
@@ -162,7 +152,7 @@ public static class HelperUtilities
         return error;
     }
 
-    public static bool ValidateCheckPositiveRange(Object thisObject, string fieldNameMinimum, float valueToCheckMinimum,
+    public static bool ValidateCheckPositiveRange(UnityEngine.Object thisObject, string fieldNameMinimum, float valueToCheckMinimum,
         string fieldNameMaximum, float valueToCheckMaximum, bool isZeroAllowed)
     {
         bool error = false;

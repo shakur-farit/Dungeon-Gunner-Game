@@ -87,18 +87,11 @@ public class FireWeapon : MonoBehaviour
 
         int ammoPerShot = Random.Range(currentAmmo.ammoSpawnAmountMin, currentAmmo.ammoSpawnAmountMax + 1);
 
-        float ammoSpawnInterval;
+        float ammoSpawnInterval = ammoPerShot > 1
+            ? Random.Range(currentAmmo.ammoSpawnIntervalMin, currentAmmo.ammoSpawnIntervalMax)
+            : 0f;
 
-        if(ammoPerShot > 1)
-        {
-            ammoSpawnInterval = Random.Range(currentAmmo.ammoSpawnIntervalMin, currentAmmo.ammoSpawnIntervalMax);
-        }
-        else
-        {
-            ammoSpawnInterval = 0f;
-        }
-
-        while(ammoCounter < ammoPerShot)
+        while (ammoCounter < ammoPerShot)
         {
             ammoCounter++;
 

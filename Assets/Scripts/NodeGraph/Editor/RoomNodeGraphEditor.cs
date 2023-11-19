@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -162,23 +163,15 @@ public class RoomNodeGraphEditor : EditorWindow
 
     private void ProcessRoomNodeGraphEvents(Event currentEvent)
     {
-        switch (currentEvent.type)
+        Dictionary<EventType, Action<Event>> eventHandlers = new Dictionary<EventType, Action<Event>>
         {
-            case EventType.MouseDown:
-                ProcessMouseDownEvent(currentEvent);
-                break;
+            { EventType.MouseDown, ProcessMouseDownEvent },
+            { EventType.MouseUp, ProcessMouseUpEvent },
+            { EventType.MouseDrag, ProcessMouseDragEvent }
+        };
 
-            case EventType.MouseUp:
-                ProcessMouseUpEvent(currentEvent);
-                break;
-
-            case EventType.MouseDrag:
-                ProcessMouseDragEvent(currentEvent);
-                break;
-
-            default:
-                break;
-        }
+        if (eventHandlers.TryGetValue(currentEvent.type, out var handler))
+            handler.Invoke(currentEvent);
     }
 
     private void ProcessMouseDownEvent(Event currentEvent)

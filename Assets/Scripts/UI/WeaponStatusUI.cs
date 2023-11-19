@@ -68,12 +68,11 @@ public class WeaponStatusUI : MonoBehaviour
         if (weapon.IsWeaponReloading)
         {
             UpdateWeaponReloadBar(weapon);
-        }
-        else
-        {
-            ResetWeaponReloadBar();
+            UpdateReloadText(weapon);
+            return;
         }
 
+        ResetWeaponReloadBar();
         UpdateReloadText(weapon);
     }
 

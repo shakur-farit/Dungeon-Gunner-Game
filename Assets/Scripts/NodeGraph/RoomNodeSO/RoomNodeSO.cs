@@ -35,31 +35,38 @@ public class RoomNodeSO : ScriptableObject
         EditorGUI.BeginChangeCheck();
 
         if (parentRoomNodeIDList.Count > 0 || roomNodeType.isEntrance)
-            EditorGUILayout.LabelField(roomNodeType.roomNodeTypeName);
-        else
         {
-            int selected = roomNodeTypeList.list.FindIndex(x => x == roomNodeType);
+            EditorGUILayout.LabelField(roomNodeType.roomNodeTypeName);
 
-            int selection = EditorGUILayout.Popup("", selected, GetRoomNodeTypesToDisplay());
+            if (EditorGUI.EndChangeCheck())
+                EditorUtility.SetDirty(this);
 
-            roomNodeType = roomNodeTypeList.list[selection];
+            GUILayout.EndArea();
 
-            if (roomNodeTypeList.list[selected].isCorridor && !roomNodeTypeList.list[selection].isCorridor ||
-                !roomNodeTypeList.list[selected].isCorridor && roomNodeTypeList.list[selection].isCorridor ||
-                !roomNodeTypeList.list[selected].isBossRoom && roomNodeTypeList.list[selection].isBossRoom)
+            return;
+        }
+
+        int selected = roomNodeTypeList.list.FindIndex(x => x == roomNodeType);
+
+        int selection = EditorGUILayout.Popup("", selected, GetRoomNodeTypesToDisplay());
+
+        roomNodeType = roomNodeTypeList.list[selection];
+
+        if (roomNodeTypeList.list[selected].isCorridor && !roomNodeTypeList.list[selection].isCorridor ||
+            !roomNodeTypeList.list[selected].isCorridor && roomNodeTypeList.list[selection].isCorridor ||
+            !roomNodeTypeList.list[selected].isBossRoom && roomNodeTypeList.list[selection].isBossRoom)
+        {
+            if (childRoomNodeIDList.Count > 0)
             {
-                if (childRoomNodeIDList.Count > 0)
+                for (int i = childRoomNodeIDList.Count - 1; i >= 0; i--)
                 {
-                    for (int i = childRoomNodeIDList.Count - 1; i >= 0; i--)
+                    RoomNodeSO childRoomNode = roomNodeGraph.GetRoomNode(childRoomNodeIDList[i]);
+
+                    if (childRoomNode != null)
                     {
-                        RoomNodeSO childRoomNode = roomNodeGraph.GetRoomNode(childRoomNodeIDList[i]);
+                        RemoveChildRoomNodeIDFromRoomNode(childRoomNode.id);
 
-                        if (childRoomNode != null)
-                        {
-                            RemoveChildRoomNodeIDFromRoomNode(childRoomNode.id);
-
-                            childRoomNode.RemoveParentRoomNodeIDFromRoomNode(id);
-                        }
+                        childRoomNode.RemoveParentRoomNodeIDFromRoomNode(id);
                     }
                 }
             }
@@ -86,23 +93,15 @@ public class RoomNodeSO : ScriptableObject
 
     public void ProcessEvent(Event currentEvent)
     {
-        switch(currentEvent.type)
+        Dictionary<EventType, Action<Event>> eventHandlers = new Dictionary<EventType, Action<Event>>
         {
-            case EventType.MouseDown:
-                ProcessMouseDownEvent(currentEvent);
-                break;
+            { EventType.MouseDown, ProcessMouseDownEvent },
+            { EventType.MouseUp, ProcessMouseUpEvent },
+            { EventType.MouseDrag, ProcessMouseDragEvent }
+        };
 
-            case EventType.MouseUp:
-                ProcessMouseUpevent(currentEvent);
-                break;
-
-            case EventType.MouseDrag:
-                ProcessMouseDragEvent(currentEvent);
-                break;
-
-            default:
-                break;
-        }
+        if (eventHandlers.TryGetValue(currentEvent.type, out var handler))
+            handler.Invoke(currentEvent);      
     }
 
     private void ProcessMouseDownEvent(Event currentEvent)
@@ -131,7 +130,7 @@ public class RoomNodeSO : ScriptableObject
         roomNodeGraph.SetNodeToDrawConnectionLineFrom(this, currentEvent.mousePosition);
     }
 
-    private void ProcessMouseUpevent(Event currentEvent)
+    private void ProcessMouseUpEvent(Event currentEvent)
     {
         if (currentEvent.button == 0)
             ProcessLeftClickUpEvent();
