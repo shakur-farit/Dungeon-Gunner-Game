@@ -7,10 +7,13 @@ public class RoomTemplateSO : ScriptableObject
 {
     [HideInInspector] public string guid;
 
+    [Header("Room Prefab")]
     public GameObject prefab;
 
-    [HideInInspector] public GameObject previousPrefab; // this is used to regenerate the guid if the so is copied and the prefab is changed
+    [HideInInspector] public GameObject previousPrefab; // this is used to regenerate the
+                                                        // guid if the so is copied and the prefab is changed
 
+    [Header("Room Configuration")]
     public RoomNodeTypeSO roomNodeType;
     public Vector2Int lowerBounds;
     public Vector2Int upperBounds;
@@ -18,6 +21,9 @@ public class RoomTemplateSO : ScriptableObject
     [SerializeField] public List<Doorway> doorwayList;
 
     public Vector2Int[] spawnPositionArray;
+
+    [Header("Enemy Deatils")]
+    public List<SpawnableObjectsByLevel<EnemyDetailsSO>> enemiesByLevelList;
 
     public List<Doorway> GetDoorwayList => doorwayList;
 

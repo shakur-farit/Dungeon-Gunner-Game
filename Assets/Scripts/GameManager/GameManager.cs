@@ -16,6 +16,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     public Room GetCurrentRoom => currentRoom;
     public Player GetPlayer => player;
     public Sprite GetPlayerMinimaoIcon => playerDetails.playerMiniMapIcon;
+    public DungeonLevelSO getCurrentDungeonLevel => dungeonLevelList[currentDungeonLevelListIndex];
 
     public Room SetCurrentRoom 
     { 
