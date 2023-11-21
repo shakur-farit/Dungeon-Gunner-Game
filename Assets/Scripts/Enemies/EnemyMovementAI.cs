@@ -16,7 +16,17 @@ public class EnemyMovementAI : MonoBehaviour
     private WaitForFixedUpdate _waitForFixedUpdate;
     private bool _chasePlayer = false;
 
+    [HideInInspector] public int UpdateFrameNumber = 1; // deafult value.
+                                                        // This is set by the enemy spawner.
     [HideInInspector] public float MovementSpeed;
+
+    public int SetUpdateFrameNumber
+    {
+        set
+        {
+            UpdateFrameNumber = value;
+        }
+    }
 
     private void Awake()
     {
@@ -48,6 +58,9 @@ public class EnemyMovementAI : MonoBehaviour
         if (!_chasePlayer)
             return;
 
+        if(Time.frameCount % Settings.targetFrameRateToSpreadPathfidingOver != UpdateFrameNumber) 
+            return;
+
         float distanceToRebuildPath =
             (_playerReferencePosition - GameManager.Instance.GetPlayer.GetPlayerPosition).magnitude;
         if (_currentEnemyPathRebuildCooldown <= 0f || distanceToRebuildPath > Settings.playerMoveDistanceToRebuildPath)
@@ -73,8 +86,6 @@ public class EnemyMovementAI : MonoBehaviour
 
     private IEnumerator MoveEnemyRoutine(Stack<Vector3> movementSteps)
     {
-        Debug.Log("Move Steps = " + movementSteps.Count);
-
         while (movementSteps.Count > 0)
         {
             Vector3 nextPosition = movementSteps.Pop();

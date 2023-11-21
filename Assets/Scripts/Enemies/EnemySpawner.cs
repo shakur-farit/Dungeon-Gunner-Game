@@ -86,6 +86,7 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
                     .Range(0, _currentRoom.spawnPositionArray.Length)];
 
                 CreateEnemy(randomEnemyHelperClass.GetItem(), grid.CellToWorld(cellPosition));
+                Debug.Log("CreateEnemy");
 
                 yield return new WaitForSeconds(GetEnemySpawnInterval());
             }

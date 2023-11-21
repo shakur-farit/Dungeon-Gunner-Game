@@ -43,7 +43,15 @@ public class Enemy : MonoBehaviour
     {
         EnemyDetails = enemyDetails;
 
+        SetEnemyMovementUpdateFrame(enemySpawnNumber);
+            
         SetEnemyAnimationSpeed();
+    }
+
+    private void SetEnemyMovementUpdateFrame(int enemySpawnNumber)
+    {
+        _enemyMovementAI.SetUpdateFrameNumber = 
+            enemySpawnNumber % Settings.targetFrameRateToSpreadPathfidingOver;
     }
 
     private void SetEnemyAnimationSpeed()

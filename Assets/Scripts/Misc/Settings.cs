@@ -47,6 +47,7 @@ public static class Settings
     //AStar pathfinding parameters
     public const int defaultAStarMovementPenalty = 40;
     public const int prefferedPathAStarMovementPenalty = 1;
+    public const int targetFrameRateToSpreadPathfidingOver = 60;
     public const float playerMoveDistanceToRebuildPath = 3f;
     public const float enemyPathRebuildCooldown = 2f;
 
