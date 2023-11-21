@@ -29,7 +29,7 @@ public class RandomSpawnableObject<T>
 
         foreach (SpawnableObjectsByLevel<T> spawnableObjectsByLevel in _spawnableObjectsByLevelList)
         {
-            if(spawnableObjectsByLevel.DungeonLevel == GameManager.Instance.getCurrentDungeonLevel)
+            if(spawnableObjectsByLevel.DungeonLevel == GameManager.Instance.GetCurrentDungeonLevel)
             {
                 foreach (SpawnableObjectRatio<T> spawnableObjectRatio in spawnableObjectsByLevel.SpawnableObjectRatioList)
                 {

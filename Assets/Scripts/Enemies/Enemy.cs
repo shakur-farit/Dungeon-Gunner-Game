@@ -1,12 +1,14 @@
+using System;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-[RequireComponent (typeof(SortingGroup))]
-[RequireComponent (typeof(SpriteRenderer))]
-[RequireComponent (typeof(Rigidbody2D))]
-[RequireComponent (typeof(Animator))]
-[RequireComponent (typeof(CircleCollider2D))]
-[RequireComponent (typeof(PolygonCollider2D))]
+[RequireComponent(typeof(SortingGroup))]
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(CircleCollider2D))]
+[RequireComponent(typeof(PolygonCollider2D))]
+[RequireComponent(typeof(AnimateEnemy))]
 [RequireComponent(typeof(EnemyMovementAI))]
 [RequireComponent(typeof(MovementToPositionEvent))]
 [RequireComponent(typeof(MovementToPosition))]
@@ -15,8 +17,7 @@ using UnityEngine.Rendering;
 [DisallowMultipleComponent]
 public class Enemy : MonoBehaviour
 {
-    public EnemyDetailsSO EnemyDetails;
-
+    [HideInInspector] public EnemyDetailsSO EnemyDetails;
     [HideInInspector] public SpriteRenderer[] SpriteRendererArray;
     [HideInInspector] public Animator EnemyAnimator;
     [HideInInspector] public MovementToPositionEvent EnemyMovementToPositionEvent;
@@ -35,5 +36,18 @@ public class Enemy : MonoBehaviour
         EnemyAnimator = GetComponent<Animator>();
         EnemyMovementToPositionEvent = GetComponent<MovementToPositionEvent>();
         EnemyIdleEvent = GetComponent<IdleEvent>();
+    }
+
+    public void EnemyInitialization(EnemyDetailsSO enemyDetails, int enemySpawnNumber,
+        DungeonLevelSO dungeonLevel)
+    {
+        EnemyDetails = enemyDetails;
+
+        SetEnemyAnimationSpeed();
+    }
+
+    private void SetEnemyAnimationSpeed()
+    {
+        EnemyAnimator.speed = _enemyMovementAI.MovementSpeed / Settings.baseSpeedForEnemyAnimations;
     }
 }
