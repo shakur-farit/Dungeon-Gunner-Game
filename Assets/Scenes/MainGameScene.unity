@@ -1150,7 +1150,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e2244acec8ad85e42bf04654c890467a, type: 2}
   - {fileID: 11400000, guid: 4ad59108281360c46974fad1c20fadb1, type: 2}
   - {fileID: 11400000, guid: c3a9e3641ee003845a3a48f7a4f922f7, type: 2}
-  currentDungeonLevelListIndex: 2
+  currentDungeonLevelListIndex: 0
   gameState: 0
 --- !u!81 &877200564
 AudioListener:
@@ -1172,7 +1172,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9727872b29e7d4fa59175974e0cbdf1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomTemplate: {fileID: 11400000, guid: 5ec7c3fd29261984abd0f0a91400645d, type: 2}
 --- !u!1 &921652453
 GameObject:
   m_ObjectHideFlags: 0
@@ -2749,7 +2748,7 @@ Camera:
     x: 0
     y: 0
     width: 1
-    height: 0.9995861
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60

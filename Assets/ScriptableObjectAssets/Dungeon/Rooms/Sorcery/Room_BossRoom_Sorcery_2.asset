@@ -64,3 +64,44 @@ MonoBehaviour:
   - {x: -2, y: -6}
   - {x: 11, y: -5}
   - {x: 23, y: -4}
+  enemiesByLevelList:
+  - DungeonLevel: {fileID: 11400000, guid: e2244acec8ad85e42bf04654c890467a, type: 2}
+    SpawnableObjectRatioList:
+    - DungeonObject: {fileID: 11400000, guid: 3f6f53b0193f23d4f9cdcf72bf42d7f9, type: 2}
+      Ratio: 1
+  - DungeonLevel: {fileID: 11400000, guid: 4ad59108281360c46974fad1c20fadb1, type: 2}
+    SpawnableObjectRatioList:
+    - DungeonObject: {fileID: 11400000, guid: 3f6f53b0193f23d4f9cdcf72bf42d7f9, type: 2}
+      Ratio: 1
+    - DungeonObject: {fileID: 11400000, guid: ff64a4410fe97fb4597dc9db6f0d7ce2, type: 2}
+      Ratio: 1
+  - DungeonLevel: {fileID: 11400000, guid: c3a9e3641ee003845a3a48f7a4f922f7, type: 2}
+    SpawnableObjectRatioList:
+    - DungeonObject: {fileID: 11400000, guid: 3f6f53b0193f23d4f9cdcf72bf42d7f9, type: 2}
+      Ratio: 1
+    - DungeonObject: {fileID: 11400000, guid: ff64a4410fe97fb4597dc9db6f0d7ce2, type: 2}
+      Ratio: 1
+    - DungeonObject: {fileID: 11400000, guid: 3346eb251edff304e8cfceb63f08d9aa, type: 2}
+      Ratio: 1
+  roomEnemySpawnParametrsList:
+  - DungeonLevel: {fileID: 11400000, guid: e2244acec8ad85e42bf04654c890467a, type: 2}
+    MinTotalEnemiesToSpawn: 1
+    MaxTotalEnemiesToSpawn: 3
+    MinCocncurrentEnemies: 1
+    MaxCocncurrentEnemies: 1
+    MinSpawnInterval: 2
+    MaxSpawnInterval: 4
+  - DungeonLevel: {fileID: 11400000, guid: 4ad59108281360c46974fad1c20fadb1, type: 2}
+    MinTotalEnemiesToSpawn: 3
+    MaxTotalEnemiesToSpawn: 5
+    MinCocncurrentEnemies: 2
+    MaxCocncurrentEnemies: 2
+    MinSpawnInterval: 1
+    MaxSpawnInterval: 2
+  - DungeonLevel: {fileID: 11400000, guid: c3a9e3641ee003845a3a48f7a4f922f7, type: 2}
+    MinTotalEnemiesToSpawn: 5
+    MaxTotalEnemiesToSpawn: 6
+    MinCocncurrentEnemies: 2
+    MaxCocncurrentEnemies: 4
+    MinSpawnInterval: 1
+    MaxSpawnInterval: 2
