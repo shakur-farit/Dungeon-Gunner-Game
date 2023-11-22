@@ -12,7 +12,9 @@ Implemented mechanics:
  8. Minimap
  9. Weapon shoot and ammo hit effects
  10. Enemy AI movement
- Some gameplay: https://github.com/shakur-farit/Dungeon-Gunner-Game/assets/93837330/fb023be2-7e03-4c84-b645-665ab3aac7b7
+ 11. Enemy spawning
+ Some gameplay:
+ https://github.com/shakur-farit/Dungeon-Gunner-Game/assets/93837330/5fdd3b6e-26c3-4d3d-9125-602dc0c45084
 
 
 
