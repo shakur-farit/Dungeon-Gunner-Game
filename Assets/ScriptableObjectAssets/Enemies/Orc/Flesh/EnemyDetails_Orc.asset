@@ -14,3 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyName: Orc
   EnemyPrefab: {fileID: 6436605987075168439, guid: 7b14a5e67187ed54bb0c1c3bdeae76cc, type: 3}
+  ChaseDistance: 40
+  EnemyStandartMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  EnemyMaterializeTime: 3
+  EnemyMaterializeShader: {fileID: -6465566751694194690, guid: 5fec8f8e6ea244648a3c6ede24a56288, type: 3}
+  EnemyMaterializeColor: {r: 0.84298223, g: 8.47419, b: 0, a: 1}
