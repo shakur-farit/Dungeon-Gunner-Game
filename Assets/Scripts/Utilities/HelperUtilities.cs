@@ -118,12 +118,14 @@ public static class HelperUtilities
             Debug.Log(fieldName + " must contain a positive value or zero in object " + thisObject.name.ToString());
             error = true;
             return error;
+
         }
         
-        if(valueToCheck <= 0)
+        if(!isZeroAllowed && valueToCheck <= 0)
         {
             Debug.Log(fieldName + " must contain a positive value in object " + thisObject.name.ToString());
             error = true;
+            Debug.Log("Here");
             return error;
         }
 
@@ -142,7 +144,7 @@ public static class HelperUtilities
             
         }
 
-        if (valueToCheck <= 0)
+        if (!isZeroAllowed && valueToCheck <= 0)
         {
             Debug.Log(fieldName + " must contain a positive value in object " + thisObject.name.ToString());
             error = true;

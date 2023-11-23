@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f8c0d1311dec7b4582bf2ecfa88947a, type: 3}
+  m_Name: EnemyDetails_Grinmonk_Brown
+  m_EditorClassIdentifier: 
+  EnemyName: Grinmonk
+  EnemyPrefab: {fileID: 485347191427928860, guid: 5b18dfbdb522b8a4c8c71ea172bf927e, type: 3}
+  ChaseDistance: 40
+  EnemyStandartMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  EnemyMaterializeTime: 3
+  EnemyMaterializeShader: {fileID: -6465566751694194690, guid: 5fec8f8e6ea244648a3c6ede24a56288, type: 3}
+  EnemyMaterializeColor: {r: 0.84298223, g: 8.47419, b: 0, a: 1}
+  EnenmyWeapon: {fileID: 11400000, guid: e42704d81db8d324d80d78b52b43cf94, type: 2}
+  FiringIntervalMin: 0.8
+  FiringIntervalMax: 1.3
+  FiringDurationMin: 6
+  FiringDurationMax: 8
+  FiringLineOfSightRiquired: 1

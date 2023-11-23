@@ -1,8 +1,18 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
 
+[RequireComponent(typeof(EnemyWeaponAI))]
+[RequireComponent(typeof(AimWeaponEvent))]
+[RequireComponent(typeof(AimWeapon))]
+[RequireComponent(typeof(FireWeaponEvent))]
+[RequireComponent(typeof(FireWeapon))]
+[RequireComponent(typeof(SetActiveWeaponEvent))]
+[RequireComponent(typeof(ActiveWeapon))]
+[RequireComponent(typeof(WeaponFiredEvent))]
+[RequireComponent(typeof(ReloadWeaponEvent))]
+[RequireComponent(typeof(ReloadWeapon))]
+[RequireComponent(typeof(WeaponReloadedEvent))]
 [RequireComponent(typeof(SortingGroup))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -20,11 +30,15 @@ using UnityEngine.Rendering;
 public class Enemy : MonoBehaviour
 {
     [HideInInspector] public EnemyDetailsSO EnemyDetails;
+    [HideInInspector] public AimWeaponEvent EnemyAimWeaponEvent;
+    [HideInInspector] public FireWeaponEvent EnemyFireWeaponEvent;
     [HideInInspector] public SpriteRenderer[] SpriteRendererArray;
     [HideInInspector] public Animator EnemyAnimator;
     [HideInInspector] public MovementToPositionEvent EnemyMovementToPositionEvent;
     [HideInInspector] public IdleEvent EnemyIdleEvent;
 
+    private FireWeapon _fireWeapon;
+    private SetActiveWeaponEvent _setActiveWeaponEvent;
     private MaterializeEffect _materializeEffect;
     private CircleCollider2D _circleCollider2D;
     private PolygonCollider2D _polygonCollider2D;
@@ -32,6 +46,8 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
+        _fireWeapon = GetComponent<FireWeapon>();
+        _setActiveWeaponEvent = GetComponent<SetActiveWeaponEvent>();
         _materializeEffect = GetComponent<MaterializeEffect>();
         _circleCollider2D = GetComponent<CircleCollider2D>();
         _polygonCollider2D = GetComponent<PolygonCollider2D>();
@@ -40,6 +56,8 @@ public class Enemy : MonoBehaviour
         EnemyAnimator = GetComponent<Animator>();
         EnemyMovementToPositionEvent = GetComponent<MovementToPositionEvent>();
         EnemyIdleEvent = GetComponent<IdleEvent>();
+        EnemyAimWeaponEvent = GetComponent<AimWeaponEvent>();
+        EnemyFireWeaponEvent = GetComponent<FireWeaponEvent>();
     }
 
     public void EnemyInitialization(EnemyDetailsSO enemyDetails, int enemySpawnNumber,
@@ -48,6 +66,8 @@ public class Enemy : MonoBehaviour
         EnemyDetails = enemyDetails;
 
         SetEnemyMovementUpdateFrame(enemySpawnNumber);
+
+        SetEnemyStartingWeapon();
             
         SetEnemyAnimationSpeed();
 
@@ -58,6 +78,23 @@ public class Enemy : MonoBehaviour
     {
         _enemyMovementAI.SetUpdateFrameNumber = 
             enemySpawnNumber % Settings.targetFrameRateToSpreadPathfidingOver;
+    }
+
+    private void SetEnemyStartingWeapon()
+    {
+        if(EnemyDetails.EnenmyWeapon != null)
+        {
+            Weapon weapon = new Weapon()
+            {
+                WeaponDetails = EnemyDetails.EnenmyWeapon,
+                WeaponReloadTimer = 0f,
+                WeaponClipRemainingAmmo = EnemyDetails.EnenmyWeapon.weaponClipAmmoCapacity,
+                WeaponRemainingAmmo = EnemyDetails.EnenmyWeapon.weaponAmmoCapacity,
+                IsWeaponReloading = false
+            };
+
+            _setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon);
+        }
     }
 
     private void SetEnemyAnimationSpeed()
@@ -82,5 +119,7 @@ public class Enemy : MonoBehaviour
         _polygonCollider2D.enabled = isEnabled;
 
         _enemyMovementAI.enabled = isEnabled;
+
+        _fireWeapon.enabled = isEnabled;
     }
 }
