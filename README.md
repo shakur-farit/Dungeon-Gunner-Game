@@ -17,5 +17,5 @@ Implemented mechanics:
  11. Enemy spawning
  12. Enemy aiming and firing
  Some gameplay:
- https://github.com/shakur-farit/Dungeon-Gunner-Game/assets/93837330/3d5fe262-2312-4198-8755-281c69877003
+ https://github.com/shakur-farit/Dungeon-Gunner-Game/assets/93837330/52c8263e-0038-417b-8852-63045c8425fa
 
