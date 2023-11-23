@@ -1,5 +1,6 @@
+ Some gameplay:
+ https://github.com/shakur-farit/Dungeon-Gunner-Game/assets/93837330/52c8263e-0038-417b-8852-63045c8425fa
 
-https://github.com/shakur-farit/Dungeon-Gunner-Game/assets/93837330/4a6e7694-7f68-4858-82d8-bdae346e1488
 # Dungeon-Gunner-Game
 Rouglike dungeon shooter game.
 
@@ -16,6 +17,5 @@ Implemented mechanics:
  10. Enemy AI movement
  11. Enemy spawning
  12. Enemy aiming and firing
- Some gameplay:
- https://github.com/shakur-farit/Dungeon-Gunner-Game/assets/93837330/52c8263e-0038-417b-8852-63045c8425fa
+
 
