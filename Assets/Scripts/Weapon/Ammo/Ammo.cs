@@ -46,11 +46,21 @@ public class Ammo : MonoBehaviour, IFireable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        DealDamage(collision);
+
         PlayAmmoHitEffect();
 
         DisableAmmo();
     }
 
+    private void DealDamage(Collider2D collision)
+    {
+        Health health = collision.GetComponent<Health>();
+
+        if (health != null)
+            health.TakeDamage(_ammoDetails.ammoDamage);
+    }
+    
     public void InitialiseAmmo(AmmoDetailsSO ammoDetails, float aimAngle, float weaponAimAngle,
         float ammoSpeed, Vector3 weaponAimDirectionVector, bool ovverideAmmoMovement = false)
     {

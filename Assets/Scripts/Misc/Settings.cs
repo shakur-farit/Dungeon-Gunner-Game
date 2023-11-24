@@ -13,6 +13,7 @@ public static class Settings
     // Room settings
     public const float faidInTime = 0.5f;
     public const int maxChildCorridors = 3;
+    public const float doorUnlockDelay = 1f;
 
     // Player animation parameters
     public static int aimUp = Animator.StringToHash("aimUp");
@@ -29,7 +30,7 @@ public static class Settings
     public static int rollDown = Animator.StringToHash("rollDown");
     public static float baseSpeedForPlayerAnimations = 8f;
 
-    //Enemy animator parametrs
+    // Enemy animator parametrs
     public static float baseSpeedForEnemyAnimations = 3f;
 
     // Door animation parameters
@@ -44,14 +45,17 @@ public static class Settings
     // else weapon aim angle (from the weapon shoot position)
     public const float useAimAngleDistance = 3.5f;
 
-    //AStar pathfinding parameters
+    // AStar pathfinding parameters
     public const int defaultAStarMovementPenalty = 40;
     public const int prefferedPathAStarMovementPenalty = 1;
     public const int targetFrameRateToSpreadPathfidingOver = 60;
     public const float playerMoveDistanceToRebuildPath = 3f;
     public const float enemyPathRebuildCooldown = 2f;
 
-    //UI Parametrs
+    // Enemy parametrs
+    public const int defaultEnemyHealth = 20;
+
+    // UI parametrs
     public const float uiAmmoIconSpacing = 4f;
 }
 

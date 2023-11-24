@@ -1,18 +1,47 @@
 using UnityEngine;
 
+[RequireComponent(typeof(HealthEvent))]
 [DisallowMultipleComponent]
 public class Health : MonoBehaviour
 {
-    private int startingHealth;
-    private int currentHealth;
+    private int _startingHealth;
+    private int _currentHealth;
+    private HealthEvent _healthEvent;
 
-    public int GetStartingHealth => startingHealth;
+    [HideInInspector] public bool IsDamageable = true;
+
+    public int GetStartingHealth => _startingHealth;
+
     public int SetStartingHealth
     {
         set 
         { 
-            startingHealth = value;
-            currentHealth = value;
+            _startingHealth = value;
+            _currentHealth = value;
         }
+    }
+
+    private void Awake()
+    {
+        _healthEvent = GetComponent<HealthEvent>();
+    }
+
+    private void Start()
+    {
+        CallHealthEvent(0);
+    }
+
+    public void TakeDamage(int damageAmount)
+    {
+        if (IsDamageable)
+        {
+            _currentHealth -= damageAmount;
+            CallHealthEvent(damageAmount);
+        }
+    }
+
+    private void CallHealthEvent(int damageAmount)
+    {
+        _healthEvent.CallHealthChangedEvent(((float)_currentHealth / (float)_startingHealth), _currentHealth, damageAmount);
     }
 }
