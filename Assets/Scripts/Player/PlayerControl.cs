@@ -37,9 +37,9 @@ public class PlayerControl : MonoBehaviour
     {
         int index = 1;
 
-        foreach (Weapon weapon in player.weaponList)
+        foreach (Weapon weapon in player.WeaponList)
         {
-            if(weapon.WeaponDetails == player.playerDetails.startingWeapon)
+            if(weapon.WeaponDetails == player.PlayerDetails.startingWeapon)
             {
                 SetWeaponByIndex(index);
                 break;
@@ -50,7 +50,7 @@ public class PlayerControl : MonoBehaviour
 
     private void SetPlayerAnimationSpeed()
     {
-        player.animator.speed = moveSpeed / Settings.baseSpeedForPlayerAnimations;
+        player.PlayerAnimator.speed = moveSpeed / Settings.baseSpeedForPlayerAnimations;
     }
 
     private void Update()
@@ -80,7 +80,7 @@ public class PlayerControl : MonoBehaviour
         {
             if (!rightMouseButton)
             {
-                player.movementByVelocityEvent.CallMovementbyVelocityEvent(direction, moveSpeed);
+                player.PlayerMovementByVelocityEvent.CallMovementbyVelocityEvent(direction, moveSpeed);
                 return;
             }
 
@@ -91,7 +91,7 @@ public class PlayerControl : MonoBehaviour
             }
         }
         
-        player.idleEvent.CallIdleEvent();
+        player.PlayerIdleEvent.CallIdleEvent();
     }
 
     private void PlayerRoll(Vector3 direction)
@@ -110,7 +110,7 @@ public class PlayerControl : MonoBehaviour
 
         while(Vector3.Distance(player.transform.position, targetPosition) > minDistance)
         {
-            player.movementToPositionEvent.CallMovementToPositionEvent(targetPosition, 
+            player.PlayerMovementToPositionEvent.CallMovementToPositionEvent(targetPosition, 
                 player.transform.position, movementDetails.rollSpeed, direction, isPlayerRolling);
 
             yield return waitForFixedUpdate;
@@ -150,7 +150,7 @@ public class PlayerControl : MonoBehaviour
     {
         Vector3 mouseWorldPosition = HelperUtilities.GetMouseWorldPosition();
 
-        weaponDirection = (mouseWorldPosition - player.activeWeapon.GetShootPosition);
+        weaponDirection = (mouseWorldPosition - player.PlayerActiveWeapon.GetShootPosition);
 
         Vector3 playerDirection = (mouseWorldPosition - transform.position);
 
@@ -159,7 +159,7 @@ public class PlayerControl : MonoBehaviour
 
         playerAimDirection = HelperUtilities.GetAimDerection(playerAngleDegress);
 
-        player.aimWeaponEvent.CallAimWeaponEvent(playerAimDirection, playerAngleDegress, 
+        player.PlayerAimWeaponEvent.CallAimWeaponEvent(playerAimDirection, playerAngleDegress, 
             weaponAngleDegress, weaponDirection);
     }
 
@@ -168,7 +168,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            player.fireWeaponEvent.CallOnFireWeaponEvent(true, leftMouseDownPreviousFrame, playerAimDirection, 
+            player.PlayerFireWeaponEvent.CallOnFireWeaponEvent(true, leftMouseDownPreviousFrame, playerAimDirection, 
                 playerAngleDegress, weaponAngleDegress, weaponDirection);
             leftMouseDownPreviousFrame = true;
             return;
@@ -212,10 +212,10 @@ public class PlayerControl : MonoBehaviour
     {
         int index = weaponIndex - 1;
 
-        if(index < player.weaponList.Count)
+        if(index < player.WeaponList.Count)
         {
             currentWeaponIndex = weaponIndex;
-            player.setActiveWeaponEvent.CallSetActiveWeaponEvent(player.weaponList[index]);
+            player.PlayerSetActiveWeaponEvent.CallSetActiveWeaponEvent(player.WeaponList[index]);
         }
     }
 
@@ -223,7 +223,7 @@ public class PlayerControl : MonoBehaviour
     {
         currentWeaponIndex++;
 
-        if(currentWeaponIndex > player.weaponList.Count)
+        if(currentWeaponIndex > player.WeaponList.Count)
         {
             currentWeaponIndex = 1;
         }
@@ -237,7 +237,7 @@ public class PlayerControl : MonoBehaviour
 
         if (currentWeaponIndex < 1)
         {
-            currentWeaponIndex = player.weaponList.Count;
+            currentWeaponIndex = player.WeaponList.Count;
         }
 
         SetWeaponByIndex(currentWeaponIndex);
@@ -245,7 +245,7 @@ public class PlayerControl : MonoBehaviour
 
     private void ReloadWeaponInput()
     {
-        Weapon currentWeapon = player.activeWeapon.GetCurrentWeapon;
+        Weapon currentWeapon = player.PlayerActiveWeapon.GetCurrentWeapon;
 
         if (currentWeapon.IsWeaponReloading)
             return;
@@ -259,7 +259,7 @@ public class PlayerControl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            player.reloadWeaponEvent.CallOnRealoadWeaponEvent(player.activeWeapon.GetCurrentWeapon, 0);
+            player.PlayerReloadWeaponEvent.CallOnRealoadWeaponEvent(player.PlayerActiveWeapon.GetCurrentWeapon, 0);
         }
     }
 
@@ -287,13 +287,13 @@ public class PlayerControl : MonoBehaviour
     {
         List<Weapon> tempWeaponList = new List<Weapon>();
 
-        Weapon currentWeapon = player.weaponList[currentWeaponIndex - 1];
+        Weapon currentWeapon = player.WeaponList[currentWeaponIndex - 1];
         currentWeapon.WeaponListPosition = 1;
         tempWeaponList.Add(currentWeapon);
 
         int index = 2;
 
-        foreach (Weapon weapon in player.weaponList)
+        foreach (Weapon weapon in player.WeaponList)
         {
             if (weapon == currentWeapon)
                 continue;
@@ -303,7 +303,7 @@ public class PlayerControl : MonoBehaviour
             index++;
         }
 
-        player.weaponList = tempWeaponList;
+        player.WeaponList = tempWeaponList;
 
         currentWeaponIndex = 1;
 

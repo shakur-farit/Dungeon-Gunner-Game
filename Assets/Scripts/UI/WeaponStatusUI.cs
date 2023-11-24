@@ -27,29 +27,29 @@ public class WeaponStatusUI : MonoBehaviour
 
     private void OnEnable()
     {
-        player.setActiveWeaponEvent.OnSetActiveWeapon += SetActiveWeaponEvent_OnSetActiveWeapon;
+        player.PlayerSetActiveWeaponEvent.OnSetActiveWeapon += SetActiveWeaponEvent_OnSetActiveWeapon;
 
-        player.weaponFiredEvent.OnWeaponFired += WeaponFiredEvent_OnWeaponFired;
+        player.PlayerWeaponFiredEvent.OnWeaponFired += WeaponFiredEvent_OnWeaponFired;
 
-        player.reloadWeaponEvent.OnReloadWeapon += ReloadWeaponEvent_OnReloadWeapon;
+        player.PlayerReloadWeaponEvent.OnReloadWeapon += ReloadWeaponEvent_OnReloadWeapon;
 
-        player.weaponReloadedEvent.OnWeaponReloaded += WeaponReloadedEvent_OnWeaponReloaded;
+        player.PlayerWeaponReloadedEvent.OnWeaponReloaded += WeaponReloadedEvent_OnWeaponReloaded;
     }
 
     private void OnDisable()
     {
-        player.setActiveWeaponEvent.OnSetActiveWeapon -= SetActiveWeaponEvent_OnSetActiveWeapon;
+        player.PlayerSetActiveWeaponEvent.OnSetActiveWeapon -= SetActiveWeaponEvent_OnSetActiveWeapon;
 
-        player.weaponFiredEvent.OnWeaponFired -= WeaponFiredEvent_OnWeaponFired;
+        player.PlayerWeaponFiredEvent.OnWeaponFired -= WeaponFiredEvent_OnWeaponFired;
 
-        player.reloadWeaponEvent.OnReloadWeapon -= ReloadWeaponEvent_OnReloadWeapon;
+        player.PlayerReloadWeaponEvent.OnReloadWeapon -= ReloadWeaponEvent_OnReloadWeapon;
 
-        player.weaponReloadedEvent.OnWeaponReloaded -= WeaponReloadedEvent_OnWeaponReloaded;
+        player.PlayerWeaponReloadedEvent.OnWeaponReloaded -= WeaponReloadedEvent_OnWeaponReloaded;
     }
 
     private void Start()
     {
-        SetActiveWeapon(player.activeWeapon.GetCurrentWeapon);
+        SetActiveWeapon(player.PlayerActiveWeapon.GetCurrentWeapon);
     }
 
     private void SetActiveWeaponEvent_OnSetActiveWeapon(SetActiveWeaponEvent setActiveWeaponEvent, 
@@ -103,7 +103,7 @@ public class WeaponStatusUI : MonoBehaviour
 
     private void WeaponReloaded(Weapon weapon)
     {
-       if(player.activeWeapon.GetCurrentWeapon == weapon)
+       if(player.PlayerActiveWeapon.GetCurrentWeapon == weapon)
        {
            UpdateReloadText(weapon);
            UpdateAmmoText(weapon);

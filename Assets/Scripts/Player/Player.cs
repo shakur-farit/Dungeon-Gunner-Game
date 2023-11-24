@@ -1,8 +1,12 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Health))]
+[RequireComponent(typeof(HealthEvent))]
+[RequireComponent(typeof(DestroyedEvent))]
+[RequireComponent(typeof(Destroyed))]
 [RequireComponent(typeof(PlayerControl))]
 [RequireComponent(typeof(MovementToPosition))]
 [RequireComponent(typeof(MovementToPositionEvent))]
@@ -30,49 +34,73 @@ using UnityEngine.Rendering;
 [DisallowMultipleComponent]
 public class Player : MonoBehaviour
 {
-    [HideInInspector] public PlayerDetailsSO playerDetails;
-    [HideInInspector] public Health health;
-    [HideInInspector] public MovementToPositionEvent movementToPositionEvent;
-    [HideInInspector] public MovementByVelocityEvent movementByVelocityEvent;
-    [HideInInspector] public IdleEvent idleEvent;
-    [HideInInspector] public AimWeaponEvent aimWeaponEvent;
-    [HideInInspector] public SetActiveWeaponEvent setActiveWeaponEvent;
-    [HideInInspector] public FireWeaponEvent fireWeaponEvent;
-    [HideInInspector] public FireWeapon fireWeapon;
-    [HideInInspector] public ReloadWeaponEvent reloadWeaponEvent;
-    [HideInInspector] public WeaponReloadedEvent weaponReloadedEvent;
-    [HideInInspector] public ReloadWeapon reloadWeapon;
-    [HideInInspector] public WeaponFiredEvent weaponFiredEvent;
-    [HideInInspector] public ActiveWeapon activeWeapon;
-    [HideInInspector] public SpriteRenderer spriteRenderer;
-    [HideInInspector] public Animator animator;
+    [HideInInspector] public PlayerDetailsSO PlayerDetails;
+    [HideInInspector] public Health PlayerHealth;
+    [HideInInspector] public HealthEvent PlayerHealthEvent;
+    [HideInInspector] public DestroyedEvent PlayerDestroyedEvent;
+    [HideInInspector] public MovementToPositionEvent PlayerMovementToPositionEvent;
+    [HideInInspector] public MovementByVelocityEvent PlayerMovementByVelocityEvent;
+    [HideInInspector] public IdleEvent PlayerIdleEvent;
+    [HideInInspector] public AimWeaponEvent PlayerAimWeaponEvent;
+    [HideInInspector] public SetActiveWeaponEvent PlayerSetActiveWeaponEvent;
+    [HideInInspector] public FireWeaponEvent PlayerFireWeaponEvent;
+    [HideInInspector] public FireWeapon PlayerFireWeapon;
+    [HideInInspector] public ReloadWeaponEvent PlayerReloadWeaponEvent;
+    [HideInInspector] public WeaponReloadedEvent PlayerWeaponReloadedEvent;
+    [HideInInspector] public ReloadWeapon PlayerReloadWeapon;
+    [HideInInspector] public WeaponFiredEvent PlayerWeaponFiredEvent;
+    [HideInInspector] public ActiveWeapon PlayerActiveWeapon;
+    [HideInInspector] public SpriteRenderer PlayerSpriteRenderer;
+    [HideInInspector] public Animator PlayerAnimator;
 
-    public List<Weapon> weaponList = new List<Weapon>();
+    public List<Weapon> WeaponList = new List<Weapon>();
 
     public Vector3 GetPlayerPosition => transform.position;
 
     private void Awake()
     {
-        health = GetComponent<Health>();
-        movementToPositionEvent = GetComponent<MovementToPositionEvent>();
-        movementByVelocityEvent = GetComponent<MovementByVelocityEvent>();
-        idleEvent = GetComponent<IdleEvent>();
-        aimWeaponEvent = GetComponent<AimWeaponEvent>();
-        setActiveWeaponEvent = GetComponent<SetActiveWeaponEvent>();
-        fireWeaponEvent = GetComponent<FireWeaponEvent>();
-        fireWeapon = GetComponent<FireWeapon>();
-        weaponFiredEvent = GetComponent<WeaponFiredEvent>();
-        reloadWeaponEvent = GetComponent<ReloadWeaponEvent>();
-        weaponReloadedEvent = GetComponent<WeaponReloadedEvent>();
-        reloadWeapon = GetComponent<ReloadWeapon>();
-        activeWeapon = GetComponent<ActiveWeapon>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
+        PlayerHealth = GetComponent<Health>();
+        PlayerHealthEvent = GetComponent<HealthEvent>();
+        PlayerDestroyedEvent = GetComponent<DestroyedEvent>();
+        PlayerMovementToPositionEvent = GetComponent<MovementToPositionEvent>();
+        PlayerMovementByVelocityEvent = GetComponent<MovementByVelocityEvent>();
+        PlayerIdleEvent = GetComponent<IdleEvent>();
+        PlayerAimWeaponEvent = GetComponent<AimWeaponEvent>();
+        PlayerSetActiveWeaponEvent = GetComponent<SetActiveWeaponEvent>();
+        PlayerFireWeaponEvent = GetComponent<FireWeaponEvent>();
+        PlayerFireWeapon = GetComponent<FireWeapon>();
+        PlayerWeaponFiredEvent = GetComponent<WeaponFiredEvent>();
+        PlayerReloadWeaponEvent = GetComponent<ReloadWeaponEvent>();
+        PlayerWeaponReloadedEvent = GetComponent<WeaponReloadedEvent>();
+        PlayerReloadWeapon = GetComponent<ReloadWeapon>();
+        PlayerActiveWeapon = GetComponent<ActiveWeapon>();
+        PlayerSpriteRenderer = GetComponent<SpriteRenderer>();
+        PlayerAnimator = GetComponent<Animator>();
+    }
+
+    private void OnEnable()
+    {
+        PlayerHealthEvent.OnHealthChanged += HealthEvent_OnHealthChanged;  
+    }
+
+    private void OnDisable()
+    {
+        PlayerHealthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged;
+    }
+
+    private void HealthEvent_OnHealthChanged(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
+    {
+        Debug.Log("Health Amount = " + healthEventArgs.HealthAmount);
+
+        if(healthEventArgs.HealthAmount <= 0f)
+        {
+            PlayerDestroyedEvent.CallDestroyedEvent(true);
+        }
     }
 
     public void Initialize(PlayerDetailsSO playerDetails)
     {
-        this.playerDetails = playerDetails;
+        this.PlayerDetails = playerDetails;
 
         CreatePlayerStartingWeapons();
 
@@ -81,9 +109,9 @@ public class Player : MonoBehaviour
 
     private void CreatePlayerStartingWeapons()
     {
-        weaponList.Clear();
+        WeaponList.Clear();
 
-        foreach (WeaponDetailsSO weaponDetails in playerDetails.startingWeaponList)
+        foreach (WeaponDetailsSO weaponDetails in PlayerDetails.startingWeaponList)
         {
             AddWeaponToPlayer(weaponDetails);
         }
@@ -100,17 +128,17 @@ public class Player : MonoBehaviour
             IsWeaponReloading = false
         };
 
-        weaponList.Add(weapon);
+        WeaponList.Add(weapon);
 
-        weapon.WeaponListPosition = weaponList.Count;
+        weapon.WeaponListPosition = WeaponList.Count;
 
-        setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon);
+        PlayerSetActiveWeaponEvent.CallSetActiveWeaponEvent(weapon);
 
         return weapon;
     }
 
     private void SetPlayerHealth()
     {
-        health.SetStartingHealth = playerDetails.playerHealthAmount;
+        PlayerHealth.SetStartingHealth = PlayerDetails.playerHealthAmount;
     }
 }

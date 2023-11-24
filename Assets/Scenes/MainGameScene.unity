@@ -1149,7 +1149,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e2244acec8ad85e42bf04654c890467a, type: 2}
   - {fileID: 11400000, guid: 4ad59108281360c46974fad1c20fadb1, type: 2}
   - {fileID: 11400000, guid: c3a9e3641ee003845a3a48f7a4f922f7, type: 2}
-  currentDungeonLevelListIndex: 5
+  currentDungeonLevelListIndex: 0
   gameState: 0
   previousGameState: 0
 --- !u!81 &877200564
@@ -2780,10 +2780,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 0.03464755
     y: 0
-    width: 1
-    height: 1
+    width: 0.9303067
+    height: 0.99999994
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
