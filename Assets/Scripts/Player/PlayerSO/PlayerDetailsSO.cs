@@ -4,12 +4,21 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerDetails_", menuName = "Scriptable Objects/Player/Player Details")]
 public class PlayerDetailsSO : ScriptableObject
 {
+    [Header("Player Base Details")]
     public string playerCharacterName;
     public GameObject playerPrefab;
     public RuntimeAnimatorController runtimeAnimatorController;
+
+    [Header("Health")]
+    public int playerHealthAmount;
+    public bool isImmuneAfterHit = false;
+    public float hitImmunityTime;
+
+    [Header("Weapon")]
     public WeaponDetailsSO startingWeapon;
     public List<WeaponDetailsSO> startingWeaponList;
-    public int playerHealthAmount;
+
+    [Header("Other")]
     public Sprite playerMiniMapIcon;
     public Sprite playerHandSprite;
 
@@ -24,6 +33,10 @@ public class PlayerDetailsSO : ScriptableObject
         HelperUtilities.ValidateCheckPositiveValue(this, nameof(playerHealthAmount), playerHealthAmount,false);
         HelperUtilities.ValidateCheckNullValue(this, nameof(playerMiniMapIcon), playerMiniMapIcon);
         HelperUtilities.ValidateCheckNullValue(this,nameof(playerHandSprite), playerHandSprite);
+        if (isImmuneAfterHit)
+        {
+            HelperUtilities.ValidateCheckPositiveValue(this, nameof(hitImmunityTime), hitImmunityTime,false);
+        }
     }
 #endif
 }
