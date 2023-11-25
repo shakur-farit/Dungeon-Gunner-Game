@@ -14,8 +14,9 @@ public class PlayerControl : MonoBehaviour
     private float moveSpeed;
     private Coroutine playerRollCoroutine;
     private WaitForFixedUpdate waitForFixedUpdate;
-    private bool isPlayerRolling = false;
     private float playerRollColldownTimer = 0f;
+
+    [HideInInspector] public bool IsPlayerRolling = false;
 
     private void Awake()
     {
@@ -55,7 +56,7 @@ public class PlayerControl : MonoBehaviour
 
     private void Update()
     {
-        if (isPlayerRolling)
+        if (IsPlayerRolling)
             return;
 
         MovementInput();
@@ -103,7 +104,7 @@ public class PlayerControl : MonoBehaviour
     {
         float minDistance = 0.2f;
 
-        isPlayerRolling = true;
+        IsPlayerRolling = true;
 
         Vector3 targetPosition = player.transform.position + 
             (Vector3)direction * movementDetails.rollDistance;
@@ -111,12 +112,12 @@ public class PlayerControl : MonoBehaviour
         while(Vector3.Distance(player.transform.position, targetPosition) > minDistance)
         {
             player.PlayerMovementToPositionEvent.CallMovementToPositionEvent(targetPosition, 
-                player.transform.position, movementDetails.rollSpeed, direction, isPlayerRolling);
+                player.transform.position, movementDetails.rollSpeed, direction, IsPlayerRolling);
 
             yield return waitForFixedUpdate;
         }
 
-        isPlayerRolling = false;
+        IsPlayerRolling = false;
 
         playerRollColldownTimer = movementDetails.rollCooldownTime;
 
@@ -279,7 +280,7 @@ public class PlayerControl : MonoBehaviour
         {
             StopCoroutine(playerRollCoroutine);
 
-            isPlayerRolling = false;
+            IsPlayerRolling = false;
         }
     }
 

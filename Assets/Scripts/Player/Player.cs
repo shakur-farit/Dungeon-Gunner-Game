@@ -37,6 +37,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public Health PlayerHealth;
     [HideInInspector] public HealthEvent PlayerHealthEvent;
     [HideInInspector] public DestroyedEvent PlayerDestroyedEvent;
+    [HideInInspector] public PlayerControl PlayerControlReference;
     [HideInInspector] public MovementToPositionEvent PlayerMovementToPositionEvent;
     [HideInInspector] public MovementByVelocityEvent PlayerMovementByVelocityEvent;
     [HideInInspector] public IdleEvent PlayerIdleEvent;
@@ -61,6 +62,7 @@ public class Player : MonoBehaviour
         PlayerHealth = GetComponent<Health>();
         PlayerHealthEvent = GetComponent<HealthEvent>();
         PlayerDestroyedEvent = GetComponent<DestroyedEvent>();
+        PlayerControlReference = GetComponent<PlayerControl>();
         PlayerMovementToPositionEvent = GetComponent<MovementToPositionEvent>();
         PlayerMovementByVelocityEvent = GetComponent<MovementByVelocityEvent>();
         PlayerIdleEvent = GetComponent<IdleEvent>();
@@ -99,7 +101,7 @@ public class Player : MonoBehaviour
 
     public void Initialize(PlayerDetailsSO playerDetails)
     {
-        this.PlayerDetails = playerDetails;
+        PlayerDetails = playerDetails;
 
         CreatePlayerStartingWeapons();
 
