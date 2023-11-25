@@ -56,6 +56,7 @@ public static class Settings
     public const int defaultEnemyHealth = 20;
 
     // UI parametrs
+    public const float uiHeartSpacing = 16f;
     public const float uiAmmoIconSpacing = 4f;
 }
 

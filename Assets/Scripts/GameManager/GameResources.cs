@@ -32,6 +32,7 @@ public class GameResources : MonoBehaviour
     public TileBase[] enemyUnwalkableCollisionTileArray;
     public TileBase preferredEnemyPathTile;
     [Header("UI")]
+    public GameObject heartPrefab;
     public GameObject ammoIconPrefab;
 
 #if UNITY_EDITOR
