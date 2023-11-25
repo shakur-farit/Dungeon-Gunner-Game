@@ -93,8 +93,6 @@ public class Player : MonoBehaviour
 
     private void HealthEvent_OnHealthChanged(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
     {
-        Debug.Log("Health Amount = " + healthEventArgs.HealthAmount);
-
         if(healthEventArgs.HealthAmount <= 0f)
         {
             PlayerDestroyedEvent.CallDestroyedEvent(true);
