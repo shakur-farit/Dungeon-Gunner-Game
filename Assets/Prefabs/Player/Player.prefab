@@ -122,6 +122,8 @@ GameObject:
   - component: {fileID: 4266876554249685265}
   - component: {fileID: 253976281867604047}
   - component: {fileID: 8201460750033012439}
+  - component: {fileID: 1036313758164641470}
+  - component: {fileID: 7303986235350851211}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -373,6 +375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsDamageable: 1
+  EnemyReference: {fileID: 0}
 --- !u!114 &5465284185523115869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,22 +388,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fde870bfe5fdeaa42a774c92a7a678c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDetails: {fileID: 0}
-  health: {fileID: 0}
-  movementToPositionEvent: {fileID: 0}
-  movementByVelocityEvent: {fileID: 0}
-  idleEvent: {fileID: 0}
-  aimWeaponEvent: {fileID: 0}
-  setActiveWeaponEvent: {fileID: 0}
-  fireWeaponEvent: {fileID: 0}
-  fireWeapon: {fileID: 0}
-  reloadWeaponEvent: {fileID: 0}
-  weaponReloadedEvent: {fileID: 0}
-  reloadWeapon: {fileID: 0}
-  weaponFiredEvent: {fileID: 0}
-  activeWeapon: {fileID: 0}
-  spriteRenderer: {fileID: 0}
-  animator: {fileID: 0}
+  PlayerDetails: {fileID: 0}
+  PlayerHealth: {fileID: 0}
+  PlayerHealthEvent: {fileID: 0}
+  PlayerDestroyedEvent: {fileID: 0}
+  PlayerControlReference: {fileID: 0}
+  PlayerMovementToPositionEvent: {fileID: 0}
+  PlayerMovementByVelocityEvent: {fileID: 0}
+  PlayerIdleEvent: {fileID: 0}
+  PlayerAimWeaponEvent: {fileID: 0}
+  PlayerSetActiveWeaponEvent: {fileID: 0}
+  PlayerFireWeaponEvent: {fileID: 0}
+  PlayerFireWeapon: {fileID: 0}
+  PlayerReloadWeaponEvent: {fileID: 0}
+  PlayerWeaponReloadedEvent: {fileID: 0}
+  PlayerReloadWeapon: {fileID: 0}
+  PlayerWeaponFiredEvent: {fileID: 0}
+  PlayerActiveWeapon: {fileID: 0}
+  PlayerSpriteRenderer: {fileID: 0}
+  PlayerAnimator: {fileID: 0}
 --- !u!114 &4846028420949502368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -623,6 +629,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementDetails: {fileID: 11400000, guid: 92c901b3c724fd940b89e3db0bf2606c, type: 2}
+  IsPlayerRolling: 0
 --- !u!114 &4266876554249685265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -659,6 +666,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 576aed0e107154f709b6a37d4e7ee795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1036313758164641470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2429853594752003799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 301911c1a0856fa44aa54b0b72636433, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _contactDamageAmount: 10
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 131072
+--- !u!114 &7303986235350851211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2429853594752003799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7028fdec4f039a1438e5524553c9b5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _contactDamageAmount: 0
 --- !u!1 &2793051193500568816
 GameObject:
   m_ObjectHideFlags: 0

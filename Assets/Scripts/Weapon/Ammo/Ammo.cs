@@ -101,7 +101,8 @@ public class Ammo : MonoBehaviour, IFireable
         }
     }
 
-    private void SetFireDirection(AmmoDetailsSO ammoDetails, float aimAngle, float weaponAimAngle, Vector3 weaponAimDirectionVector)
+    private void SetFireDirection(AmmoDetailsSO ammoDetails, float aimAngle, 
+        float weaponAimAngle, Vector3 weaponAimDirectionVector)
     {
         float randomSpread = Random.Range(ammoDetails.ammoSpreadMin, ammoDetails.ammoSpreadMax);
 

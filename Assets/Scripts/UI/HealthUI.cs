@@ -36,13 +36,14 @@ public class HealthUI : MonoBehaviour
         ClearHealthBar();
 
         int heartSpriteAmount = GameResources.Instance.currentPlayer.playerDetails.playerHealthAmount;
+
         int healthHearts = Mathf.CeilToInt(healthEventArgs.HealthPercent * heartSpriteAmount / 20);
 
         for (int i = 0; i < healthHearts; i++)
         {
             GameObject heart = Instantiate(GameResources.Instance.heartPrefab, transform);
 
-            heart.GetComponent<RectTransform>().anchoredPosition = new Vector2(Settings.uiHeartSpacing *i, 0f);
+            heart.GetComponent<RectTransform>().anchoredPosition = new Vector2(Settings.uiHeartSpacing * i, 0f);
 
             _healthHeartList.Add(heart);
         }

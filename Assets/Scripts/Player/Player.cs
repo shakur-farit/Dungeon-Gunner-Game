@@ -4,6 +4,8 @@ using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(HealthEvent))]
+[RequireComponent(typeof(DealContactDamage))]
+[RequireComponent(typeof(ReceiveContactDamage))]
 [RequireComponent(typeof(DestroyedEvent))]
 [RequireComponent(typeof(Destroyed))]
 [RequireComponent(typeof(PlayerControl))]

@@ -52,7 +52,6 @@ public class Health : MonoBehaviour
                 _immunityTime = _player.PlayerDetails.hitImmunityTime;
                 _spriteRenderer = _player.PlayerSpriteRenderer;
             }
-
             return;
         }
 
@@ -65,34 +64,25 @@ public class Health : MonoBehaviour
                 _spriteRenderer = EnemyReference.SpriteRendererArray[0];
             }
         }
-
     }
 
     public void TakeDamage(int damageAmount)
     {
-        if (_player == null)
-            return;
+        bool isRolling = false;
 
-        bool isRolling = _player.PlayerControlReference.IsPlayerRolling;
+        if (_player != null)
+            isRolling = _player.PlayerControlReference.IsPlayerRolling;
 
         if (isRolling)
-        {
-            Debug.Log("Dodging the damage");
             return;
-        }
-
+   
         if (!IsDamageable)
-        {
-            Debug.Log("Avoided damage due to immunity");
-        }
+            return;
 
-        if (IsDamageable)
-        {
-            _currentHealth -= damageAmount;
-            CallHealthEvent(damageAmount);
+         _currentHealth -= damageAmount;
+         CallHealthEvent(damageAmount);
 
-            PostHitImmunity();
-        }
+         PostHitImmunity();  
     }
 
     private void PostHitImmunity()
@@ -135,6 +125,6 @@ public class Health : MonoBehaviour
 
     private void CallHealthEvent(int damageAmount)
     {
-        _healthEvent.CallHealthChangedEvent(_currentHealth / _startingHealth, _currentHealth, damageAmount);
+        _healthEvent.CallHealthChangedEvent((float)_currentHealth / (float)_startingHealth, _currentHealth, damageAmount);
     }
 }

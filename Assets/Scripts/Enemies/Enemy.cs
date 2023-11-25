@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -31,6 +30,7 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(DestroyedEvent))]
 [RequireComponent(typeof(Destroyed))]
+[RequireComponent(typeof(DealContactDamage))]
 [DisallowMultipleComponent]
 public class Enemy : MonoBehaviour
 {
@@ -81,7 +81,7 @@ public class Enemy : MonoBehaviour
 
     private void HealthEvent_OnHealthLost(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
     {
-        if(healthEventArgs.HealthAmount <= 0)
+        if (healthEventArgs.HealthAmount <= 0)
         {
             EnemyDestoryed();
         }

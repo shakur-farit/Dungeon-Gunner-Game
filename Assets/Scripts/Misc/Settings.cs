@@ -58,5 +58,8 @@ public static class Settings
     // UI parametrs
     public const float uiHeartSpacing = 16f;
     public const float uiAmmoIconSpacing = 4f;
+
+    // Contact damage parametrs
+    public const float contancDamageCollisionResetDellay = 0.5f;
 }
 
