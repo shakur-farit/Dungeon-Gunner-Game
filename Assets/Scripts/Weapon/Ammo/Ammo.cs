@@ -42,7 +42,14 @@ public class Ammo : MonoBehaviour, IFireable
         _ammoRange -= distanceVector.magnitude;
 
         if (_ammoRange < 0)
+        {
+            if (_ammoDetails.isPlayerAmmo)
+            {
+                StaticEventHandler.CallMultiplierEvent(false);
+            }
+
             DisableAmmo();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -61,10 +68,28 @@ public class Ammo : MonoBehaviour, IFireable
     {
         Health health = collision.GetComponent<Health>();
 
+        bool enemyHit = false;
+
         if (health != null)
         {
             _isColliding = true;
             health.TakeDamage(_ammoDetails.ammoDamage);
+
+            if(health.EnemyReference != null)
+            {
+                enemyHit = true;
+            }
+        }
+
+        if (_ammoDetails.isPlayerAmmo)
+        {
+            if (enemyHit)
+            {
+                StaticEventHandler.CallMultiplierEvent(true);
+                return;
+            }
+
+            StaticEventHandler.CallMultiplierEvent(false);
         }
     }
     

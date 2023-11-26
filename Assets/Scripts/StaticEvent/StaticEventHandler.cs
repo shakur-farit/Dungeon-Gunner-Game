@@ -34,11 +34,22 @@ public static class StaticEventHandler
 
     public static event Action<ScoreChangedArgs> OnScoreChanged;
 
-    public static void CallScoreChangedEvent(long score)
+    public static void CallScoreChangedEvent(long score, int mulitiplier)
     {
         OnScoreChanged?.Invoke(new ScoreChangedArgs()
         {
-            Score = score
+            Score = score,
+            Multiplier = mulitiplier
+        });
+    }
+
+    public static event Action<MultiplierArgs> OnMultiplier;
+
+    public static void CallMultiplierEvent(bool multiplier)
+    {
+        OnMultiplier?.Invoke(new MultiplierArgs()
+        {
+            Multiplier = multiplier
         });
     }
 }
@@ -61,4 +72,10 @@ public class PointScoreArgs : EventArgs
 public class ScoreChangedArgs : EventArgs
 {
     public long Score;
+    public int Multiplier;
+}
+
+public class MultiplierArgs : EventArgs
+{
+    public bool Multiplier;
 }

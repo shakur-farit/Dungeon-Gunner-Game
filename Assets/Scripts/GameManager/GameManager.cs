@@ -6,11 +6,13 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 {
     [SerializeField] private List<DungeonLevelSO> dungeonLevelList;
     [SerializeField] private int currentDungeonLevelListIndex = 0;
+
     private Room currentRoom;
     private Room previousRoom;
     private PlayerDetailsSO playerDetails;
     private Player player;
     private long gameScore;
+    private int scoreMultiplier;
 
     [HideInInspector] public GameState gameState;
     [HideInInspector] public GameState previousGameState;
@@ -52,6 +54,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         StaticEventHandler.OnRoomChanged += CallStaticEventHandler_OnRoomChanged;
 
         StaticEventHandler.OnPointScored += CallStaticEventHandler_OnPointScored;
+
+        StaticEventHandler.OnMultiplier += CallStaticEventHandler_OnMultiplier;
     }
 
     private void OnDisable()
@@ -59,6 +63,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         StaticEventHandler.OnRoomChanged -= CallStaticEventHandler_OnRoomChanged;
 
         StaticEventHandler.OnPointScored -= CallStaticEventHandler_OnPointScored;
+
+        StaticEventHandler.OnMultiplier -= CallStaticEventHandler_OnMultiplier;
     }
 
     private void CallStaticEventHandler_OnRoomChanged(RoomChangedEventArgs roomChangedEventArgs)
@@ -68,9 +74,20 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private void CallStaticEventHandler_OnPointScored(PointScoreArgs pointScoreArgs)
     {
-        gameScore += pointScoreArgs.Points;
+        gameScore += pointScoreArgs.Points * scoreMultiplier;
 
-        StaticEventHandler.CallScoreChangedEvent(gameScore);
+        StaticEventHandler.CallScoreChangedEvent(gameScore, scoreMultiplier);
+    }
+
+    private void CallStaticEventHandler_OnMultiplier(MultiplierArgs multiplierArgs)
+    {
+        scoreMultiplier = multiplierArgs.Multiplier
+            ? scoreMultiplier + 1
+            : scoreMultiplier - 1;
+
+        scoreMultiplier = Mathf.Clamp(scoreMultiplier, 1, 30);
+
+        StaticEventHandler.CallScoreChangedEvent(gameScore, scoreMultiplier);
     }
 
     private void Start()
@@ -79,6 +96,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         gameState = GameState.gameStarted;
 
         gameScore = 0;
+
+        scoreMultiplier = 1;
     }
 
     private void Update()

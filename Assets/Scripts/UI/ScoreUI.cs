@@ -22,6 +22,7 @@ public class ScoreUI : MonoBehaviour
 
     private void CallStaticEventHandler_OnScoredChanged(ScoreChangedArgs scoreChangedArgs)
     {
-        _scoreText.text = "Score: " + scoreChangedArgs.Score.ToString("###,###0");
+        _scoreText.text = "Score: " + scoreChangedArgs.Score.ToString("###,###0") +
+            "\nMultiplier: x" + scoreChangedArgs.Multiplier;
     }
 }
