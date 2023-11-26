@@ -117,14 +117,16 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
 
         enemy.GetComponent<Enemy>().EnemyInitialization(enemyDetails, _enemiesSpawnedSoFar, dungeonLevel);
 
-        enemy.GetComponent<DestroyedEvent>().OnDestoryedEvent += Enemy_OnDestroyed;
+        enemy.GetComponent<DestroyedEvent>().OnDestoryedEvent += CallEnemy_OnDestroyed;
     }
 
-    private void Enemy_OnDestroyed(DestroyedEvent destroyedEvent, DestoryedEventArgs destoryedEventArgs)
+    private void CallEnemy_OnDestroyed(DestroyedEvent destroyedEvent, DestoryedEventArgs destoryedEventArgs)
     {
-        destroyedEvent.OnDestoryedEvent -= Enemy_OnDestroyed;
+        destroyedEvent.OnDestoryedEvent -= CallEnemy_OnDestroyed;
 
         _currentEnemyCount--;
+
+        StaticEventHandler.CallPointScoredEvent(destoryedEventArgs.Points);
 
         if (_currentEnemyCount <= 0 && _enemiesSpawnedSoFar == _enemiesToSpawn)
         {
@@ -144,7 +146,7 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
 
             _currentRoom.instantiatedRoom.UnlockDoors(Settings.doorUnlockDelay);
 
-            StaticEventHandler.CalloomEnemiesDefeatedEvent(_currentRoom);
+            StaticEventHandler.CallEnemiesDefeatedEvent(_currentRoom);
         }
     }
 }

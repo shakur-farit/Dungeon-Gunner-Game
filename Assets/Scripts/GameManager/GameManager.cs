@@ -10,6 +10,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private Room previousRoom;
     private PlayerDetailsSO playerDetails;
     private Player player;
+    private long gameScore;
 
     [HideInInspector] public GameState gameState;
     [HideInInspector] public GameState previousGameState;
@@ -48,23 +49,36 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private void OnEnable()
     {
-        StaticEventHandler.OnRoomChanged += StaticEventHandler_OnRoomChanged;
+        StaticEventHandler.OnRoomChanged += CallStaticEventHandler_OnRoomChanged;
+
+        StaticEventHandler.OnPointScored += CallStaticEventHandler_OnPointScored;
     }
 
     private void OnDisable()
     {
-        StaticEventHandler.OnRoomChanged -= StaticEventHandler_OnRoomChanged;
+        StaticEventHandler.OnRoomChanged -= CallStaticEventHandler_OnRoomChanged;
+
+        StaticEventHandler.OnPointScored -= CallStaticEventHandler_OnPointScored;
     }
 
-    private void StaticEventHandler_OnRoomChanged(RoomChangedEventArgs roomChangedEventArgs)
+    private void CallStaticEventHandler_OnRoomChanged(RoomChangedEventArgs roomChangedEventArgs)
     {
         SetCurrentRoom = roomChangedEventArgs.Room;
+    }
+
+    private void CallStaticEventHandler_OnPointScored(PointScoreArgs pointScoreArgs)
+    {
+        gameScore += pointScoreArgs.Points;
+
+        StaticEventHandler.CallScoreChangedEvent(gameScore);
     }
 
     private void Start()
     {
         previousGameState = GameState.gameStarted;
         gameState = GameState.gameStarted;
+
+        gameScore = 0;
     }
 
     private void Update()

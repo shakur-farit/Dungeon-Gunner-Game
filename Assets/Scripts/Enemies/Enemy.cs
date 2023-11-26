@@ -90,7 +90,7 @@ public class Enemy : MonoBehaviour
     private void EnemyDestoryed()
     {
         DestroyedEvent destroyedEvent = GetComponent<DestroyedEvent>();
-        destroyedEvent.CallDestroyedEvent(false);
+        destroyedEvent.CallDestroyedEvent(false, _health.GetStartingHealth);
     }
 
     public void EnemyInitialization(EnemyDetailsSO enemyDetails, int enemySpawnNumber,
