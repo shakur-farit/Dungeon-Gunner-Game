@@ -15,6 +15,7 @@ public class PlayerControl : MonoBehaviour
     private Coroutine playerRollCoroutine;
     private WaitForFixedUpdate waitForFixedUpdate;
     private float playerRollColldownTimer = 0f;
+    private bool isPlayerMovementDisable = false;
 
     [HideInInspector] public bool IsPlayerRolling = false;
 
@@ -56,6 +57,9 @@ public class PlayerControl : MonoBehaviour
 
     private void Update()
     {
+        if (isPlayerMovementDisable)
+            return;
+
         if (IsPlayerRolling)
             return;
 
@@ -282,6 +286,17 @@ public class PlayerControl : MonoBehaviour
 
             IsPlayerRolling = false;
         }
+    }
+
+    public void EnablePlayerMovement()
+    {
+        isPlayerMovementDisable = false;
+    }
+
+    public void DisablePlayerMovement()
+    {
+        isPlayerMovementDisable = true;
+        player.PlayerIdleEvent.CallIdleEvent();
     }
 
     private void SetCurrentWeaponToFirstInTheList()
