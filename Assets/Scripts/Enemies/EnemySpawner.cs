@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -57,6 +58,12 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
 
     private void SpawnEnemies()
     {
+        if(GameManager.Instance.gameState == GameState.bossStage)
+        {
+            GameManager.Instance.previousGameState = GameState.bossStage;
+            GameManager.Instance.gameState = GameState.engagingBoss;
+        }
+
         if(GameManager.Instance.gameState == GameState.playingLevel)
         {
             GameManager.Instance.previousGameState = GameState.playingLevel;
@@ -117,12 +124,12 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
 
         enemy.GetComponent<Enemy>().EnemyInitialization(enemyDetails, _enemiesSpawnedSoFar, dungeonLevel);
 
-        enemy.GetComponent<DestroyedEvent>().OnDestoryedEvent += CallEnemy_OnDestroyed;
+        enemy.GetComponent<DestroyedEvent>().OnDestoryed += CallEnemy_OnDestroyed;
     }
 
     private void CallEnemy_OnDestroyed(DestroyedEvent destroyedEvent, DestoryedEventArgs destoryedEventArgs)
     {
-        destroyedEvent.OnDestoryedEvent -= CallEnemy_OnDestroyed;
+        destroyedEvent.OnDestoryed -= CallEnemy_OnDestroyed;
 
         _currentEnemyCount--;
 

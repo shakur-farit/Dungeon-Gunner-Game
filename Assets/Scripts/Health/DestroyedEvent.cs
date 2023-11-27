@@ -4,11 +4,11 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class DestroyedEvent : MonoBehaviour
 {
-    public event Action<DestroyedEvent, DestoryedEventArgs> OnDestoryedEvent;
+    public event Action<DestroyedEvent, DestoryedEventArgs> OnDestoryed;
 
     public void CallDestroyedEvent(bool playerDied, int points)
     {
-        OnDestoryedEvent?.Invoke(this, new DestoryedEventArgs()
+        OnDestoryed?.Invoke(this, new DestoryedEventArgs()
         {
             PlayerDied = playerDied,
             Points = points

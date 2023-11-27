@@ -13,12 +13,12 @@ public class Destroyed : MonoBehaviour
 
     private void OnEnable()
     {
-        _destroyedEvent.OnDestoryedEvent += DestroyedEvent_OnDestroyed;
+        _destroyedEvent.OnDestoryed += DestroyedEvent_OnDestroyed;
     }
 
     private void OnDisable()
     {
-        _destroyedEvent.OnDestoryedEvent -= DestroyedEvent_OnDestroyed;
+        _destroyedEvent.OnDestoryed -= DestroyedEvent_OnDestroyed;
     }
 
     private void DestroyedEvent_OnDestroyed(DestroyedEvent destroyedEvent, DestoryedEventArgs destoryedEventArgs)
