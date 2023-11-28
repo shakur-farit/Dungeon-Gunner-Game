@@ -292,12 +292,12 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         yield return StartCoroutine(Fade(0f, 1f, 0.5f, new Color(0f,0f,0f, 0.4f)));
 
-        string text = "WELL DONE " + GameResources.Instance.currentPlayer.playerName +
+        string text = "WELL DONE " + GameResources.Instance.currentPlayer.playerName.ToUpper() +
             " YOU'VE SURVIVED... SO FAR.\n\nNOW FIND AND DEFEAT THE BOSS. DON'T DISAPPOINT ME!";
 
         yield return StartCoroutine(DisplayMessagerRoutine(text, Color.white, 5f));
 
-        yield return StartCoroutine(Fade(1f, 0f, 0.5f, Color.black));
+        yield return StartCoroutine(Fade(1f, 0f, 0.5f, new Color(0f,0f,0f,0.4f)));
     }
 
     private IEnumerator LevelCompleted()
