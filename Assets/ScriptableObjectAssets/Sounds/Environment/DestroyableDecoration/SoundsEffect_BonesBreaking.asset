@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 471642fb07d4a4600b751afff0edf8cb, type: 3}
+  m_Name: SoundsEffect_BonesBreaking
+  m_EditorClassIdentifier: 
+  SoundEffectName: Bones Breaking
+  SoundPrefab: {fileID: 4617361661202144304, guid: 93c0e34e1ee644378a8839d587cdced1, type: 3}
+  SoundEffectClip: {fileID: 8300000, guid: a359800f30ed2d04cba7001ef7af6855, type: 3}
+  SoundEffectPitchRandomVariantionMin: 1
+  SoundEffectPitchRandomVariantionMax: 1.2
+  SoundEffectVolume: 0.44

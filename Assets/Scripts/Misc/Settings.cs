@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public static class Settings 
 {
@@ -35,6 +36,10 @@ public static class Settings
 
     // Door animation parameters
     public static int open = Animator.StringToHash("open");
+
+    // Damageable decoration animation parametrs
+    public static int destroy = Animator.StringToHash("destroy");
+    public static String stateDestroyed = "Destroyed";
 
     // Game object tags
     public const string playerTag = "Player";
