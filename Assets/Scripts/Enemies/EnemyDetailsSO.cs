@@ -28,6 +28,7 @@ public class EnemyDetailsSO : ScriptableObject
     public EnemyHealthDetails[] EnemyHealthDetailsArray;
     public bool IsImmunetAfetrHit = false;
     public float HitImmunityTime;
+    public bool IsHealthBarDisplayed = false;
 
 #if UNITY_EDITOR
     private void OnValidate()

@@ -5,6 +5,9 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Health : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] private HealthBar _healthBar;
+
     private int _startingHealth;
     private int _currentHealth;
     private HealthEvent _healthEvent;
@@ -62,6 +65,16 @@ public class Health : MonoBehaviour
                 _immunityTime = EnemyReference.EnemyDetails.HitImmunityTime;
                 _spriteRenderer = EnemyReference.SpriteRendererArray[0];
             }
+
+            if (_healthBar != null)
+            {
+                _healthBar.DisableHealthBar();
+
+                if (EnemyReference.EnemyDetails.IsHealthBarDisplayed == true)
+                {
+                    _healthBar.EnableHealthBar();
+                }
+            }
         }
     }
 
@@ -82,6 +95,11 @@ public class Health : MonoBehaviour
          CallHealthEvent(damageAmount);
 
          PostHitImmunity();  
+
+        if(_healthBar != null && EnemyReference.EnemyDetails.IsHealthBarDisplayed == true)
+        {
+            _healthBar.SetHealthBarValue((float)_currentHealth / (float)_startingHealth);
+        }
     }
 
     private void PostHitImmunity()
