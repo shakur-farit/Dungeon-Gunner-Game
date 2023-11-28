@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 [DisallowMultipleComponent]
 public class GameManager : SingletonMonobehaviour<GameManager>
@@ -143,43 +144,43 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private void HandleGameState()
     {
-        if (gameState == GameState.gameStarted)
+        Dictionary<GameState, Action> stateActions = new Dictionary<GameState, Action>();
+
+        stateActions[GameState.gameStarted] = () =>
         {
             PlayDungeonLevel(currentDungeonLevelListIndex);
             gameState = GameState.playingLevel;
             RoomEnemiesDefeated();
-            return;
-        }
+        };
 
-        if(gameState == GameState.levelCompleted)
+        stateActions[GameState.levelCompleted] = () =>
         {
             StartCoroutine(LevelCompleted());
-            return;
-        }
+        };
 
-        if(gameState == GameState.gameWon)
+        stateActions[GameState.gameWon] = () =>
         {
             if (previousGameState != GameState.gameWon)
                 StartCoroutine(GameWon());
+        };
 
-            return;
-        }
-
-        if(gameState == GameState.gameLost)
+        stateActions[GameState.gameLost] = () =>
         {
-            if(previousGameState != GameState.gameLost)
+            if (previousGameState != GameState.gameLost)
             {
-
                 StopAllCoroutines();
                 StartCoroutine(GameLost());
             }
+        };
 
-            return;
-        }
-
-        if(gameState == GameState.restartGame)
+        stateActions[GameState.restartGame] = () =>
         {
             RestartGame();
+        };
+
+        if (stateActions.TryGetValue(gameState, out var action))
+        {
+            action.Invoke();
         }
     }
 
@@ -202,19 +203,19 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             }
         }
 
-        if ((isDungeonClearOfRegularEnemies && bossRoom == null) ||
-            (isDungeonClearOfRegularEnemies && bossRoom.room.isClearedOfEnemies))
-        {
-            gameState = currentDungeonLevelListIndex < dungeonLevelList.Count - 1
-                ? GameState.levelCompleted
-                : GameState.gameWon;
-            return;
-        }
+        bool isDungeonClearOfRegularEnemiesAndBossCleared =
+            isDungeonClearOfRegularEnemies && (bossRoom == null || bossRoom.room.isClearedOfEnemies);
 
-        if (isDungeonClearOfRegularEnemies)
-        {
-            gameState = GameState.bossStage;
+        gameState = isDungeonClearOfRegularEnemiesAndBossCleared
+            ? (currentDungeonLevelListIndex < dungeonLevelList.Count - 1 
+                ? GameState.levelCompleted 
+                : GameState.gameWon)
+            : (isDungeonClearOfRegularEnemies 
+                ? GameState.bossStage 
+                : gameState);
 
+        if (gameState == GameState.bossStage)
+        {
             StartCoroutine(BossStage());
         }
     }
@@ -259,22 +260,12 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         messageText.SetText(text);
         messageText.color = textColor;
 
-        if(displaySeconds > 0f)
-        {
-            float timer = displaySeconds;
+        float timer = displaySeconds > 0f ? displaySeconds : float.MaxValue;
 
-            while(timer > 0f && !Input.GetKeyDown(KeyCode.Return))
-            {
-                timer -= Time.deltaTime;
-                yield return null;
-            }
-        }
-        else
+        while (timer > 0f && !Input.GetKeyDown(KeyCode.Return))
         {
-            while (!Input.GetKeyDown(KeyCode.Return))
-            {
-                yield return null;
-            }
+            timer -= Time.deltaTime;
+            yield return null;
         }
 
         yield return null;
@@ -308,12 +299,12 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         yield return StartCoroutine(Fade(0f, 1f, 0.5f, new Color(0f, 0f, 0f, 0.4f)));
 
-        string text = "WELL DONE " + GameResources.Instance.currentPlayer.playerName +
+        string text = "WELL DONE " + GameResources.Instance.currentPlayer.playerName.ToUpper() +
             "! \n\nYOU'VE SURVIVED THIS DUNGEON... BUT THIS ISN'T END YET.";
 
         yield return StartCoroutine(DisplayMessagerRoutine(text, Color.white, 5f));
 
-        text = "COLLECT ANY LOOT... THEN PRESS \"RETURN\"\n\n TO DESCEND FURTHER INTO THE DUNGEON";
+        text = "COLLECT ANY LOOT... THEN PRESS \"ENTER\"\n\n TO DESCEND FURTHER INTO THE DUNGEON";
 
         yield return StartCoroutine(DisplayMessagerRoutine(text, Color.white, 5f));
 
@@ -339,7 +330,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         yield return StartCoroutine(Fade(0f, 1f, 0.5f, Color.black));
 
-        string text = "WELL DONE " + GameResources.Instance.currentPlayer.playerName +
+        string text = "WELL DONE " + GameResources.Instance.currentPlayer.playerName.ToUpper() +
             "!\n\n YOU'VE SURVIVED IN AAAAALL MY DUNGEONS... I'M PROUD OF YOU!";
 
         yield return StartCoroutine(DisplayMessagerRoutine(text, Color.white, 5f));
@@ -348,7 +339,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         yield return StartCoroutine(DisplayMessagerRoutine(text, Color.white, 3f));
 
-        text = "PRESS \"RETURN\" TO RESTART THE GAME";
+        text = "PRESS \"ENTER\" TO RESTART THE GAME";
 
         yield return StartCoroutine(DisplayMessagerRoutine(text, Color.white, 0f));
 
@@ -369,7 +360,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             enemy.gameObject.SetActive(false);
         }
 
-        string text = "BAD LUCK " + GameResources.Instance.currentPlayer.playerName +
+        string text = "BAD LUCK " + GameResources.Instance.currentPlayer.playerName.ToUpper() +
             "\n\n I SEE THAT YOU ARE NOT AS GOOD AS YOU THOUGHT.\n\n MAYBE NEXT TIME";
 
         yield return StartCoroutine(DisplayMessagerRoutine(text, Color.white, 5f));
@@ -378,7 +369,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         yield return StartCoroutine(DisplayMessagerRoutine(text, Color.white, 3f));
 
-        text = "PRESS \"RETURN\" TO RESTART THE GAME";
+        text = "PRESS \"ENTER\" TO RESTART THE GAME";
 
         yield return StartCoroutine(DisplayMessagerRoutine(text, Color.white, 0f));
 

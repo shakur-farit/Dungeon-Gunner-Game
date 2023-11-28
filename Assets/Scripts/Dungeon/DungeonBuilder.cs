@@ -227,8 +227,9 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
             { Orientation.West, new Vector2Int(1, 0) },
         };
 
-        Vector2Int adjustment = orientationToAdjustment.TryGetValue(doorway.orientation, out var value) ? value :
-            Vector2Int.zero;
+        Vector2Int adjustment = orientationToAdjustment.TryGetValue(doorway.orientation, out var value) 
+            ? value 
+            : Vector2Int.zero;
 
         room.lowerBounds = parentDoorwayPosition + adjustment + room.templateLowerBounds - doorway.position;
         room.upperBounds = room.lowerBounds + room.templateUpperBounds - room.templateLowerBounds;

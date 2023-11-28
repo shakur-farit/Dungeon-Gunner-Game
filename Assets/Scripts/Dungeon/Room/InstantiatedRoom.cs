@@ -19,13 +19,16 @@ public class InstantiatedRoom : MonoBehaviour
     [HideInInspector] public Bounds roomColliderBounds;
     [HideInInspector] public int[,] aStarMovementPenalty;
 
-    private BoxCollider2D boxCollider;
+    [Header("Object References")]
+    [SerializeField] private GameObject _environmentGameObject;
+
+    private BoxCollider2D _boxCollider;
 
     private void Awake()
     {
-        boxCollider = GetComponent <BoxCollider2D>();
+        _boxCollider = GetComponent <BoxCollider2D>();
 
-        roomColliderBounds = boxCollider.bounds;
+        roomColliderBounds = _boxCollider.bounds;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -249,12 +252,24 @@ public class InstantiatedRoom : MonoBehaviour
 
     private void DisableRoomCollider()
     {
-        boxCollider.enabled = false;
+        _boxCollider.enabled = false;
     }
 
     private void EnableRoomCollider()
     {
-        boxCollider.enabled = true;
+        _boxCollider.enabled = true;
+    }
+
+    public void ActivateEnvironmentGameObject()
+    {
+        if(_environmentGameObject != null)
+            _environmentGameObject.SetActive(true);
+    }
+
+    public void DeactivateEnvironmentGameObject()
+    {
+        if (_environmentGameObject != null)
+            _environmentGameObject.SetActive(false);
     }
 
     public void LockDoors()
@@ -288,4 +303,11 @@ public class InstantiatedRoom : MonoBehaviour
 
         EnableRoomCollider();
     }
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        HelperUtilities.ValidateCheckNullValue(this, nameof(_environmentGameObject), _environmentGameObject);
+    }
+#endif
 }

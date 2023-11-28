@@ -23,6 +23,7 @@ public class DestroyableItem : MonoBehaviour
         _boxCollider = GetComponent<BoxCollider2D>();
         _healthEvent = GetComponent<HealthEvent>();
         _health = GetComponent<Health>();
+        _health.SetStartingHealth = _startingHealthAmount;
         _receiveContactDamage = GetComponent<ReceiveContactDamage>();
     }
 

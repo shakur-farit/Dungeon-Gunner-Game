@@ -46,35 +46,37 @@ public class Health : MonoBehaviour
         _player = GetComponent<Player>();
         EnemyReference = GetComponent<Enemy>();
 
-        if(_player != null)
+        if (_player != null)
         {
-            if (_player.PlayerDetails.isImmuneAfterHit)
-            {
-                _isImmuneAfterHit = true;
-                _immunityTime = _player.PlayerDetails.hitImmunityTime;
-                _spriteRenderer = _player.PlayerSpriteRenderer;
-            }
+            InitializeImmunity(_player.PlayerDetails.isImmuneAfterHit, 
+                _player.PlayerDetails.hitImmunityTime, 
+                _player.PlayerSpriteRenderer);
+
             return;
         }
 
-        if(EnemyReference != null)
+        if (EnemyReference != null)
         {
-            if (EnemyReference.EnemyDetails.IsImmunetAfetrHit)
-            {
-                _isImmuneAfterHit = true;
-                _immunityTime = EnemyReference.EnemyDetails.HitImmunityTime;
-                _spriteRenderer = EnemyReference.SpriteRendererArray[0];
-            }
+            InitializeImmunity(EnemyReference.EnemyDetails.IsImmunetAfetrHit, 
+                EnemyReference.EnemyDetails.HitImmunityTime, 
+                EnemyReference.SpriteRendererArray[0]);
 
-            if (_healthBar != null)
-            {
-                _healthBar.DisableHealthBar();
+            _healthBar?.DisableHealthBar();
 
-                if (EnemyReference.EnemyDetails.IsHealthBarDisplayed == true)
-                {
-                    _healthBar.EnableHealthBar();
-                }
-            }
+            if (EnemyReference.EnemyDetails.IsHealthBarDisplayed)
+                _healthBar?.EnableHealthBar();
+        }
+    }
+
+    private void InitializeImmunity(bool isImmuneAfterHit, 
+        float immunityTime, 
+        SpriteRenderer spriteRenderer)
+    {
+        if (isImmuneAfterHit)
+        {
+            _isImmuneAfterHit = true;
+            _immunityTime = immunityTime;
+            _spriteRenderer = spriteRenderer;
         }
     }
 
