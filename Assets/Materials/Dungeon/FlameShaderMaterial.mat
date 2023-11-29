@@ -42,10 +42,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DissolveAmount: 2
-    - _DissolveScale: 1
-    - _Distortion: 0.02
-    - _DistortionScale: 6
+    - _DissolveAmount: 2.83
+    - _DissolveScale: 1.94
+    - _Distortion: -0.13
+    - _DistortionScale: 6.33
     m_Colors:
     - _DissolveSpeed: {r: -0.33, g: -1, b: 0, a: 0}
     - _EmmissionColor: {r: 766.9961, g: 128.50197, b: 0, a: 1}
