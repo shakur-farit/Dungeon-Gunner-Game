@@ -133,7 +133,12 @@ public static class AStar
         int movementPenaltyForGridSpace = instantiatedRoom
             .aStarMovementPenalty[neighbourNodeXPosition, neighbourNodeYPosition];
 
-        if (movementPenaltyForGridSpace == 0 || closeNodeHashSet.Contains(neighbourNode))
+        int itemObstacleForGridSpace = instantiatedRoom.aStarItemObstacles[neighbourNodeXPosition, 
+            neighbourNodeYPosition];
+
+        if (movementPenaltyForGridSpace == 0 ||
+            itemObstacleForGridSpace == 0 ||
+            closeNodeHashSet.Contains(neighbourNode))
         {
             return null;
         }

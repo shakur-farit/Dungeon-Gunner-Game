@@ -18,6 +18,8 @@ public class InstantiatedRoom : MonoBehaviour
     [HideInInspector] public Tilemap minimapTilemap;
     [HideInInspector] public Bounds roomColliderBounds;
     [HideInInspector] public int[,] aStarMovementPenalty;
+    [HideInInspector] public int[,] aStarItemObstacles;
+    [HideInInspector]public List<MoveItem> moveableItemsList;
 
     [Header("Object References")]
     [SerializeField] private GameObject _environmentGameObject;
@@ -29,6 +31,13 @@ public class InstantiatedRoom : MonoBehaviour
         _boxCollider = GetComponent <BoxCollider2D>();
 
         roomColliderBounds = _boxCollider.bounds;
+    }
+
+    private void Start()
+    {
+
+        UpdateMoveableObstacles();
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -48,6 +57,8 @@ public class InstantiatedRoom : MonoBehaviour
         BlockOffUnusedDoorways();
 
         AddObstaclesAndPrefferedPath();
+
+        CreateItemObstaclesArray();
 
         AddDoorsToRooms();
 
@@ -303,6 +314,63 @@ public class InstantiatedRoom : MonoBehaviour
 
         EnableRoomCollider();
     }
+
+    private void CreateItemObstaclesArray()
+    {
+        aStarItemObstacles = new int[room.templateUpperBounds.x - room.templateLowerBounds.x + 1,
+            room.templateUpperBounds.y - room.templateLowerBounds.y + 1];
+    }
+
+    private void InitializeItemObstaclesArray()
+    {
+        for (int x = 0; x < (room.templateUpperBounds.x - room.templateLowerBounds.x + 1); x++)
+        {
+            for (int y = 0; y < (room.templateUpperBounds.y - room.templateLowerBounds.y + 1); y++)
+            {
+                aStarItemObstacles[x, y] = Settings.defaultAStarMovementPenalty;
+            }
+        }
+    }
+
+    public void UpdateMoveableObstacles()
+    {
+        InitializeItemObstaclesArray();
+
+        foreach (MoveItem moveItem in moveableItemsList)
+        {
+            Vector3Int colliderBoundsMin = grid.WorldToCell(moveItem.ItemBoxCollieder.bounds.min);
+            Vector3Int colliderBoundsMax = grid.WorldToCell(moveItem.ItemBoxCollieder.bounds.max);
+
+            for (int i = colliderBoundsMin.x; i < colliderBoundsMax.x; i++)
+            {
+                for (int j = colliderBoundsMin.y; j < colliderBoundsMax.y; j++)
+                {
+                    aStarItemObstacles[i - room.templateLowerBounds.x, j - room.templateLowerBounds.y] = 0;
+                }
+            }
+        }
+    }
+
+    ///// <summary>
+    ///// This is usid for debugging - shows the position of the table obstacle
+    ///// TO-DO: commented out before updating rooms prefabs
+    ///// </summary>
+    //private void OnDrawGizmos()
+    //{
+    //    for (int x = 0; x < (room.templateUpperBounds.x - room.templateLowerBounds.x + 1); x++)
+    //    {
+    //        for (int y = 0; y < (room.templateUpperBounds.y - room.templateLowerBounds.y + 1); y++)
+    //        {
+    //            if (aStarItemObstacles[x,y] == 0)
+    //            {
+    //                Vector3 worldCellPos = grid.CellToWorld(new Vector3Int(x + room.templateLowerBounds.x,
+    //                    y + room.templateLowerBounds.y, 0));
+
+    //                Gizmos.DrawCube(new Vector3(worldCellPos.x + 0.5f, worldCellPos.y + 0.5f, 0), Vector3.one);
+    //            }
+    //        }
+    //    }
+    //}
 
 #if UNITY_EDITOR
     private void OnValidate()
