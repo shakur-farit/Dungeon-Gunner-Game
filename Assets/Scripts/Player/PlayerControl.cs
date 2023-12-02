@@ -67,6 +67,8 @@ public class PlayerControl : MonoBehaviour
 
         WeaponInput();
 
+        UseItemInput();
+
         PlayerRollCooldownTimer();
     }
 
@@ -265,6 +267,24 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             player.PlayerReloadWeaponEvent.CallOnRealoadWeaponEvent(player.PlayerActiveWeapon.GetCurrentWeapon, 0);
+        }
+    }
+
+    private void UseItemInput()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            float useItemRadius = 2f;
+
+            Collider2D[] collider2DArray = Physics2D.OverlapCircleAll(player.GetPlayerPosition, useItemRadius);
+
+            foreach (Collider2D collider2D in collider2DArray)
+            {
+                IUseable useable = collider2D.GetComponent<IUseable>();
+
+                if (useable != null)
+                    useable.UseItem();
+            }
         }
     }
 

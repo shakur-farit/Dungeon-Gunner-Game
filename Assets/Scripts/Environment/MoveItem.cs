@@ -18,7 +18,7 @@ public class MoveItem : MonoBehaviour
     {
         ItemBoxCollieder = GetComponent<BoxCollider2D>();
         _rigidbody = GetComponent<Rigidbody2D>();
-        _room = GetComponent<InstantiatedRoom>();
+        _room = GetComponentInParent<InstantiatedRoom>();
 
         _room.moveableItemsList.Add(this);
     }

@@ -351,22 +351,22 @@ public class InstantiatedRoom : MonoBehaviour
         }
     }
 
-    ///// <summary>
+    /// <summary>
     ///// This is usid for debugging - shows the position of the table obstacle
     ///// TO-DO: commented out before updating rooms prefabs
     ///// </summary>
     //private void OnDrawGizmos()
     //{
-    //    for (int x = 0; x < (room.templateUpperBounds.x - room.templateLowerBounds.x + 1); x++)
+    //    for (int i = 0; i < (room.templateUpperBounds.x - room.templateLowerBounds.x + 1); i++)
     //    {
-    //        for (int y = 0; y < (room.templateUpperBounds.y - room.templateLowerBounds.y + 1); y++)
+    //        for (int j = 0; j < (room.templateUpperBounds.y - room.templateLowerBounds.y + 1); j++)
     //        {
-    //            if (aStarItemObstacles[x,y] == 0)
+    //            if (aStarItemObstacles[i, j] == 0)
     //            {
-    //                Vector3 worldCellPos = grid.CellToWorld(new Vector3Int(x + room.templateLowerBounds.x,
-    //                    y + room.templateLowerBounds.y, 0));
+    //                Vector3 worldCellPos = grid.CellToWorld(new Vector3Int(i + room.templateLowerBounds.x,
+    //                    j + room.templateLowerBounds.y, 0));
 
-    //                Gizmos.DrawCube(new Vector3(worldCellPos.x + 0.5f, worldCellPos.y + 0.5f, 0), Vector3.one);
+    //                Gizmos.DrawWireCube(new Vector3(worldCellPos.x + 0.5f, worldCellPos.y + 0.5f, 0), Vector3.one);
     //            }
     //        }
     //    }

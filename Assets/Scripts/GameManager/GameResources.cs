@@ -24,6 +24,7 @@ public class GameResources : MonoBehaviour
     [Header("Sounds")]
     public AudioMixerGroup soundMasterMixerGroup;
     public SoundEffectSO doorOpenCloseSoundEffect;
+    public SoundEffectSO tableFlip;
     [Header("Materials")]
     public Material dimmeMaterial;
     public Material litMaterial;
@@ -41,6 +42,7 @@ public class GameResources : MonoBehaviour
         HelperUtilities.ValidateCheckNullValue(this, nameof(roomNodeTypeList), roomNodeTypeList);
         HelperUtilities.ValidateCheckNullValue(this, nameof(currentPlayer), currentPlayer);
         HelperUtilities.ValidateCheckNullValue(this, nameof(doorOpenCloseSoundEffect), doorOpenCloseSoundEffect);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(tableFlip), tableFlip);
         HelperUtilities.ValidateCheckNullValue(this, nameof(litMaterial), litMaterial);
         HelperUtilities.ValidateCheckNullValue(this, nameof(dimmeMaterial), dimmeMaterial);
         HelperUtilities.ValidateCheckNullValue(this, nameof(variableLitShader), variableLitShader);
