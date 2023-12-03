@@ -40,3 +40,4 @@ MonoBehaviour:
     EnemyHealthAmount: 70
   IsImmunetAfetrHit: 0
   HitImmunityTime: 0
+  IsHealthBarDisplayed: 0

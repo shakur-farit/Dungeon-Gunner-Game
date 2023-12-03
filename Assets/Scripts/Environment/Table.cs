@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
@@ -27,29 +29,31 @@ public class Table : MonoBehaviour, IUseable
 
             Vector3 closestPointToPlayer = bounds.ClosestPoint(GameManager.Instance.GetPlayer.GetPlayerPosition);
 
-            if(closestPointToPlayer.x == bounds.max.x)
+            Dictionary<float, Action> xActions = new Dictionary<float, Action>
             {
-                _animator.SetBool(Settings.flipLeft, true);
+                { bounds.max.x, () => _animator.SetBool(Settings.flipLeft, true) },
+                { bounds.min.x, () => _animator.SetBool(Settings.flipRight, true) }
+            };
+
+            Dictionary<float, Action> yActions = new Dictionary<float, Action>
+            {
+                { bounds.min.y, () => _animator.SetBool(Settings.flipUp, true) },
+                { bounds.max.y, () => _animator.SetBool(Settings.flipDown, true) }
+            };
+
+            if (xActions.TryGetValue(closestPointToPlayer.x, out Action xAction))
+            {
+                xAction();
             }
-            else if (closestPointToPlayer.x == bounds.min.x)
+
+            if (yActions.TryGetValue(closestPointToPlayer.y, out Action yAction))
             {
-                _animator.SetBool(Settings.flipRight, true);
-            }
-            else if (closestPointToPlayer.y == bounds.min.y)
-            {
-                _animator.SetBool(Settings.flipUp, true);
-            }
-            else if (closestPointToPlayer.y == bounds.max.y)
-            {
-                _animator.SetBool(Settings.flipDown, true);
+                yAction();
             }
 
             gameObject.layer = LayerMask.NameToLayer("Environment");
-
             _rigidbody.mass = _itemMass;
-
             SoundEffectManager.Instance.PlaySoundEffect(GameResources.Instance.tableFlip);
-
             _isItemUsed = true;
         }
     }
