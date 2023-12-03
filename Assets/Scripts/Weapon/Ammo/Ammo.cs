@@ -35,20 +35,23 @@ public class Ammo : MonoBehaviour, IFireable
             _isAmmoMaterialSet = true;
         }
 
-        Vector3 distanceVector = _fireDirectionVector * _ammoSpeed * Time.deltaTime;
-
-        transform.position += distanceVector;
-
-        _ammoRange -= distanceVector.magnitude;
-
-        if (_ammoRange < 0)
+        if (!_ovverideAmmoMovement)
         {
+            Vector3 distanceVector = _fireDirectionVector * _ammoSpeed * Time.deltaTime;
+
+            transform.position += distanceVector;
+
+            _ammoRange -= distanceVector.magnitude;
+
+            if (_ammoRange >= 0)
+                return;
+
             if (_ammoDetails.isPlayerAmmo)
             {
                 StaticEventHandler.CallMultiplierEvent(false);
             }
 
-            DisableAmmo();
+            DisableAmmo();            
         }
     }
 
@@ -131,7 +134,7 @@ public class Ammo : MonoBehaviour, IFireable
     {
         float randomSpread = Random.Range(ammoDetails.ammoSpreadMin, ammoDetails.ammoSpreadMax);
 
-        int spreadToogle = Random.Range(0, 2) * 2 - 1;
+        int spreadToogle = Random.Range(-1, 2);
 
         _fireDirectionAngle = weaponAimDirectionVector.magnitude < Settings.useAimAngleDistance
            ? aimAngle
