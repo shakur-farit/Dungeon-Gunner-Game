@@ -138,6 +138,17 @@ public class Player : MonoBehaviour
         return weapon;
     }
 
+    public bool IsWeaponHeldByPlayer(WeaponDetailsSO weaponDetails)
+    {
+        foreach (Weapon weapon in WeaponList)
+        {
+            if (weapon.WeaponDetails == weaponDetails)
+                return true;
+        }
+
+        return false;
+    }
+
     private void SetPlayerHealth()
     {
         PlayerHealth.SetStartingHealth = PlayerDetails.playerHealthAmount;

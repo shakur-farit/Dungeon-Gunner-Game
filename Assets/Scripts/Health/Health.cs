@@ -146,4 +146,20 @@ public class Health : MonoBehaviour
     {
         _healthEvent.CallHealthChangedEvent((float)_currentHealth / (float)_startingHealth, _currentHealth, damageAmount);
     }
+
+    public void AddHealth(int healthPercent)
+    {
+        int healthIncrease = Mathf.RoundToInt(_startingHealth * healthPercent / 100f);
+
+        int totalHealth = _currentHealth + healthPercent;
+
+        if(totalHealth > _startingHealth)
+        {
+            _currentHealth = _startingHealth;
+        }
+
+        _currentHealth = totalHealth;
+
+        CallHealthEvent(0);
+    }
 }
