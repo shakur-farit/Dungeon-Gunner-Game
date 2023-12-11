@@ -510,3 +510,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1985a95ce5e1b4c3e80b5151fe2e7c80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _materializeColor: {r: 15.999729, g: 12.221267, b: 1.507828, a: 0}
+  _materializeTime: 3
+  _itemSpawnPoint: {fileID: 4890116452608626507}

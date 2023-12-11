@@ -118,7 +118,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private Weapon AddWeaponToPlayer(WeaponDetailsSO weaponDetails)
+    public Weapon AddWeaponToPlayer(WeaponDetailsSO weaponDetails)
     {
         Weapon weapon = new Weapon()
         {
