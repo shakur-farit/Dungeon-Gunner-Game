@@ -73,7 +73,10 @@ public class Chest : MonoBehaviour, IUseable
     public void UseItem()
     {
         if (!_isEnabled)
+        {
+            Debug.Log("!!!");
             return;
+        }
 
         Dictionary<ChestState, Action> chestAction = new Dictionary<ChestState, Action>()
         {

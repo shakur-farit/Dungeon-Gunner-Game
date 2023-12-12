@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
-using System;
+
 
 [RequireComponent(typeof(MaterializeEffect))]
 public class ChestItem : MonoBehaviour
