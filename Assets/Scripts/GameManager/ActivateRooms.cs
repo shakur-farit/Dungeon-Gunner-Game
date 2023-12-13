@@ -13,11 +13,14 @@ public class ActivateRooms : MonoBehaviour
     {
         _mainCamera = Camera.main;
 
-        InvokeRepeating("EnableRooms", 0.5f, 0.75f);
+        InvokeRepeating(nameof(EnableRooms), 0.5f, 0.75f);
     }
 
     private void EnableRooms()
     {
+        if (GameManager.Instance.gameState == GameState.dungeonOverviewMap)
+            return;
+
         HelperUtilities
             .CameraWorldPositionBounds(out Vector2Int miniMapCameraWorldPositionLowerBounds,
             out Vector2Int miniMapCameraWorldPositionUpperBounds, _miniMapCamaera);

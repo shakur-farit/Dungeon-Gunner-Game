@@ -51,6 +51,9 @@ public class GameResources : MonoBehaviour
     public Sprite heartIcon;
     public Sprite bulletIcon;
 
+    [Header("Minimap")]
+    public GameObject minimapSkullPrefab;
+
 #if UNITY_EDITOR
     private void OnValidate()
     {
@@ -72,6 +75,7 @@ public class GameResources : MonoBehaviour
         HelperUtilities.ValidateCheckNullValue(this, nameof(chestItemPrefab), chestItemPrefab);
         HelperUtilities.ValidateCheckNullValue(this, nameof(heartIcon), heartIcon);
         HelperUtilities.ValidateCheckNullValue(this, nameof(bulletIcon), bulletIcon);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(minimapSkullPrefab), minimapSkullPrefab);
     }
 #endif
 }

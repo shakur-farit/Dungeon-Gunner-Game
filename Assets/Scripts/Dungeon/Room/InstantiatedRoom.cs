@@ -158,6 +158,10 @@ public class InstantiatedRoom : MonoBehaviour
                     doorComponent.isBossRoomDoor = true;
 
                     doorComponent.LockDoor();
+
+                    GameObject skullIcon = Instantiate(GameResources.Instance.minimapSkullPrefab,
+                        gameObject.transform);
+                    skullIcon.transform.localPosition = door.transform.localPosition;
                 }
             }
         }

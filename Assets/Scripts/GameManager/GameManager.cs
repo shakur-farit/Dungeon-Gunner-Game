@@ -24,6 +24,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private long gameScore;
     private int scoreMultiplier;
     private InstantiatedRoom bossRoom;
+    private bool isFading = false;
 
     [HideInInspector] public GameState gameState;
     [HideInInspector] public GameState previousGameState;
@@ -153,6 +154,30 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             RoomEnemiesDefeated();
         };
 
+        stateActions[GameState.playingLevel] = () =>
+        {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                DisplayDungeonOverViewMap();
+            }
+        };
+
+        stateActions[GameState.dungeonOverviewMap] = () =>
+        {
+            if (Input.GetKeyUp(KeyCode.Tab))
+            {
+                DungeonMap.Instance.ClearDungeonOverViewMap();
+            }
+        };
+
+        stateActions[GameState.bossStage] = () =>
+        {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                DisplayDungeonOverViewMap();
+            }
+        };
+
         stateActions[GameState.levelCompleted] = () =>
         {
             StartCoroutine(LevelCompleted());
@@ -218,6 +243,14 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         {
             StartCoroutine(BossStage());
         }
+    }
+
+    private void DisplayDungeonOverViewMap()
+    {
+        if (isFading)
+            return;
+
+        DungeonMap.Instance.DisplayDungeonOverViewMap();
     }
 
     private void PlayDungeonLevel(int dungeonLevelListIndex)
@@ -383,6 +416,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     public IEnumerator Fade(float startFadeAlpha, float targetFadeAlphs, float fadeSeconds, Color backgroundColor)
     {
+        isFading = true;
+
         Image image = canvasGroup.GetComponent<Image>();
         image.color = backgroundColor;
 
@@ -394,6 +429,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             canvasGroup.alpha = Mathf.Lerp(startFadeAlpha, targetFadeAlphs, time / fadeSeconds);
             yield return null;
         }
+
+        isFading = false;
     }
 
 #if UNITY_EDITOR
