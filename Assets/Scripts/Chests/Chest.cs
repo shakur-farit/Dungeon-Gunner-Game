@@ -89,7 +89,8 @@ public class Chest : MonoBehaviour, IUseable
 
         if (chestAction.TryGetValue(_chestState, out Action action))
         {
-            action();
+            if(action != null)
+                action();
         }
     }
 
