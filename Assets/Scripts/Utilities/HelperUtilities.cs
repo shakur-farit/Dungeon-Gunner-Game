@@ -79,7 +79,8 @@ public static class HelperUtilities
         return false;
     }
 
-    public static bool ValidateCheckNullValue(UnityEngine.Object thisObject, string fieldName, UnityEngine.Object objectToCheck)
+    public static bool ValidateCheckNullValue(UnityEngine.Object thisObject, string fieldName, 
+        UnityEngine.Object objectToCheck)
     {
         if (objectToCheck ==  null)
         {
@@ -89,7 +90,8 @@ public static class HelperUtilities
         return false;
     }
 
-    public static bool ValidateCheckEnumerableValues(UnityEngine.Object thisObject, string filedName, IEnumerable enumerableObjectToCheck)
+    public static bool ValidateCheckEnumerableValues(UnityEngine.Object thisObject, string filedName, 
+        IEnumerable enumerableObjectToCheck)
     {
         bool error = false;
         int count = 0;
@@ -121,7 +123,8 @@ public static class HelperUtilities
         return error;
     }
 
-    public static bool ValidateCheckPositiveValue(UnityEngine.Object thisObject, string fieldName, int valueToCheck, bool isZeroAllowed)
+    public static bool ValidateCheckPositiveValue(UnityEngine.Object thisObject, string fieldName, 
+        int valueToCheck, bool isZeroAllowed)
     {
         bool error = false;
 
@@ -137,14 +140,14 @@ public static class HelperUtilities
         {
             Debug.Log(fieldName + " must contain a positive value in object " + thisObject.name.ToString());
             error = true;
-            Debug.Log("Here");
             return error;
         }
 
         return error;
     }
 
-    public static bool ValidateCheckPositiveValue(UnityEngine.Object thisObject, string fieldName, float valueToCheck, bool isZeroAllowed)
+    public static bool ValidateCheckPositiveValue(UnityEngine.Object thisObject, string fieldName, 
+        float valueToCheck, bool isZeroAllowed)
     {
         bool error = false;
 
@@ -166,8 +169,8 @@ public static class HelperUtilities
         return error;
     }
 
-    public static bool ValidateCheckPositiveRange(UnityEngine.Object thisObject, string fieldNameMinimum, float valueToCheckMinimum,
-        string fieldNameMaximum, float valueToCheckMaximum, bool isZeroAllowed)
+    public static bool ValidateCheckPositiveRange(UnityEngine.Object thisObject, string fieldNameMinimum, 
+        float valueToCheckMinimum, string fieldNameMaximum, float valueToCheckMaximum, bool isZeroAllowed)
     {
         bool error = false;
 
@@ -187,6 +190,27 @@ public static class HelperUtilities
         return error;
     }
 
+    public static bool ValidateCheckPositiveRange(UnityEngine.Object thisObject, string fieldNameMinimum,
+        int valueToCheckMinimum, string fieldNameMaximum, int valueToCheckMaximum, bool isZeroAllowed)
+    {
+        bool error = false;
+
+        if (valueToCheckMinimum > valueToCheckMaximum)
+        {
+            Debug.Log(fieldNameMinimum + " must be less than or equal to " + fieldNameMaximum + " in object " +
+                thisObject.name.ToString());
+            error = true;
+        }
+
+        if (ValidateCheckPositiveValue(thisObject, fieldNameMinimum, valueToCheckMinimum, isZeroAllowed))
+            error = true;
+
+        if (ValidateCheckPositiveValue(thisObject, fieldNameMaximum, valueToCheckMaximum, isZeroAllowed))
+            error = true;
+
+        return error;
+    }
+
     public static Vector3 GetSpawnPositionNearestToPlayer(Vector3 playerPosition)
     {
         Room currentRoom = GameManager.Instance.GetCurrentRoom;
@@ -199,8 +223,11 @@ public static class HelperUtilities
         {
             Vector3 spawnPositionWorld = grid.CellToWorld((Vector3Int)spawnPositionGrid);
 
-            if(Vector3.Distance(spawnPositionWorld, playerPosition) < Vector3.Distance(nearestSpawnPosition, playerPosition))
+            if (Vector3.Distance(spawnPositionWorld, playerPosition) <
+                Vector3.Distance(nearestSpawnPosition, playerPosition))
+            {
                 nearestSpawnPosition = spawnPositionWorld;
+            }
         }
 
         return nearestSpawnPosition;
