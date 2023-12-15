@@ -1,4 +1,4 @@
-https://github.com/shakur-farit/Dungeon-Gunner-Game/assets/93837330/556db710-f8b5-478a-9ed2-808a521185a1
+https://github.com/shakur-farit/Dungeon-Gunner-Game/assets/93837330/9f556fb5-7ee6-41f6-a27a-a06d118ea99f
 
 # Dungeon-Gunner-Game
 Rouglike dungeon shooter game.
