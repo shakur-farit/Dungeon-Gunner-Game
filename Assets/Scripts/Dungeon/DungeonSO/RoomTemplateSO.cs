@@ -13,6 +13,10 @@ public class RoomTemplateSO : ScriptableObject
     [HideInInspector] public GameObject previousPrefab; // this is used to regenerate the
                                                         // guid if the so is copied and the prefab is changed
 
+    [Header("Room Music")]
+    public MusicTrackSO battleMusic;
+    public MusicTrackSO ambientMusic;
+
     [Header("Room Configuration")]
     public RoomNodeTypeSO roomNodeType;
     public Vector2Int lowerBounds;
@@ -38,7 +42,10 @@ public class RoomTemplateSO : ScriptableObject
             previousPrefab = prefab;
             EditorUtility.SetDirty(this);
         }
+
         HelperUtilities.ValidateCheckNullValue(this, nameof(prefab), prefab);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(battleMusic), battleMusic);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(ambientMusic), ambientMusic);
         HelperUtilities.ValidateCheckNullValue(this, nameof(roomNodeType), roomNodeType);
 
         HelperUtilities.ValidateCheckEnumerableValues(this, nameof(doorwayList), doorwayList);

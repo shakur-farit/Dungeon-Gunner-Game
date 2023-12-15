@@ -23,6 +23,12 @@ public class GameResources : MonoBehaviour
     [Header("Player")]
     public CurrentPlayerSO currentPlayer;
 
+    [Header("Music")]
+    public AudioMixerGroup musicMasterMixerGroup;
+    public AudioMixerSnapshot musicOnFullSnapshot;
+    public AudioMixerSnapshot musicLowSnapshot;
+    public AudioMixerSnapshot musicOffSnapshot;
+
     [Header("Sounds")]
     public AudioMixerGroup soundMasterMixerGroup;
     public SoundEffectSO doorOpenCloseSoundEffect;
@@ -71,6 +77,10 @@ public class GameResources : MonoBehaviour
         HelperUtilities.ValidateCheckNullValue(this, nameof(materializeShader), materializeShader);
         HelperUtilities.ValidateCheckEnumerableValues(this, nameof(enemyUnwalkableCollisionTileArray), enemyUnwalkableCollisionTileArray);
         HelperUtilities.ValidateCheckNullValue(this, nameof(preferredEnemyPathTile), preferredEnemyPathTile);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(musicMasterMixerGroup), musicMasterMixerGroup);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(musicOnFullSnapshot), musicOnFullSnapshot);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(musicLowSnapshot), musicLowSnapshot);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(musicOffSnapshot), musicOffSnapshot);
         HelperUtilities.ValidateCheckNullValue(this, nameof(ammoIconPrefab), ammoIconPrefab);
         HelperUtilities.ValidateCheckNullValue(this, nameof(chestItemPrefab), chestItemPrefab);
         HelperUtilities.ValidateCheckNullValue(this, nameof(heartIcon), heartIcon);
