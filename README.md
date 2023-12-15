@@ -1,4 +1,4 @@
-https://github.com/shakur-farit/Dungeon-Gunner-Game/assets/93837330/549363d0-5591-4edf-966d-4ac31f000813
+https://github.com/shakur-farit/Dungeon-Gunner-Game/assets/93837330/72375de3-f057-412e-9432-0ff06e9a6878
 
 # Dungeon-Gunner-Game
 Rouglike dungeon shooter game.
@@ -26,3 +26,5 @@ Implemented mechanics:
  20. Boss health bar
  21. Decorate rooms
  22. Moveable and useable items
+ 23. Chests spawn and use
+ 24. Overview minimap and teleporting
