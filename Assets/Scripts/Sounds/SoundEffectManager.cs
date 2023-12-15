@@ -6,8 +6,16 @@ public class SoundEffectManager : SingletonMonobehaviour<SoundEffectManager>
 {
     public int SoundsVolume = 8;
 
+    private void OnDisable()
+    {
+        PlayerPrefs.SetInt("soundsVolume", SoundsVolume);
+    }
+
     private void Start()
     {
+        if (PlayerPrefs.HasKey("soundsVolume"))
+            SoundsVolume = PlayerPrefs.GetInt("soundsVolume");
+
         SetSoundsVolume(SoundsVolume);
     }
 
@@ -18,6 +26,28 @@ public class SoundEffectManager : SingletonMonobehaviour<SoundEffectManager>
         sound.SetSound(soundEffect);
         sound.gameObject.SetActive(true);
         StartCoroutine(DisableSound(sound, soundEffect.SoundEffectClip.length));
+    }
+
+    public void IncreaseSoundsVolume()
+    {
+        int maxMusicVolume = 20;
+
+        if (SoundsVolume >= maxMusicVolume)
+            return;
+
+        SoundsVolume += 1;
+
+        SetSoundsVolume(SoundsVolume);
+    }
+
+    public void DecreaseSoundsVolume()
+    {
+        if (SoundsVolume <= 0)
+            return;
+
+        SoundsVolume -= 1;
+
+        SetSoundsVolume(SoundsVolume);
     }
 
     private IEnumerator DisableSound(SoundEffect sound, float soundDuration)

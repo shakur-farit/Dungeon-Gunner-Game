@@ -10,6 +10,11 @@ public class MusicManager : SingletonMonobehaviour<MusicManager>
     private Coroutine _fadeOutMusicCoroutine;
     private Coroutine _fadeInMusicCoroutine;
 
+    private void OnDisable()
+    {
+        PlayerPrefs.SetInt("musicVolume", MusicVolume);
+    }
+
     protected override void Awake()
     {
         base.Awake();
@@ -21,6 +26,31 @@ public class MusicManager : SingletonMonobehaviour<MusicManager>
 
     private void Start()
     {
+        if (PlayerPrefs.HasKey("musicVolume"))
+            MusicVolume = PlayerPrefs.GetInt("musicVolume");
+
+        SetMusicVolume(MusicVolume);
+    }
+
+    public void IncreaseMusicVolume()
+    {
+        int maxMusicVolume = 20;
+
+        if (MusicVolume >= maxMusicVolume)
+            return;
+
+        MusicVolume += 1;
+
+        SetMusicVolume(MusicVolume);
+    }
+
+    public void DecreaseMusicVolume()
+    {
+        if (MusicVolume <= 0)
+            return;
+
+        MusicVolume -= 1;
+
         SetMusicVolume(MusicVolume);
     }
 

@@ -10,6 +10,7 @@ using System;
 public class GameManager : SingletonMonobehaviour<GameManager>
 {
     [Header("Game Object References")]
+    [SerializeField] private GameObject pauseMenu;
     [SerializeField] private TextMeshProUGUI messageText;
     [SerializeField] private CanvasGroup canvasGroup;
 
@@ -136,11 +137,6 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private void Update()
     {
         HandleGameState();
-
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            gameState = GameState.gameStarted;
-        }
     }
 
     private void HandleGameState()
@@ -156,9 +152,22 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         stateActions[GameState.playingLevel] = () =>
         {
+            if(Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseGameMenu();
+            }
+
             if (Input.GetKeyDown(KeyCode.Tab))
             {
                 DisplayDungeonOverViewMap();
+            }
+        };
+
+        stateActions[GameState.engagingEnemies] = () =>
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseGameMenu();
             }
         };
 
@@ -172,9 +181,22 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         stateActions[GameState.bossStage] = () =>
         {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseGameMenu();
+            }
+
             if (Input.GetKeyDown(KeyCode.Tab))
             {
                 DisplayDungeonOverViewMap();
+            }
+        };
+
+        stateActions[GameState.engagingBoss] = () =>
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseGameMenu();
             }
         };
 
@@ -201,6 +223,14 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         stateActions[GameState.restartGame] = () =>
         {
             RestartGame();
+        };
+
+        stateActions[GameState.gamePaused] = () =>
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseGameMenu();
+            }
         };
 
         if (stateActions.TryGetValue(gameState, out var action))
@@ -242,6 +272,28 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         if (gameState == GameState.bossStage)
         {
             StartCoroutine(BossStage());
+        }
+    }
+
+    public void PauseGameMenu()
+    {
+        if (gameState != GameState.gamePaused)
+        {
+            pauseMenu.SetActive(true);
+            GetPlayer.PlayerControlReference.DisablePlayerMovement();
+
+            previousGameState = gameState;
+            gameState = GameState.gamePaused;
+            return;
+        }
+
+        if (gameState == GameState.gamePaused)
+        {
+            pauseMenu.SetActive(false);
+            GetPlayer.PlayerControlReference.EnablePlayerMovement();
+
+            gameState = previousGameState;
+            previousGameState = GameState.gamePaused;
         }
     }
 
@@ -436,9 +488,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 #if UNITY_EDITOR
     private void OnValidate()
     {
+        HelperUtilities.ValidateCheckNullValue(this, nameof(pauseMenu), pauseMenu);
         HelperUtilities.ValidateCheckNullValue(this, nameof(messageText), messageText);
         HelperUtilities.ValidateCheckNullValue(this, nameof(canvasGroup), canvasGroup);
-
         HelperUtilities.ValidateCheckEnumerableValues(this, nameof(dungeonLevelList), dungeonLevelList);
     }
 #endif
