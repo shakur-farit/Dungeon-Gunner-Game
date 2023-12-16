@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class PauseMenuUI : MonoBehaviour
@@ -22,6 +23,11 @@ public class PauseMenuUI : MonoBehaviour
     private void Start()
     {
         gameObject.SetActive(false);
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 
     public void IncreaseMusicVolume()
