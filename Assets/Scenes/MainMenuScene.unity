@@ -399,6 +399,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6024866371510157184, guid: b36b4d4a6bb1c344ca2ff3f7d219ab8d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -467,6 +471,7 @@ GameObject:
   - component: {fileID: 1270013501}
   - component: {fileID: 1270013500}
   - component: {fileID: 1270013499}
+  - component: {fileID: 1270013502}
   m_Layer: 5
   m_Name: PlayButton
   m_TagString: Untagged
@@ -491,7 +496,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.4, y: -110}
+  m_AnchoredPosition: {x: -0.4, y: -113}
   m_SizeDelta: {x: 140, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1270013499
@@ -588,6 +593,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1270013497}
   m_CullTransparentMesh: 1
+--- !u!114 &1270013502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270013497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.8039216}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1985210344
 GameObject:
   m_ObjectHideFlags: 0
@@ -711,9 +731,9 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.10763889
+    x: 0
     y: 0
-    width: 0.7839506
+    width: 1
     height: 1
   near clip plane: 0.3
   far clip plane: 1000

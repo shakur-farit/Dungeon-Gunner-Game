@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Tilemaps;
@@ -20,7 +21,11 @@ public class GameResources : MonoBehaviour
     [Header("Dungeon")]
     public RoomNodeTypeListSO roomNodeTypeList;
 
+    [Header("Player Selection")]
+    public GameObject playerSelectionPrefab;
+
     [Header("Player")]
+    public List<PlayerDetailsSO> playerDetailsList;
     public CurrentPlayerSO currentPlayer;
 
     [Header("Music")]
@@ -65,6 +70,8 @@ public class GameResources : MonoBehaviour
     private void OnValidate()
     {
         HelperUtilities.ValidateCheckNullValue(this, nameof(roomNodeTypeList), roomNodeTypeList);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(playerSelectionPrefab), playerSelectionPrefab);
+        HelperUtilities.ValidateCheckEnumerableValues(this, nameof(playerDetailsList), playerDetailsList);
         HelperUtilities.ValidateCheckNullValue(this, nameof(currentPlayer), currentPlayer);
         HelperUtilities.ValidateCheckNullValue(this, nameof(doorOpenCloseSoundEffect), doorOpenCloseSoundEffect);
         HelperUtilities.ValidateCheckNullValue(this, nameof(tableFlip), tableFlip);
