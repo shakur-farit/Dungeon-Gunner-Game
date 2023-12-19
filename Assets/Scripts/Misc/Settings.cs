@@ -75,5 +75,8 @@ public static class Settings
 
     // Contact damage parametrs
     public const float contancDamageCollisionResetDellay = 0.5f;
+
+    // Highscores
+    public const int numberOfHighScoresToSave = 100;
 }
 

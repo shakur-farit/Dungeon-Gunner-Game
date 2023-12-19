@@ -413,6 +413,10 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         GetPlayer.PlayerControlReference.DisablePlayerMovement();
 
+        //SetScoreText();
+
+        //yield return new WaitForSeconds(1f);
+
         yield return StartCoroutine(Fade(0f, 1f, 0.5f, Color.black));
 
         string text = "WELL DONE " + GameResources.Instance.currentPlayer.playerName.ToUpper() +
@@ -420,7 +424,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         yield return StartCoroutine(DisplayMessagerRoutine(text, Color.white, 5f));
 
-        text = "YOU SCORED " + gameScore.ToString("###,###0");
+        text = "YOU SCORED " + gameScore.ToString("###,###0") + "\n\n" + SetScoreText();
 
         yield return StartCoroutine(DisplayMessagerRoutine(text, Color.white, 3f));
 
@@ -429,6 +433,39 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         yield return StartCoroutine(DisplayMessagerRoutine(text, Color.white, 0f));
 
         gameState = GameState.restartGame;
+    }
+
+    private string SetScoreText()
+    {
+        int rank = HighScoreManager.Instance.GetRank(gameScore);
+
+        string rankText;
+
+        if (rank > 0 && rank <= Settings.numberOfHighScoresToSave)
+        {
+            rankText = "YOUR SCORE IS RANKED " + rank.ToString("#0") + " IN THE TOP "
+                + Settings.numberOfHighScoresToSave.ToString("#0");
+
+            string name = GameResources.Instance.currentPlayer.playerName;
+
+            if (name == string.Empty)
+            {
+                name = playerDetails.playerCharacterName.ToUpper();
+            }
+
+            HighScoreManager.Instance.AddScore(new Score()
+            {
+                PlayerName = name,
+                LevelDescritpion = "LEVEL " + (currentDungeonLevelListIndex + 1).ToString() +
+                " - " + GetCurrentDungeonLevel.levelName.ToUpper(),
+                PlayerScore = gameScore
+            }, rank);
+
+            return rankText;
+        }
+
+        return rankText = "YOUR SCORE ISN'T RANKED IN THE TOP " + Settings.numberOfHighScoresToSave.ToString("#0");
+
     }
 
     private IEnumerator GameLost()
@@ -450,7 +487,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         yield return StartCoroutine(DisplayMessagerRoutine(text, Color.white, 5f));
 
-        text = "YOU SCORED " + gameScore.ToString("###,###0");
+        text = "YOU SCORED " + gameScore.ToString("###,###0") + "\n\n" + SetScoreText();
 
         yield return StartCoroutine(DisplayMessagerRoutine(text, Color.white, 3f));
 
