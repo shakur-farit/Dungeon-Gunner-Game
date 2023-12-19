@@ -30,3 +30,4 @@ Implemented mechanics:
  24. Overview minimap and teleporting.
  25. Game music.
  26. Pause menu
+ 27. Main menu
