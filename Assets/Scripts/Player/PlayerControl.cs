@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [RequireComponent(typeof(Player))]
 [DisallowMultipleComponent]
 public class PlayerControl : MonoBehaviour
@@ -74,8 +75,8 @@ public class PlayerControl : MonoBehaviour
 
     private void MovementInput()
     {
-        float horizontalMovment = Input.GetAxisRaw("Horizontal");
-        float verticalMovement = Input.GetAxisRaw("Vertical");
+        float horizontalMovment = SimpleInput.GetAxisRaw("Horizontal");
+        float verticalMovement = SimpleInput.GetAxisRaw("Vertical");
         bool rightMouseButton = Input.GetMouseButtonDown(1);
 
         Vector2 direction = new Vector2(horizontalMovment, verticalMovement);

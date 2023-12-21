@@ -3510,6 +3510,7 @@ SpriteAtlas:
     - 5bb857dbcaf4e402e92cb6c02962febf: -1449344625
     - 5bb857dbcaf4e402e92cb6c02962febf: -272821529
     - 5bb857dbcaf4e402e92cb6c02962febf: 399671463
+    - 2fe25ddbdba826749ba968e3463605e6: 21300000
     - 2802addb8c594ef459f602a1578e8c1b: 3943470889513969835
     - 2802addb8c594ef459f602a1578e8c1b: 7702502308132731690
     - 2802addb8c594ef459f602a1578e8c1b: 7121959247808852978
@@ -8405,6 +8406,7 @@ SpriteAtlas:
   - {fileID: -1449344625, guid: 5bb857dbcaf4e402e92cb6c02962febf, type: 3}
   - {fileID: -272821529, guid: 5bb857dbcaf4e402e92cb6c02962febf, type: 3}
   - {fileID: 399671463, guid: 5bb857dbcaf4e402e92cb6c02962febf, type: 3}
+  - {fileID: 21300000, guid: 2fe25ddbdba826749ba968e3463605e6, type: 3}
   - {fileID: 3943470889513969835, guid: 2802addb8c594ef459f602a1578e8c1b, type: 3}
   - {fileID: 7702502308132731690, guid: 2802addb8c594ef459f602a1578e8c1b, type: 3}
   - {fileID: 7121959247808852978, guid: 2802addb8c594ef459f602a1578e8c1b, type: 3}
@@ -13299,6 +13301,7 @@ SpriteAtlas:
   - TheThiefRollDown_1
   - TheThiefRollDown_2
   - TheThiefRollDown_3
+  - Free Flat Arrow 2 E Icon
   - sigil_circle_1
   - sigil_circle_0
   - sigil_circle_3
